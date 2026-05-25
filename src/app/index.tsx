@@ -1,16 +1,28 @@
-import React, { useState } from 'react';
-import { Alert, Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, Animated, Image, ImageBackground, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function Index() {
   // Καταστάσεις οθόνης: 'login' | 'pin' | 'wallet' | 'id_detail'
   const [screen, setScreen] = useState<'login' | 'pin' | 'wallet' | 'id_detail'>('login');
   const [pin, setPin] = useState('');
 
+  // Animation logic για τον παλλόμενο κύκλο της αρχικής οθόνης
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(scaleAnim, { toValue: 1.06, duration: 2200, useNativeDriver: true }),
+        Animated.timing(scaleAnim, { toValue: 1, duration: 2200, useNativeDriver: true })
+      ])
+    ).start();
+  }, []);
+
   const handlePinInput = (value: string) => {
     if (pin.length < 4) {
       const newPin = pin + value;
       setPin(newPin);
-      if (newPin === '1234') { 
+      if (newPin === '1234') { // Ο κωδικός πρόσβασης
         setTimeout(() => {
           setScreen('wallet');
           setPin('');
@@ -24,16 +36,17 @@ export default function Index() {
     }
   };
 
-  // --- ΟΘΟΝΗ 1: ΑΡΧΙΚΟ LOGIN ---
+  // --- ΟΘΟΝΗ 1: ΑΡΧΙΚΟ LOGIN (gov.gr wallet) ---
   if (screen === 'login') {
     return (
-      <SafeAreaView style={styles.loginContainer}>
+      <ImageBackground source={require('../../assets/background.jpg')} style={styles.loginContainer}>
         <StatusBar barStyle="light-content" backgroundColor="#0052B4" />
+        
         <View style={styles.loginLogoSection}>
-          <View style={styles.cropMarks}>
+          <Animated.View style={[styles.circlePulse, { transform: [{ scale: scaleAnim }] }]}>
             <Text style={styles.loginLogoText}>gov.gr</Text>
             <Text style={styles.loginLogoSubtext}>wallet</Text>
-          </View>
+          </Animated.View>
         </View>
 
         <View style={styles.loginButtonSection}>
@@ -56,12 +69,11 @@ export default function Index() {
           </TouchableOpacity>
         </View>
 
-        {/* ΔΙΟΡΘΩΣΗ: Χωρίστηκε το κείμενο για να γίνει το gr σιαν */}
         <View style={styles.loginFooter}>
           <Text style={styles.loginFooterText}>🏛️ gov</Text>
           <Text style={styles.loginFooterCyanText}>gr</Text>
         </View>
-      </SafeAreaView>
+      </ImageBackground>
     );
   }
 
@@ -253,13 +265,22 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
-  // Login Styles
-  loginContainer: { flex: 1, backgroundColor: '#0052B4', justifyContent: 'space-between', paddingHorizontal: 24 },
+  // Νέα Login Styles (με ImageBackground & Animated Circle)
+  loginContainer: { flex: 1, justifyContent: 'space-between', paddingHorizontal: 24, paddingTop: 60 },
   loginLogoSection: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  cropMarks: { borderWidth: 0, padding: 10, alignItems: 'center' },
+  circlePulse: {
+    width: 210,
+    height: 210,
+    borderRadius: 105,
+    borderWidth: 2,
+    borderColor: '#00D2FF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 82, 180, 0.25)',
+  },
   loginLogoText: { color: '#FFF', fontSize: 42, fontWeight: 'bold' },
-  loginLogoSubtext: { color: '#00D2FF', fontSize: 22, fontWeight: '600', marginTop: -5 },
-  loginButtonSection: { width: '100%', marginBottom: 40 },
+  loginLogoSubtext: { color: '#00D2FF', fontSize: 22, fontWeight: '600', marginTop: -3 },
+  loginButtonSection: { width: '100%', marginBottom: 30 },
   btnTaxis: { backgroundColor: '#00D2FF', paddingVertical: 16, borderRadius: 12, alignItems: 'center', marginBottom: 14 },
   btnTaxisText: { color: '#0052B4', fontSize: 16, fontWeight: '700' },
   btnOutline: { backgroundColor: 'transparent', paddingVertical: 16, borderRadius: 12, alignItems: 'center', borderWidth: 1.5, borderColor: 'rgba(255,255,255,0.4)', marginBottom: 14 },
@@ -267,11 +288,9 @@ const styles = StyleSheet.create({
   loginDividerRow: { flexDirection: 'row', alignItems: 'center', marginVertical: 15 },
   loginLine: { flex: 1, height: 1, backgroundColor: 'rgba(255,255,255,0.2)' },
   loginDividerText: { color: 'rgba(255,255,255,0.6)', paddingHorizontal: 10, fontSize: 13 },
-  
-  // Footer Διευθέτηση για να μπει το gr ξεχωριστά
-  loginFooter: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingBottom: 20 },
+  loginFooter: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingBottom: 25 },
   loginFooterText: { color: 'rgba(255,255,255,0.5)', fontSize: 14, fontWeight: 'bold' },
-  loginFooterCyanText: { color: '#00D2FF', fontSize: 14, fontWeight: 'bold' }, // ΔΙΟΡΘΩΣΗ: gr σε Σιαν (Cyan)
+  loginFooterCyanText: { color: '#00D2FF', fontSize: 14, fontWeight: 'bold' },
 
   // Pin Screen Styles
   pinContainer: { flex: 1, backgroundColor: '#0052B4', alignItems: 'center', justifyContent: 'center' },
@@ -322,28 +341,20 @@ const styles = StyleSheet.create({
 
   // Detail ID Styles
   detailContainer: { flex: 1, backgroundColor: '#00469B' },
-  detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#4AD7F0' },
+  detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#79E7FF' },
   backArrow: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   detailHeaderTitle: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   moreOptions: { color: '#FFF', fontSize: 24, fontWeight: 'bold' },
   detailScroll: { paddingBottom: 40 },
-  
-  // ΔΙΟΡΘΩΣΗ: Το φόντο έγινε ελαφρώς πιο σκούρο μπλε (#1B6395)
-  photoContainer: { backgroundColor: '#1B6395', flexDirection: 'row', paddingHorizontal: 20, paddingVertical: 25, width: '100%', alignItems: 'center', justifyContent: 'space-between' },
-  numberSideBox: { flex: 1, justifyContent: 'center' },
-  photoRightBox: { marginLeft: 15 },
-  idPhotoLive: { width: 115, height: 150, borderRadius: 8, borderWidth: 0 },
-  
-  idDetailsBlock: { paddingHorizontal: 20, paddingTop: 15 },
-  idNumberLabel: { color: 'rgba(255,255,255,0.7)', fontSize: 14, fontWeight: '500' },
-  idNumberValue: { color: '#FFF', fontSize: 24, fontWeight: 'bold', marginTop: 4 },
-  
-  // Πεδία με ρεαλιστικές λευκές γραμμές
-  detailField: { marginBottom: 16, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.25)', paddingBottom: 6 },
-  fieldLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 11, fontWeight: '600' },
-  fieldValue: { color: '#FFF', fontSize: 20, fontWeight: '700', marginTop: 2 },
-  
+  photoContainer: { backgroundColor: '#79E7FF', alignItems: 'center', paddingVertical: 20, width: '100%' },
+  idPhotoLive: { width: 130, height: 170, borderRadius: 12, borderWidth: 3, borderColor: 'rgba(255,255,255,0.2)' },
+  idDetailsBlock: { paddingHorizontal: 20, paddingTop: 20 },
+  idNumberLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 13, fontWeight: '500' },
+  idNumberValue: { color: '#00D2FF', fontSize: 24, fontWeight: 'bold', marginBottom: 20, marginTop: 2 },
+  detailField: { marginBottom: 18, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.1)', paddingBottom: 6 },
+  fieldLabel: { color: 'rgba(255,255,255,0.4)', fontSize: 11, fontWeight: '600' },
+  fieldValue: { color: '#FFF', fontSize: 18, fontWeight: '600', marginTop: 2 },
   detailQrSection: { alignItems: 'center', marginTop: 20, paddingVertical: 15 },
   realQrFrame: { backgroundColor: '#FFF', padding: 12, borderRadius: 12 },
-  detailQrSubtext: { color: 'rgba(255,255,255,0.5)', fontSize: 12, marginTop: 10, fontWeight: '500' }
+  detailQrSubtext: { color: 'rgba(255,255,255,0.4)', fontSize: 12, marginTop: 10, fontWeight: '500' }
 });
