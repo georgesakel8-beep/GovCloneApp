@@ -5,6 +5,7 @@ export default function Index() {
   const [screen, setScreen] = useState<'login' | 'pin' | 'wallet' | 'id_detail'>('login');
   const [pin, setPin] = useState('');
 
+  // Εφέ παλμού για premium αίσθηση στην αρχική οθόνη
   const scaleAnim = useRef(new Animated.Value(1)).current;
   useEffect(() => {
     Animated.loop(
@@ -27,10 +28,13 @@ export default function Index() {
     }
   };
 
-  // --- ΟΘΟΝΗ 1: ΑΡΧΙΚΟ LOGIN ---
+  // --- ΟΘΟΝΗ 1: ΑΡΧΙΚΟ LOGIN (Premium Look) ---
   if (screen === 'login') {
     return (
-      <ImageBackground source={require('../../assets/background.jpg')} style={styles.loginContainer}>
+      <ImageBackground 
+        source={{ uri: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop' }} 
+        style={styles.loginContainer}
+      >
         <StatusBar barStyle="light-content" backgroundColor="#0e1e38" />
         
         <View style={styles.loginLogoSection}>
@@ -100,7 +104,7 @@ export default function Index() {
     );
   }
 
-  // --- ΟΘΟΝΗ 2: ΚΕΝΤΡΙΚΟ WALLET ---
+  // --- ΟΘΟΝΗ 2: ΚΕΝΤΡΙΚΟ WALLET (Ρεαλιστικές Κάρτες) ---
   if (screen === 'wallet') {
     return (
       <SafeAreaView style={styles.walletContainer}>
@@ -192,8 +196,11 @@ export default function Index() {
             <Text style={styles.idCountryLabel}>HELLENIC REPUBLIC</Text>
           </View>
           <View style={styles.photoRightBox}>
-            {/* Εδώ διορθώθηκε σε myphoto.jpeg για να μην κρασάρει το Vercel */}
-            <Image source={require('../../assets/myphoto.jpeg')} style={styles.idPhotoLive} />
+            {/* Online Placeholder Φωτογραφία Προφίλ για 100% επιτυχία στο Build */}
+            <Image 
+              source={{ uri: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=500&auto=format&fit=crop' }} 
+              style={styles.idPhotoLive} 
+            />
           </View>
         </View>
 
@@ -231,7 +238,11 @@ export default function Index() {
 
         <View style={styles.detailQrSection}>
           <View style={styles.realQrFrame}>
-            <Image source={require('../../assets/qrcode.jpeg')} style={{ width: 140, height: 140 }} />
+            {/* Online έτοιμο QR Code */}
+            <Image 
+              source={{ uri: 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=GovGrWalletCloneGeorge' }} 
+              style={{ width: 140, height: 140 }} 
+            />
           </View>
           <Text style={styles.detailQrSubtext}>Κράτησε πατημένο το QR για μεγέθυνση</Text>
         </View>
