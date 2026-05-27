@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Alert, Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function Index() {
-  // Καταστάσεις οθόνης: 'login' | 'pin' | 'wallet' | 'id_detail'
   const [screen, setScreen] = useState<'login' | 'pin' | 'wallet' | 'id_detail'>('login');
   const [pin, setPin] = useState('');
 
@@ -10,7 +9,7 @@ export default function Index() {
     if (pin.length < 4) {
       const newPin = pin + value;
       setPin(newPin);
-      if (newPin === '1234') { // Ο κωδικός πρόσβασης
+      if (newPin === '1234') { 
         setTimeout(() => {
           setScreen('wallet');
           setPin('');
@@ -95,13 +94,12 @@ export default function Index() {
     );
   }
 
-  // --- ΟΘΟΝΗ 2: ΚΕΝΤΡΙΚΟ WALLET (Έγγραφα) ---
+  // --- ΟΘΟΝΗ 2: ΚΕΝΤΡΙΚΟ WALLET ---
   if (screen === 'wallet') {
     return (
       <SafeAreaView style={styles.walletContainer}>
         <StatusBar barStyle="light-content" backgroundColor="#0052B4" />
         
-        {/* Top Header */}
         <View style={styles.walletHeader}>
           <TouchableOpacity style={styles.mailCircle}>
             <Text style={styles.walletHeaderIcon}>✉️</Text>
@@ -119,19 +117,17 @@ export default function Index() {
           <Text style={styles.welcomeText}>Καλωσόρισες,</Text>
           <Text style={styles.userName}>ΓΙΩΡΓΟΣ ΣΑΚΕΛΛΑΡΟΠΟΥΛΟΣ</Text>
 
-          {/* ΚΑΡΤΑ 1: Δελτίο Ταυτότητας */}
           <TouchableOpacity style={styles.walletCardId} activeOpacity={0.9} onPress={() => setScreen('id_detail')}>
             <View style={styles.cardTopRow}>
               <Text style={styles.cardMainTitleId}>Δελτίο Ταυτότητας</Text>
               <View style={styles.miniPlusId}><Text style={styles.miniPlusTextId}>+</Text></View>
             </View>
             <View style={styles.cardBottomRow}>
-              <Text style={styles.cardPlaceholdersId}>--  ------  ----</Text>
-              <Text style={styles.cardLabelId}>Ημ. Έκδοσης</Text>
+              <Text style={styles.cardPlaceholdersId}>AO 948215</Text>
+              <Text style={styles.cardLabelId}>ΕΛΛΗΝΙΚΗ ΔΗΜΟΚΡΑΤΙΑ</Text>
             </View>
           </TouchableOpacity>
 
-          {/* ΚΑΡΤΑ 2: Άδεια Οδήγησης */}
           <TouchableOpacity style={styles.walletCardLicense} activeOpacity={0.9}>
             <View style={styles.cardTopRow}>
               <Text style={styles.cardMainTitleLicense}>Άδεια Οδήγησης</Text>
@@ -139,12 +135,11 @@ export default function Index() {
             </View>
             <View style={styles.cardBottomRow}>
               <Text style={styles.cardPlaceholdersLicense}>---------  -------</Text>
-              <Text style={styles.cardLabelLicense}>Ισχύει μέχρι:</Text>
+              <Text style={styles.cardLabelLicense}>Ισχύει μέχρι: --/--/----</Text>
             </View>
           </TouchableOpacity>
         </ScrollView>
 
-        {/* Bottom Tab Bar (Σκούρο Μπλε) */}
         <View style={styles.bottomTabBar}>
           <TouchableOpacity style={styles.tabItem}>
             <Text style={[styles.tabIcon, styles.tabActive]}>📇</Text>
@@ -172,7 +167,6 @@ export default function Index() {
     <SafeAreaView style={styles.detailContainer}>
       <StatusBar barStyle="light-content" backgroundColor="#79E7FF" />
       
-      {/* Detail Header */}
       <View style={styles.detailHeader}>
         <TouchableOpacity onPress={() => setScreen('wallet')}>
           <Text style={styles.backArrow}>◀</Text>
@@ -185,15 +179,17 @@ export default function Index() {
 
       <ScrollView contentContainerStyle={styles.detailScroll}>
         
-        {/* Φωτογραφία Προφίλ - Διορθώθηκε για να καλεί το σωστό αρχείο σου */}
         <View style={styles.photoContainer}>
-          <Image source={require('../../assets/myphoto.jpeg')} style={styles.idPhotoLive} />
+          {/* Default γκρίζο placeholder σιλουέτας για να μην κρασάρει ποτέ το build αν λείπει αρχείο */}
+          <Image 
+            source={{ uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAACWCAMAAAAj6S32AAAAMFBMVEUAAICAAMDAwMCAgIDAwMDAwID///8AAIDAwMCAgID///8AAICAgMDAwID///8AAIAv4TscAAAADnRSTlMAESIzRFVmd4iZqru8zMzzun7IAAAByUlEQVR42u3b23KCMBSG4TshgAnI+7/t6mAnatWh9bZZzbybXvTrgAnSbhvGZDKZTMb/Ybe9bZofmU7N7mO++YpPizK9vL5vN6V6bHcbby6Z6pZ6bL7vFvVovpZg48ZgY2OwsTHY2BhsBAw2GgYbDYONjcHGxmBjY7CxMdgIGGw0DDYaBhsbg42NwcbGYGNjsBEw2GgYbDQMNjYGGxuDjY3BxsZgI2Cw0TDYaBhsBAw2GgYbDYONjcHGxmBjY7CxMdgIGGw0DDYaBhsNg42NwcbGYGNjsBEYbDQMNhoGGxuDjY3BxsZgY2OwETDYaBhsNAw2NgYbG4ONjcHGxmAjYLDb3N6exuC9f83BxsZgY2OwEeg7g+vR6M8/Hxtb9bM5WIdf6tS7vT8XG1v1pznYqB8N/wBstA42NgYbG4ONjcFGwGCjYbDRMNjYGGxsDDY2Bhsbg42AwUbDYKNhsNEw2NgYbG4ONjYGGwGDjYbBRsNgY2OwsTHY2BhsbAw2AgYbDYONhsFGwGBjY7CxMdgIGGw0DDYaBhsbg42Nwb9ksP9N/P8WwV7qf/+S++0vS59v/v8U7K9V6XUymeoXvEw6v9wO7pMAAAAASUVORK5CYII=' }} 
+            style={styles.idPhotoLive} 
+          />
         </View>
 
-        {/* Στοιχεία Ταυτότητας */}
         <View style={styles.idDetailsBlock}>
           <Text style={styles.idNumberLabel}>Αριθμός ταυτότητας:</Text>
-          <Text style={styles.idNumberValue}>ΑΝ 714079</Text>
+          <Text style={styles.idNumberValue}>AO 948215</Text>
 
           <View style={styles.detailField}>
             <Text style={styles.fieldLabel}>ΕΠΩΝΥΜΟ</Text>
@@ -236,10 +232,12 @@ export default function Index() {
           </View>
         </View>
 
-        {/* QR Code */}
         <View style={styles.detailQrSection}>
           <View style={styles.realQrFrame}>
-            <Image source={require('../../assets/qrcode.jpeg')} style={{ width: 130, height: 130 }} />
+            <Image 
+              source={{ uri: 'https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=GovGrWalletCloneGeorge' }} 
+              style={{ width: 130, height: 130 }} 
+            />
           </View>
           <Text style={styles.detailQrSubtext}>Κωδικός Ασφαλείας: 8492-1024</Text>
         </View>
@@ -250,7 +248,6 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
-  // Login Styles
   loginContainer: { flex: 1, backgroundColor: '#0052B4', justifyContent: 'space-between', paddingHorizontal: 24 },
   loginLogoSection: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   cropMarks: { borderWidth: 0, padding: 10, alignItems: 'center' },
@@ -267,7 +264,6 @@ const styles = StyleSheet.create({
   loginFooter: { alignItems: 'center', paddingBottom: 20 },
   loginFooterText: { color: 'rgba(255,255,255,0.5)', fontSize: 14, fontWeight: 'bold' },
 
-  // Pin Screen Styles
   pinContainer: { flex: 1, backgroundColor: '#0052B4', alignItems: 'center', justifyContent: 'center' },
   pinTitle: { color: '#FFF', fontSize: 20, fontWeight: '600', marginBottom: 30 },
   dotsRow: { flexDirection: 'row', marginBottom: 50 },
@@ -277,7 +273,6 @@ const styles = StyleSheet.create({
   numButton: { width: 75, height: 75, justifyContent: 'center', alignItems: 'center', margin: 8, backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 37.5 },
   numText: { color: '#FFF', fontSize: 24, fontWeight: '600' },
 
-  // Wallet main Styles (Διορθωμένο Μπλε Φόντο)
   walletContainer: { flex: 1, backgroundColor: '#0052B4' },
   walletHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, marginTop: 10 },
   mailCircle: { backgroundColor: '#FFF', width: 34, height: 34, borderRadius: 17, justifyContent: 'center', alignItems: 'center' },
@@ -291,7 +286,6 @@ const styles = StyleSheet.create({
   welcomeText: { color: '#FFF', fontSize: 18, fontWeight: '400' },
   userName: { color: '#FFF', fontSize: 26, fontWeight: 'bold', marginBottom: 30, marginTop: 4 },
   
-  // Κάρτα Ταυτότητας
   walletCardId: { backgroundColor: '#80E8FF', borderRadius: 16, padding: 20, height: 175, justifyContent: 'space-between', marginBottom: 20 },
   cardMainTitleId: { color: '#FFF', fontSize: 22, fontWeight: 'bold' },
   miniPlusId: { backgroundColor: '#FFF', width: 44, height: 44, borderRadius: 22, justifyContent: 'center', alignItems: 'center' },
@@ -300,24 +294,20 @@ const styles = StyleSheet.create({
   cardPlaceholdersId: { color: '#00469B', fontSize: 28, fontWeight: 'bold', letterSpacing: 2, marginBottom: 4 },
   cardLabelId: { color: 'rgba(0, 70, 155, 0.5)', fontSize: 11, fontWeight: '600' },
 
-  // Κάρτα Άδειας Οδήγησης
   walletCardLicense: { backgroundColor: '#FFF', borderRadius: 16, padding: 20, height: 175, justifyContent: 'space-between', marginBottom: 20 },
   cardMainTitleLicense: { color: '#80E8FF', fontSize: 22, fontWeight: 'bold' },
   miniPlusLicense: { backgroundColor: '#00D2FF', width: 44, height: 44, borderRadius: 22, justifyContent: 'center', alignItems: 'center' },
   miniPlusTextLicense: { color: '#FFF', fontSize: 26, fontWeight: 'bold' },
   cardPlaceholdersLicense: { color: '#00469B', fontSize: 28, fontWeight: 'bold', letterSpacing: 2, marginBottom: 4 },
   cardLabelLicense: { color: 'rgba(0, 70, 155, 0.3)', fontSize: 11, fontWeight: '600' },
-  
   cardTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
 
-  // Bottom Tab Bar (Σκούρο ρεαλιστικό Μπλε)
   bottomTabBar: { height: 75, backgroundColor: '#003A80', borderTopWidth: 0, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingBottom: 12 },
   tabItem: { alignItems: 'center' },
   tabIcon: { fontSize: 24, color: '#66A3FF' },
   tabLabel: { fontSize: 11, color: '#66A3FF', marginTop: 4, fontWeight: '500' },
   tabActive: { color: '#FFF', fontWeight: '700' },
 
-  // Detail ID Styles
   detailContainer: { flex: 1, backgroundColor: '#00469B' },
   detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#79E7FF' },
   backArrow: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
@@ -325,7 +315,7 @@ const styles = StyleSheet.create({
   moreOptions: { color: '#FFF', fontSize: 24, fontWeight: 'bold' },
   detailScroll: { paddingBottom: 40 },
   photoContainer: { backgroundColor: '#79E7FF', alignItems: 'center', paddingVertical: 20, width: '100%' },
-  idPhotoLive: { width: 130, height: 170, borderRadius: 12, borderWidth: 3, borderColor: 'rgba(255,255,255,0.2)' },
+  idPhotoLive: { width: 130, height: 170, borderRadius: 12, borderWidth: 3, borderColor: 'rgba(255,255,255,0.2)', backgroundColor: '#E0E0E0' },
   idDetailsBlock: { paddingHorizontal: 20, paddingTop: 20 },
   idNumberLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 13, fontWeight: '500' },
   idNumberValue: { color: '#00D2FF', fontSize: 24, fontWeight: 'bold', marginBottom: 20, marginTop: 2 },
