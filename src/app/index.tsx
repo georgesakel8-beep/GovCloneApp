@@ -186,7 +186,7 @@ export default function Index() {
         <View style={styles.photoContainer}>
           <View style={styles.numberSideBox}>
             <Text style={styles.idNumberLabel}>Αριθμός ταυτότητας:</Text>
-            <Text style={styles.idNumberValue}>ΑΝ 714079</Text>
+            <Text style={styles.idNumberValue}>Α03449095</Text>
             
             <Text style={[styles.idNumberLabel, { marginTop: 15 }]}>Ημ. Έκδοσης:</Text>
             <Text style={[styles.idNumberValue, { fontSize: 18, marginTop: 2 }]}>07/05/2026</Text>
@@ -210,7 +210,6 @@ export default function Index() {
           </View>
           
           <View style={styles.actionRow}>
-            {/* Αντικατάσταση του emoji με το πραγματικό QR image */}
             <TouchableOpacity style={styles.actionBtn} onPress={() => setShowQR(!showQR)}>
               <Image source={require('../../assets/qrcode.jpeg')} style={styles.miniQrIcon} />
               <Text style={styles.actionText}>Προβολή{'\n'}QR κωδικού</Text>
@@ -253,34 +252,43 @@ export default function Index() {
             </View>
 
             <View style={styles.detailField}>
-              <Text style={styles.fieldLabel}>ΠΑΤΡΩΝΥΜΟ / FATHER'S NAME</Text>
+              <Text style={styles.fieldLabel}>ΟΝΟΜΑ ΠΑΤΕΡΑ</Text>
               <Text style={styles.fieldValue}>ΑΛΕΞΙΟΣ</Text>
             </View>
 
             <View style={styles.detailField}>
-              <Text style={styles.fieldLabel}>ΜΗΤΡΩΝΥΜΟ / MOTHER'S NAME</Text>
+              <Text style={styles.fieldLabel}>FATHER'S NAME</Text>
+              <Text style={styles.fieldValue}>ALEXIOS</Text>
+            </View>
+
+            <View style={styles.detailField}>
+              <Text style={styles.fieldLabel}>ΟΝΟΜΑ ΜΗΤΕΡΑΣ (MOTHER'S NAME)</Text>
               <Text style={styles.fieldValue}>ΑΡΕΤΗ</Text>
             </View>
 
             <View style={styles.detailField}>
-              <Text style={styles.fieldLabel}>ΗΜΕΡΟΜΗΝΙΑ ΓΕΝΝΗΣΗΣ / DATE OF BIRTH</Text>
+              <Text style={styles.fieldLabel}>ΗΜ. ΓΕΝΝΗΣΗΣ (DATE OF BIRTH)</Text>
               <Text style={styles.fieldValue}>25/02/2007</Text>
             </View>
 
             <View style={styles.detailField}>
-              <Text style={styles.fieldLabel}>ΤΟΠΟΣ ΓΕΝΝΗΣΗΣ / PLACE OF BIRTH</Text>
+              <Text style={styles.fieldLabel}>ΤΟΠΟΣ ΓΕΝΝΗΣΗΣ (PLACE OF BIRTH)</Text>
               <Text style={styles.fieldValue}>ΠΑΤΡΑ ΑΧΑΪΑΣ</Text>
             </View>
 
             <View style={styles.detailField}>
-              <Text style={styles.fieldLabel}>ΑΡΧΗ ΕΚΔΟΣΗΣ / ISSUANCE OFFICE</Text>
+              <Text style={styles.fieldLabel}>ΑΡΧΗ ΕΚΔΟΣΗΣ (ISSUANCE OFFICE)</Text>
               <Text style={styles.fieldValue}>Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ</Text>
             </View>
 
-            {/* Προσθήκη Footer με τον κωδικό και την προειδοποίηση */}
+            {/* Προσθήκη Footer με τον κωδικό, το εικονίδιο και την προειδοποίηση σε δύο γραμμές */}
             <View style={styles.footerDocs}>
-              <Text style={styles.docCodeText}>Κωδικός εγγράφου: GR-7489201-BXC-9084</Text>
-              <Text style={styles.travelWarningText}>Δεν αποτελεί διεθνές ταξιδιωτικό έγγραφο / Not an international travel document</Text>
+              <View style={styles.docCodeRow}>
+                <Text style={styles.docCodeText}>Κωδικός εγγράφου: DAKmMxyii4ljZliNeY5z7A</Text>
+                <Text style={styles.copyIcon}>📋</Text>
+              </View>
+              <Text style={styles.travelWarningText}>Δεν αποτελεί διεθνές ταξιδιωτικό έγγραφο</Text>
+              <Text style={styles.travelWarningText}>Not an international travel document</Text>
             </View>
           </View>
         )}
@@ -365,8 +373,10 @@ const styles = StyleSheet.create({
   numberSideBox: { flex: 1, justifyContent: 'center' },
   photoRightBox: { marginLeft: 15 },
   idPhotoLive: { width: 120, height: 160, borderRadius: 14, borderWidth: 1, borderColor: 'rgba(255,255,255,0.3)' },
-  idNumberLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 12, fontWeight: '500' },
-  idNumberValue: { color: '#FFF', fontSize: 24, fontWeight: 'bold', marginTop: 2 },
+  
+  // Αλλαγή γραμματοσειράς στο πάνω μέρος (να είναι πιο λεπτή/καθαρή)
+  idNumberLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 12, fontWeight: '400', letterSpacing: 0.5 },
+  idNumberValue: { color: '#FFF', fontSize: 24, fontWeight: '400', marginTop: 2 },
 
   actionGrid: { paddingHorizontal: 20, paddingVertical: 20, backgroundColor: '#1B6395', borderBottomLeftRadius: 20, borderBottomRightRadius: 20, marginBottom: 15 },
   actionRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 },
@@ -376,15 +386,20 @@ const styles = StyleSheet.create({
   actionText: { color: '#333', fontSize: 13, fontWeight: '600', flexShrink: 1 },
 
   idDetailsBlock: { paddingHorizontal: 20, paddingTop: 5 },
-  detailField: { marginBottom: 18, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.1)', paddingBottom: 6 },
-  fieldLabel: { color: 'rgba(255,255,255,0.5)', fontSize: 11, fontWeight: '600' },
-  fieldValue: { color: '#FFF', fontSize: 18, fontWeight: '600', marginTop: 2 },
+  detailField: { marginBottom: 16, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.1)', paddingBottom: 6 },
+  
+  // Νέες ρυθμίσεις γραμματοσειράς (Font Weights & Sizes)
+  fieldLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 12, fontWeight: '400', letterSpacing: 0.5 },
+  fieldValue: { color: '#FFF', fontSize: 22, fontWeight: '400', marginTop: 2, letterSpacing: 0.2 },
   
   detailQrSection: { alignItems: 'center', marginTop: 30, paddingVertical: 15 },
   realQrFrame: { backgroundColor: '#FFF', padding: 15, borderRadius: 12 },
   detailQrSubtext: { color: 'rgba(255,255,255,0.6)', fontSize: 13, marginTop: 15, fontWeight: '500' },
 
-  footerDocs: { marginTop: 15, marginBottom: 20, alignItems: 'center', paddingHorizontal: 10 },
-  docCodeText: { color: 'rgba(255,255,255,0.8)', fontSize: 14, fontWeight: '500', marginBottom: 8 },
-  travelWarningText: { color: 'rgba(255,255,255,0.3)', fontSize: 10, textAlign: 'center', fontWeight: '400' }
+  // Νέα διάταξη για το κάτω μέρος
+  footerDocs: { marginTop: 25, marginBottom: 20, alignItems: 'center', paddingHorizontal: 10 },
+  docCodeRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
+  docCodeText: { color: 'rgba(255,255,255,0.8)', fontSize: 13, fontWeight: '400' },
+  copyIcon: { color: 'rgba(255,255,255,0.8)', fontSize: 16, marginLeft: 6 },
+  travelWarningText: { color: 'rgba(255,255,255,0.4)', fontSize: 12, textAlign: 'center', fontWeight: '400', lineHeight: 18 }
 });
