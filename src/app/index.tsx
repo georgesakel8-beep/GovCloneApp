@@ -2,14 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Alert, Animated, Image, ImageBackground, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function Index() {
-  // Καταστάσεις οθόνης: 'login' | 'pin' | 'wallet' | 'id_detail'
   const [screen, setScreen] = useState<'login' | 'pin' | 'wallet' | 'id_detail'>('login');
   const [pin, setPin] = useState('');
-  
-  // Νέο State για την εμφάνιση του QR Code όταν πατάμε το αντίστοιχο κουμπί
   const [showQR, setShowQR] = useState(false);
-
-  // Animation logic για τον παλλόμενο κύκλο της αρχικής οθόνης
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
@@ -25,7 +20,7 @@ export default function Index() {
     if (pin.length < 4) {
       const newPin = pin + value;
       setPin(newPin);
-      if (newPin === '1234') { // Ο κωδικός πρόσβασης
+      if (newPin === '1234') { 
         setTimeout(() => {
           setScreen('wallet');
           setPin('');
@@ -39,39 +34,33 @@ export default function Index() {
     }
   };
 
-  // --- ΟΘΟΝΗ 1: ΑΡΧΙΚΟ LOGIN (gov.gr wallet) ---
+  // --- ΟΘΟΝΗ 1: ΑΡΧΙΚΟ LOGIN ---
   if (screen === 'login') {
     return (
       <ImageBackground source={require('../../assets/background.jpg')} style={styles.loginContainer}>
         <StatusBar barStyle="light-content" backgroundColor="#0052B4" />
-        
         <View style={styles.loginLogoSection}>
           <Animated.View style={[styles.circlePulse, { transform: [{ scale: scaleAnim }] }]}>
             <Text style={styles.loginLogoText}>gov.gr</Text>
             <Text style={styles.loginLogoSubtext}>wallet</Text>
           </Animated.View>
         </View>
-
         <View style={styles.loginButtonSection}>
           <TouchableOpacity style={styles.btnTaxis} onPress={() => setScreen('pin')}>
             <Text style={styles.btnTaxisText}>Σύνδεση με κωδικούς TaxisNet</Text>
           </TouchableOpacity>
-
           <TouchableOpacity style={styles.btnOutline}>
             <Text style={styles.btnOutlineText}>🔳  Έλεγχος Εγγράφου</Text>
           </TouchableOpacity>
-
           <View style={styles.loginDividerRow}>
             <View style={styles.loginLine} />
             <Text style={styles.loginDividerText}>Non Greek residents</Text>
             <View style={styles.loginLine} />
           </View>
-
           <TouchableOpacity style={styles.btnOutline}>
             <Text style={styles.btnOutlineText}>Event Tickets</Text>
           </TouchableOpacity>
         </View>
-
         <View style={styles.loginFooter}>
           <Text style={styles.loginFooterText}>🏛️ gov</Text>
           <Text style={styles.loginFooterCyanText}>gr</Text>
@@ -86,13 +75,11 @@ export default function Index() {
       <SafeAreaView style={styles.pinContainer}>
         <StatusBar barStyle="light-content" backgroundColor="#0052B4" />
         <Text style={styles.pinTitle}>Εισάγετε κωδικό PIN</Text>
-        
         <View style={styles.dotsRow}>
           {[1, 2, 3, 4].map((dot, index) => (
             <View key={index} style={[styles.dot, pin.length > index && styles.dotFilled]} />
           ))}
         </View>
-
         <View style={styles.numPad}>
           {['1', '2', '3', '4', '5', '6', '7', '8', '9', 'C', '0', '⬅️'].map((num, index) => (
             <TouchableOpacity 
@@ -117,7 +104,6 @@ export default function Index() {
     return (
       <SafeAreaView style={styles.walletContainer}>
         <StatusBar barStyle="light-content" backgroundColor="#0052B4" />
-        
         <View style={styles.walletHeader}>
           <TouchableOpacity style={styles.mailCircle}>
             <Text style={styles.walletHeaderIcon}>✉️</Text>
@@ -135,7 +121,6 @@ export default function Index() {
           <Text style={styles.welcomeText}>Καλωσόρισες,</Text>
           <Text style={styles.userName}>ΓΕΩΡΓΙΟΣ ΣΑΚΕΛΛΑΡΟΠΟΥΛΟΣ</Text>
 
-          {/* ΚΑΡΤΑ 1: Δελτίο Ταυτότητας */}
           <TouchableOpacity style={styles.walletCardId} activeOpacity={0.9} onPress={() => setScreen('id_detail')}>
             <View style={styles.cardTopRow}>
               <Text style={styles.cardMainTitleId}>Δελτίο Ταυτότητας</Text>
@@ -147,7 +132,6 @@ export default function Index() {
             </View>
           </TouchableOpacity>
 
-          {/* ΚΑΡΤΑ 2: Άδεια Οδήγησης */}
           <TouchableOpacity style={styles.walletCardLicense} activeOpacity={0.9}>
             <View style={styles.cardTopRow}>
               <Text style={styles.cardMainTitleLicense}>Άδεια Οδήγησης</Text>
@@ -187,7 +171,6 @@ export default function Index() {
     <SafeAreaView style={styles.detailContainer}>
       <StatusBar barStyle="light-content" backgroundColor="#1B6395" />
       
-      {/* Detail Header */}
       <View style={styles.detailHeader}>
         <TouchableOpacity onPress={() => { setScreen('wallet'); setShowQR(false); }}>
           <Text style={styles.backArrow}>◀</Text>
@@ -200,7 +183,6 @@ export default function Index() {
 
       <ScrollView contentContainerStyle={styles.detailScroll}>
         
-        {/* Πάνω Μέρος: Αριθμός, Ημ. Έκδοσης (Αριστερά) - Φωτογραφία (Δεξιά) */}
         <View style={styles.photoContainer}>
           <View style={styles.numberSideBox}>
             <Text style={styles.idNumberLabel}>Αριθμός ταυτότητας:</Text>
@@ -214,9 +196,7 @@ export default function Index() {
           </View>
         </View>
 
-        {/* 4 Κουμπιά (Ορθογώνια παραλληλόγραμμα) */}
         <View style={styles.actionGrid}>
-          {/* Γραμμή 1 */}
           <View style={styles.actionRow}>
             <TouchableOpacity style={styles.actionBtn}>
               <Text style={styles.actionIcon}>💳</Text>
@@ -229,10 +209,10 @@ export default function Index() {
             </TouchableOpacity>
           </View>
           
-          {/* Γραμμή 2 */}
           <View style={styles.actionRow}>
+            {/* Αντικατάσταση του emoji με το πραγματικό QR image */}
             <TouchableOpacity style={styles.actionBtn} onPress={() => setShowQR(!showQR)}>
-              <Text style={styles.actionIcon}>🔲</Text>
+              <Image source={require('../../assets/qrcode.jpeg')} style={styles.miniQrIcon} />
               <Text style={styles.actionText}>Προβολή{'\n'}QR κωδικού</Text>
             </TouchableOpacity>
             
@@ -243,7 +223,6 @@ export default function Index() {
           </View>
         </View>
 
-        {/* Κάτω Μέρος: Εναλλαγή ανάμεσα σε Στοιχεία και QR Code */}
         {showQR ? (
           <View style={styles.detailQrSection}>
             <View style={styles.realQrFrame}>
@@ -290,7 +269,18 @@ export default function Index() {
 
             <View style={styles.detailField}>
               <Text style={styles.fieldLabel}>ΤΟΠΟΣ ΓΕΝΝΗΣΗΣ / PLACE OF BIRTH</Text>
-              <Text style={styles.fieldValue}>ΠΑΤΡΑ</Text>
+              <Text style={styles.fieldValue}>ΠΑΤΡΑ ΑΧΑΪΑΣ</Text>
+            </View>
+
+            <View style={styles.detailField}>
+              <Text style={styles.fieldLabel}>ΑΡΧΗ ΕΚΔΟΣΗΣ / ISSUANCE OFFICE</Text>
+              <Text style={styles.fieldValue}>Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ</Text>
+            </View>
+
+            {/* Προσθήκη Footer με τον κωδικό και την προειδοποίηση */}
+            <View style={styles.footerDocs}>
+              <Text style={styles.docCodeText}>Κωδικός εγγράφου: GR-7489201-BXC-9084</Text>
+              <Text style={styles.travelWarningText}>Δεν αποτελεί διεθνές ταξιδιωτικό έγγραφο / Not an international travel document</Text>
             </View>
           </View>
         )}
@@ -301,18 +291,11 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
-  // Νέα Login Styles (με ImageBackground & Animated Circle)
   loginContainer: { flex: 1, justifyContent: 'space-between', paddingHorizontal: 24, paddingTop: 60 },
   loginLogoSection: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   circlePulse: {
-    width: 210,
-    height: 210,
-    borderRadius: 105,
-    borderWidth: 2,
-    borderColor: '#00D2FF',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 82, 180, 0.25)',
+    width: 210, height: 210, borderRadius: 105, borderWidth: 2, borderColor: '#00D2FF',
+    justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 82, 180, 0.25)'
   },
   loginLogoText: { color: '#FFF', fontSize: 42, fontWeight: 'bold' },
   loginLogoSubtext: { color: '#00D2FF', fontSize: 22, fontWeight: '600', marginTop: -3 },
@@ -328,7 +311,6 @@ const styles = StyleSheet.create({
   loginFooterText: { color: 'rgba(255,255,255,0.5)', fontSize: 14, fontWeight: 'bold' },
   loginFooterCyanText: { color: '#00D2FF', fontSize: 14, fontWeight: 'bold' },
 
-  // Pin Screen Styles
   pinContainer: { flex: 1, backgroundColor: '#0052B4', alignItems: 'center', justifyContent: 'center' },
   pinTitle: { color: '#FFF', fontSize: 20, fontWeight: '600', marginBottom: 30 },
   dotsRow: { flexDirection: 'row', marginBottom: 50 },
@@ -338,7 +320,6 @@ const styles = StyleSheet.create({
   numButton: { width: 75, height: 75, justifyContent: 'center', alignItems: 'center', margin: 8, backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 37.5 },
   numText: { color: '#FFF', fontSize: 24, fontWeight: '600' },
 
-  // Wallet Main Styles
   walletContainer: { flex: 1, backgroundColor: '#0052B4' },
   walletHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, marginTop: 10 },
   mailCircle: { backgroundColor: '#FFF', width: 34, height: 34, borderRadius: 17, justifyContent: 'center', alignItems: 'center' },
@@ -352,7 +333,6 @@ const styles = StyleSheet.create({
   welcomeText: { color: '#FFF', fontSize: 18, fontWeight: '400' },
   userName: { color: '#FFF', fontSize: 26, fontWeight: 'bold', marginBottom: 30, marginTop: 4 },
   
-  // Κάρτες Αρχικής
   walletCardId: { backgroundColor: '#80E8FF', borderRadius: 16, padding: 20, height: 175, justifyContent: 'space-between', marginBottom: 20 },
   cardMainTitleId: { color: '#FFF', fontSize: 22, fontWeight: 'bold' },
   miniPlusId: { backgroundColor: '#FFF', width: 44, height: 44, borderRadius: 22, justifyContent: 'center', alignItems: 'center' },
@@ -368,22 +348,19 @@ const styles = StyleSheet.create({
   cardTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   cardBottomRow: { flexDirection: 'column' },
 
-  // Bottom Tab Bar
   bottomTabBar: { height: 75, backgroundColor: '#003A80', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingBottom: 12 },
   tabItem: { alignItems: 'center' },
   tabIcon: { fontSize: 24, color: '#66A3FF' },
   tabLabel: { fontSize: 11, color: '#66A3FF', marginTop: 4, fontWeight: '500' },
   tabActive: { color: '#FFF', fontWeight: '700' },
 
-  // Detail ID Styles
-  detailContainer: { flex: 1, backgroundColor: '#00377A' }, // Λίγο πιο σκούρο μπλε στο φόντο
+  detailContainer: { flex: 1, backgroundColor: '#00377A' },
   detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#1B6395' },
   backArrow: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   detailHeaderTitle: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   moreOptions: { color: '#FFF', fontSize: 24, fontWeight: 'bold' },
   detailScroll: { paddingBottom: 40 },
   
-  // Το Πάνω Μέρος
   photoContainer: { backgroundColor: '#1B6395', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, paddingTop: 20, paddingBottom: 10, width: '100%' },
   numberSideBox: { flex: 1, justifyContent: 'center' },
   photoRightBox: { marginLeft: 15 },
@@ -391,29 +368,23 @@ const styles = StyleSheet.create({
   idNumberLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 12, fontWeight: '500' },
   idNumberValue: { color: '#FFF', fontSize: 24, fontWeight: 'bold', marginTop: 2 },
 
-  // Τα 4 Κουμπιά (Grid)
   actionGrid: { paddingHorizontal: 20, paddingVertical: 20, backgroundColor: '#1B6395', borderBottomLeftRadius: 20, borderBottomRightRadius: 20, marginBottom: 15 },
   actionRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 },
-  actionBtn: { 
-    backgroundColor: '#F5F7FA', 
-    borderRadius: 12, 
-    width: '48%', 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    paddingVertical: 12, 
-    paddingHorizontal: 10 
-  },
+  actionBtn: { backgroundColor: '#F5F7FA', borderRadius: 12, width: '48%', flexDirection: 'row', alignItems: 'center', paddingVertical: 12, paddingHorizontal: 10 },
   actionIcon: { fontSize: 22, marginRight: 8 },
+  miniQrIcon: { width: 22, height: 22, marginRight: 8, borderRadius: 4 },
   actionText: { color: '#333', fontSize: 13, fontWeight: '600', flexShrink: 1 },
 
-  // Στοιχεία Ταυτότητας
   idDetailsBlock: { paddingHorizontal: 20, paddingTop: 5 },
   detailField: { marginBottom: 18, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.1)', paddingBottom: 6 },
   fieldLabel: { color: 'rgba(255,255,255,0.5)', fontSize: 11, fontWeight: '600' },
   fieldValue: { color: '#FFF', fontSize: 18, fontWeight: '600', marginTop: 2 },
   
-  // Ενότητα QR Code
   detailQrSection: { alignItems: 'center', marginTop: 30, paddingVertical: 15 },
   realQrFrame: { backgroundColor: '#FFF', padding: 15, borderRadius: 12 },
-  detailQrSubtext: { color: 'rgba(255,255,255,0.6)', fontSize: 13, marginTop: 15, fontWeight: '500' }
+  detailQrSubtext: { color: 'rgba(255,255,255,0.6)', fontSize: 13, marginTop: 15, fontWeight: '500' },
+
+  footerDocs: { marginTop: 15, marginBottom: 20, alignItems: 'center', paddingHorizontal: 10 },
+  docCodeText: { color: 'rgba(255,255,255,0.8)', fontSize: 14, fontWeight: '500', marginBottom: 8 },
+  travelWarningText: { color: 'rgba(255,255,255,0.3)', fontSize: 10, textAlign: 'center', fontWeight: '400' }
 });
