@@ -6,8 +6,8 @@ export default function Index() {
   const [screen, setScreen] = useState<'login' | 'pin' | 'wallet' | 'id_detail'>('login');
   const [pin, setPin] = useState('');
   
-  // Νέο State για την εναλλαγή των επιλογών (Στοιχεία, QR κτλ) κάτω από τη φωτογραφία
-  const [activeTab, setActiveTab] = useState('Στοιχεία');
+  // Νέο State για την εμφάνιση του QR Code όταν πατάμε το αντίστοιχο κουμπί
+  const [showQR, setShowQR] = useState(false);
 
   // Animation logic για τον παλλόμενο κύκλο της αρχικής οθόνης
   const scaleAnim = useRef(new Animated.Value(1)).current;
@@ -187,9 +187,9 @@ export default function Index() {
     <SafeAreaView style={styles.detailContainer}>
       <StatusBar barStyle="light-content" backgroundColor="#1B6395" />
       
-      {/* Detail Header - Το έκανα το ίδιο σκούρο μπλε για ομοιομορφία με το πλαίσιο από κάτω */}
+      {/* Detail Header */}
       <View style={styles.detailHeader}>
-        <TouchableOpacity onPress={() => { setScreen('wallet'); setActiveTab('Στοιχεία'); }}>
+        <TouchableOpacity onPress={() => { setScreen('wallet'); setShowQR(false); }}>
           <Text style={styles.backArrow}>◀</Text>
         </TouchableOpacity>
         <Text style={styles.detailHeaderTitle}>Δελτίο Ταυτότητας</Text>
@@ -200,36 +200,58 @@ export default function Index() {
 
       <ScrollView contentContainerStyle={styles.detailScroll}>
         
-        {/* Πάνω Μέρος: Πιο σκούρο background, Αριθμός Αριστερά, Φωτογραφία Δεξιά */}
+        {/* Πάνω Μέρος: Αριθμός, Ημ. Έκδοσης (Αριστερά) - Φωτογραφία (Δεξιά) */}
         <View style={styles.photoContainer}>
           <View style={styles.numberSideBox}>
             <Text style={styles.idNumberLabel}>Αριθμός ταυτότητας:</Text>
             <Text style={styles.idNumberValue}>ΑΝ 714079</Text>
+            
+            <Text style={[styles.idNumberLabel, { marginTop: 15 }]}>Ημ. Έκδοσης:</Text>
+            <Text style={[styles.idNumberValue, { fontSize: 18, marginTop: 2 }]}>07/05/2026</Text>
           </View>
           <View style={styles.photoRightBox}>
             <Image source={require('../../assets/myphoto.jpeg.jpeg')} style={styles.idPhotoLive} />
           </View>
         </View>
 
-        {/* 4 Επιλογές (Tabs) ακριβώς κάτω από τη φωτογραφία */}
-        <View style={styles.tabsRow}>
-          {['Στοιχεία', 'QR', 'Ιστορικό', 'Έλεγχος'].map((tab) => (
-            <TouchableOpacity key={tab} style={styles.tabButton} onPress={() => setActiveTab(tab)}>
-              <Text style={[styles.tabText, activeTab === tab && styles.tabTextActive]}>{tab}</Text>
-              {activeTab === tab && <View style={styles.activeIndicator} />}
+        {/* 4 Κουμπιά (Ορθογώνια παραλληλόγραμμα) */}
+        <View style={styles.actionGrid}>
+          {/* Γραμμή 1 */}
+          <View style={styles.actionRow}>
+            <TouchableOpacity style={styles.actionBtn}>
+              <Text style={styles.actionIcon}>💳</Text>
+              <Text style={styles.actionText}>Προσθήκη στο{'\n'}Wallet</Text>
             </TouchableOpacity>
-          ))}
+            
+            <TouchableOpacity style={styles.actionBtn}>
+              <Text style={styles.actionIcon}>📄</Text>
+              <Text style={styles.actionText}>Αντίγραφο</Text>
+            </TouchableOpacity>
+          </View>
+          
+          {/* Γραμμή 2 */}
+          <View style={styles.actionRow}>
+            <TouchableOpacity style={styles.actionBtn} onPress={() => setShowQR(!showQR)}>
+              <Text style={styles.actionIcon}>🔲</Text>
+              <Text style={styles.actionText}>Προβολή{'\n'}QR κωδικού</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity style={styles.actionBtn}>
+              <Text style={styles.actionIcon}>🔍</Text>
+              <Text style={styles.actionText}>Quick Scan</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* Κάτω Μέρος: Εναλλαγή ανάμεσα σε Στοιχεία και QR Code */}
-        {activeTab === 'QR' ? (
+        {showQR ? (
           <View style={styles.detailQrSection}>
             <View style={styles.realQrFrame}>
-              <Image source={require('../../assets/qrcode.jpeg')} style={{ width: 150, height: 150 }} />
+              <Image source={require('../../assets/qrcode.jpeg')} style={{ width: 180, height: 180 }} />
             </View>
             <Text style={styles.detailQrSubtext}>Κωδικός Ασφαλείας: 8492-1024</Text>
           </View>
-        ) : activeTab === 'Στοιχεία' ? (
+        ) : (
           <View style={styles.idDetailsBlock}>
             <View style={styles.detailField}>
               <Text style={styles.fieldLabel}>ΕΠΩΝΥΜΟ</Text>
@@ -271,7 +293,7 @@ export default function Index() {
               <Text style={styles.fieldValue}>ΠΑΤΡΑ</Text>
             </View>
           </View>
-        ) : null}
+        )}
 
       </ScrollView>
     </SafeAreaView>
@@ -354,36 +376,44 @@ const styles = StyleSheet.create({
   tabActive: { color: '#FFF', fontWeight: '700' },
 
   // Detail ID Styles
-  detailContainer: { flex: 1, backgroundColor: '#00469B' },
+  detailContainer: { flex: 1, backgroundColor: '#00377A' }, // Λίγο πιο σκούρο μπλε στο φόντο
   detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#1B6395' },
   backArrow: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   detailHeaderTitle: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   moreOptions: { color: '#FFF', fontSize: 24, fontWeight: 'bold' },
   detailScroll: { paddingBottom: 40 },
   
-  // Το Πιο Σκούρο Background που ζήτησες με Οριζόντια Διάταξη
-  photoContainer: { backgroundColor: '#1B6395', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 20, width: '100%' },
+  // Το Πάνω Μέρος
+  photoContainer: { backgroundColor: '#1B6395', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, paddingTop: 20, paddingBottom: 10, width: '100%' },
   numberSideBox: { flex: 1, justifyContent: 'center' },
   photoRightBox: { marginLeft: 15 },
-  idPhotoLive: { width: 115, height: 150, borderRadius: 10, borderWidth: 2, borderColor: 'rgba(255,255,255,0.2)' },
-  idNumberLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 13, fontWeight: '500' },
-  idNumberValue: { color: '#FFF', fontSize: 24, fontWeight: 'bold', marginTop: 4 },
+  idPhotoLive: { width: 120, height: 160, borderRadius: 14, borderWidth: 1, borderColor: 'rgba(255,255,255,0.3)' },
+  idNumberLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 12, fontWeight: '500' },
+  idNumberValue: { color: '#FFF', fontSize: 24, fontWeight: 'bold', marginTop: 2 },
 
-  // Οι 4 Επιλογές (Tabs)
-  tabsRow: { flexDirection: 'row', justifyContent: 'space-around', backgroundColor: '#1B6395', paddingBottom: 0 },
-  tabButton: { paddingVertical: 12, paddingHorizontal: 10, alignItems: 'center' },
-  tabText: { color: 'rgba(255,255,255,0.6)', fontSize: 14, fontWeight: '600' },
-  tabTextActive: { color: '#FFF', fontWeight: 'bold' },
-  activeIndicator: { height: 3, width: '100%', backgroundColor: '#00D2FF', marginTop: 8, borderTopLeftRadius: 3, borderTopRightRadius: 3, position: 'absolute', bottom: 0 },
+  // Τα 4 Κουμπιά (Grid)
+  actionGrid: { paddingHorizontal: 20, paddingVertical: 20, backgroundColor: '#1B6395', borderBottomLeftRadius: 20, borderBottomRightRadius: 20, marginBottom: 15 },
+  actionRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12 },
+  actionBtn: { 
+    backgroundColor: '#F5F7FA', 
+    borderRadius: 12, 
+    width: '48%', 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    paddingVertical: 12, 
+    paddingHorizontal: 10 
+  },
+  actionIcon: { fontSize: 22, marginRight: 8 },
+  actionText: { color: '#333', fontSize: 13, fontWeight: '600', flexShrink: 1 },
 
   // Στοιχεία Ταυτότητας
-  idDetailsBlock: { paddingHorizontal: 20, paddingTop: 20 },
+  idDetailsBlock: { paddingHorizontal: 20, paddingTop: 5 },
   detailField: { marginBottom: 18, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.1)', paddingBottom: 6 },
-  fieldLabel: { color: 'rgba(255,255,255,0.4)', fontSize: 11, fontWeight: '600' },
+  fieldLabel: { color: 'rgba(255,255,255,0.5)', fontSize: 11, fontWeight: '600' },
   fieldValue: { color: '#FFF', fontSize: 18, fontWeight: '600', marginTop: 2 },
   
   // Ενότητα QR Code
-  detailQrSection: { alignItems: 'center', marginTop: 40, paddingVertical: 15 },
+  detailQrSection: { alignItems: 'center', marginTop: 30, paddingVertical: 15 },
   realQrFrame: { backgroundColor: '#FFF', padding: 15, borderRadius: 12 },
   detailQrSubtext: { color: 'rgba(255,255,255,0.6)', fontSize: 13, marginTop: 15, fontWeight: '500' }
 });
