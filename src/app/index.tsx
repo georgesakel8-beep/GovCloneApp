@@ -5,6 +5,9 @@ export default function Index() {
   // Καταστάσεις οθόνης: 'login' | 'pin' | 'wallet' | 'id_detail'
   const [screen, setScreen] = useState<'login' | 'pin' | 'wallet' | 'id_detail'>('login');
   const [pin, setPin] = useState('');
+  
+  // Νέο State για την εναλλαγή των επιλογών (Στοιχεία, QR κτλ) κάτω από τη φωτογραφία
+  const [activeTab, setActiveTab] = useState('Στοιχεία');
 
   // Animation logic για τον παλλόμενο κύκλο της αρχικής οθόνης
   const scaleAnim = useRef(new Animated.Value(1)).current;
@@ -182,11 +185,11 @@ export default function Index() {
   // --- ΟΘΟΝΗ 3: ΑΝΑΛΥΤΙΚΗ ΠΡΟΒΟΛΗ ΤΑΥΤΟΤΗΤΑΣ ---
   return (
     <SafeAreaView style={styles.detailContainer}>
-      <StatusBar barStyle="light-content" backgroundColor="#4AD7F0" />
+      <StatusBar barStyle="light-content" backgroundColor="#1B6395" />
       
-      {/* Detail Header */}
+      {/* Detail Header - Το έκανα το ίδιο σκούρο μπλε για ομοιομορφία με το πλαίσιο από κάτω */}
       <View style={styles.detailHeader}>
-        <TouchableOpacity onPress={() => setScreen('wallet')}>
+        <TouchableOpacity onPress={() => { setScreen('wallet'); setActiveTab('Στοιχεία'); }}>
           <Text style={styles.backArrow}>◀</Text>
         </TouchableOpacity>
         <Text style={styles.detailHeaderTitle}>Δελτίο Ταυτότητας</Text>
@@ -197,7 +200,7 @@ export default function Index() {
 
       <ScrollView contentContainerStyle={styles.detailScroll}>
         
-        {/* Πάνω Μέρος: Οριζόντια Διάταξη Αριθμού και Φωτογραφίας */}
+        {/* Πάνω Μέρος: Πιο σκούρο background, Αριθμός Αριστερά, Φωτογραφία Δεξιά */}
         <View style={styles.photoContainer}>
           <View style={styles.numberSideBox}>
             <Text style={styles.idNumberLabel}>Αριθμός ταυτότητας:</Text>
@@ -208,56 +211,67 @@ export default function Index() {
           </View>
         </View>
 
-        {/* Στοιχεία με τις επίσημες διαχωριστικές γραμμές */}
-        <View style={styles.idDetailsBlock}>
-          <View style={styles.detailField}>
-            <Text style={styles.fieldLabel}>ΕΠΩΝΥΜΟ</Text>
-            <Text style={styles.fieldValue}>ΣΑΚΕΛΛΑΡΟΠΟΥΛΟΣ</Text>
-          </View>
-
-          <View style={styles.detailField}>
-            <Text style={styles.fieldLabel}>SURNAME</Text>
-            <Text style={styles.fieldValue}>SAKELLAROPOULOS</Text>
-          </View>
-
-          <View style={styles.detailField}>
-            <Text style={styles.fieldLabel}>ΟΝΟΜΑ</Text>
-            <Text style={styles.fieldValue}>ΓΕΩΡΓΙΟΣ</Text>
-          </View>
-
-          <View style={styles.detailField}>
-            <Text style={styles.fieldLabel}>GIVEN NAME</Text>
-            <Text style={styles.fieldValue}>GEORGIOS</Text>
-          </View>
-
-          <View style={styles.detailField}>
-            <Text style={styles.fieldLabel}>ΠΑΤΡΩΝΥΜΟ / FATHER'S NAME</Text>
-            <Text style={styles.fieldValue}>ΑΛΕΞΙΟΣ</Text>
-          </View>
-
-          <View style={styles.detailField}>
-            <Text style={styles.fieldLabel}>ΜΗΤΡΩΝΥΜΟ / MOTHER'S NAME</Text>
-            <Text style={styles.fieldValue}>ΑΡΕΤΗ</Text>
-          </View>
-
-          <View style={styles.detailField}>
-            <Text style={styles.fieldLabel}>ΗΜΕΡΟΜΗΝΙΑ ΓΕΝΝΗΣΗΣ / DATE OF BIRTH</Text>
-            <Text style={styles.fieldValue}>25/02/2007</Text>
-          </View>
-
-          <View style={styles.detailField}>
-            <Text style={styles.fieldLabel}>ΤΟΠΟΣ ΓΕΝΝΗΣΗΣ / PLACE OF BIRTH</Text>
-            <Text style={styles.fieldValue}>ΠΑΤΡΑ</Text>
-          </View>
+        {/* 4 Επιλογές (Tabs) ακριβώς κάτω από τη φωτογραφία */}
+        <View style={styles.tabsRow}>
+          {['Στοιχεία', 'QR', 'Ιστορικό', 'Έλεγχος'].map((tab) => (
+            <TouchableOpacity key={tab} style={styles.tabButton} onPress={() => setActiveTab(tab)}>
+              <Text style={[styles.tabText, activeTab === tab && styles.tabTextActive]}>{tab}</Text>
+              {activeTab === tab && <View style={styles.activeIndicator} />}
+            </TouchableOpacity>
+          ))}
         </View>
 
-        {/* QR Code Section */}
-        <View style={styles.detailQrSection}>
-          <View style={styles.realQrFrame}>
-            <Image source={require('../../assets/qrcode.jpeg')} style={{ width: 135, height: 135 }} />
+        {/* Κάτω Μέρος: Εναλλαγή ανάμεσα σε Στοιχεία και QR Code */}
+        {activeTab === 'QR' ? (
+          <View style={styles.detailQrSection}>
+            <View style={styles.realQrFrame}>
+              <Image source={require('../../assets/qrcode.jpeg')} style={{ width: 150, height: 150 }} />
+            </View>
+            <Text style={styles.detailQrSubtext}>Κωδικός Ασφαλείας: 8492-1024</Text>
           </View>
-          <Text style={styles.detailQrSubtext}>Κωδικός Ασφαλείας: 8492-1024</Text>
-        </View>
+        ) : activeTab === 'Στοιχεία' ? (
+          <View style={styles.idDetailsBlock}>
+            <View style={styles.detailField}>
+              <Text style={styles.fieldLabel}>ΕΠΩΝΥΜΟ</Text>
+              <Text style={styles.fieldValue}>ΣΑΚΕΛΛΑΡΟΠΟΥΛΟΣ</Text>
+            </View>
+
+            <View style={styles.detailField}>
+              <Text style={styles.fieldLabel}>SURNAME</Text>
+              <Text style={styles.fieldValue}>SAKELLAROPOULOS</Text>
+            </View>
+
+            <View style={styles.detailField}>
+              <Text style={styles.fieldLabel}>ΟΝΟΜΑ</Text>
+              <Text style={styles.fieldValue}>ΓΕΩΡΓΙΟΣ</Text>
+            </View>
+
+            <View style={styles.detailField}>
+              <Text style={styles.fieldLabel}>GIVEN NAME</Text>
+              <Text style={styles.fieldValue}>GEORGIOS</Text>
+            </View>
+
+            <View style={styles.detailField}>
+              <Text style={styles.fieldLabel}>ΠΑΤΡΩΝΥΜΟ / FATHER'S NAME</Text>
+              <Text style={styles.fieldValue}>ΑΛΕΞΙΟΣ</Text>
+            </View>
+
+            <View style={styles.detailField}>
+              <Text style={styles.fieldLabel}>ΜΗΤΡΩΝΥΜΟ / MOTHER'S NAME</Text>
+              <Text style={styles.fieldValue}>ΑΡΕΤΗ</Text>
+            </View>
+
+            <View style={styles.detailField}>
+              <Text style={styles.fieldLabel}>ΗΜΕΡΟΜΗΝΙΑ ΓΕΝΝΗΣΗΣ / DATE OF BIRTH</Text>
+              <Text style={styles.fieldValue}>25/02/2007</Text>
+            </View>
+
+            <View style={styles.detailField}>
+              <Text style={styles.fieldLabel}>ΤΟΠΟΣ ΓΕΝΝΗΣΗΣ / PLACE OF BIRTH</Text>
+              <Text style={styles.fieldValue}>ΠΑΤΡΑ</Text>
+            </View>
+          </View>
+        ) : null}
 
       </ScrollView>
     </SafeAreaView>
@@ -341,20 +355,35 @@ const styles = StyleSheet.create({
 
   // Detail ID Styles
   detailContainer: { flex: 1, backgroundColor: '#00469B' },
-  detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#79E7FF' },
+  detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#1B6395' },
   backArrow: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   detailHeaderTitle: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   moreOptions: { color: '#FFF', fontSize: 24, fontWeight: 'bold' },
   detailScroll: { paddingBottom: 40 },
-  photoContainer: { backgroundColor: '#79E7FF', alignItems: 'center', paddingVertical: 20, width: '100%' },
-  idPhotoLive: { width: 130, height: 170, borderRadius: 12, borderWidth: 3, borderColor: 'rgba(255,255,255,0.2)' },
-  idDetailsBlock: { paddingHorizontal: 20, paddingTop: 20 },
+  
+  // Το Πιο Σκούρο Background που ζήτησες με Οριζόντια Διάταξη
+  photoContainer: { backgroundColor: '#1B6395', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 20, width: '100%' },
+  numberSideBox: { flex: 1, justifyContent: 'center' },
+  photoRightBox: { marginLeft: 15 },
+  idPhotoLive: { width: 115, height: 150, borderRadius: 10, borderWidth: 2, borderColor: 'rgba(255,255,255,0.2)' },
   idNumberLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 13, fontWeight: '500' },
-  idNumberValue: { color: '#00D2FF', fontSize: 24, fontWeight: 'bold', marginBottom: 20, marginTop: 2 },
+  idNumberValue: { color: '#FFF', fontSize: 24, fontWeight: 'bold', marginTop: 4 },
+
+  // Οι 4 Επιλογές (Tabs)
+  tabsRow: { flexDirection: 'row', justifyContent: 'space-around', backgroundColor: '#1B6395', paddingBottom: 0 },
+  tabButton: { paddingVertical: 12, paddingHorizontal: 10, alignItems: 'center' },
+  tabText: { color: 'rgba(255,255,255,0.6)', fontSize: 14, fontWeight: '600' },
+  tabTextActive: { color: '#FFF', fontWeight: 'bold' },
+  activeIndicator: { height: 3, width: '100%', backgroundColor: '#00D2FF', marginTop: 8, borderTopLeftRadius: 3, borderTopRightRadius: 3, position: 'absolute', bottom: 0 },
+
+  // Στοιχεία Ταυτότητας
+  idDetailsBlock: { paddingHorizontal: 20, paddingTop: 20 },
   detailField: { marginBottom: 18, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.1)', paddingBottom: 6 },
   fieldLabel: { color: 'rgba(255,255,255,0.4)', fontSize: 11, fontWeight: '600' },
   fieldValue: { color: '#FFF', fontSize: 18, fontWeight: '600', marginTop: 2 },
-  detailQrSection: { alignItems: 'center', marginTop: 20, paddingVertical: 15 },
-  realQrFrame: { backgroundColor: '#FFF', padding: 12, borderRadius: 12 },
-  detailQrSubtext: { color: 'rgba(255,255,255,0.4)', fontSize: 12, marginTop: 10, fontWeight: '500' }
+  
+  // Ενότητα QR Code
+  detailQrSection: { alignItems: 'center', marginTop: 40, paddingVertical: 15 },
+  realQrFrame: { backgroundColor: '#FFF', padding: 15, borderRadius: 12 },
+  detailQrSubtext: { color: 'rgba(255,255,255,0.6)', fontSize: 13, marginTop: 15, fontWeight: '500' }
 });
