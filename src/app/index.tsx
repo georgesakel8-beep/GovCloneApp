@@ -141,7 +141,9 @@ export default function Index() {
         <Text style={styles.detailHeaderTitle}>Δελτίο Ταυτότητας</Text>
         <TouchableOpacity><Text style={styles.moreOptions}>⋮</Text></TouchableOpacity>
       </View>
-      <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
+      
+      {/* Χρησιμοποιούμε σωστό zIndex και στο ScrollView Container */}
+      <ScrollView contentContainerStyle={{ paddingBottom: 40 }} style={{ flex: 1 }}>
         
         {/* Επάνω Ανοιχτό Γαλάζιο Πλαίσιο */}
         <View style={styles.photoContainerGradient}>
@@ -151,11 +153,11 @@ export default function Index() {
             <Text style={[styles.idNumberLabel, { marginTop: 12 }]}>Ημ. Έκδοσης:</Text>
             <Text style={[styles.idNumberValue, { fontSize: 18, marginTop: 2 }]}>07/05/2026</Text>
           </View>
-          
-          {/* Η φωτογραφία με zIndex και elevation για να βγαίνει ΠΑΝΩ από το μπλε */}
-          <View style={styles.photoWrapperAbsolute}>
-            <Image source={require('../../assets/myphoto.jpeg.jpeg')} style={styles.idPhotoLive} />
-          </View>
+        </View>
+
+        {/* Η φωτογραφία μεταφέρθηκε εδώ ΕΞΩ από το γαλάζιο box ώστε να μην επηρεάζεται από το layout του */}
+        <View style={styles.photoWrapperAbsolute}>
+          <Image source={require('../../assets/myphoto.jpeg.jpeg')} style={styles.idPhotoLive} />
         </View>
 
         {/* Κάτω Σκούρο Μπλε Πλαίσιο */}
@@ -270,39 +272,32 @@ const styles = StyleSheet.create({
   cardTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   cardBottomRow: { flexDirection: 'column' },
 
-  // Bottom Tab Bar
-  bottomTabBar: { height: 75, backgroundColor: '#003A80', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingBottom: 12 },
-  tabItem: { alignItems: 'center' },
-  tabIcon: { fontSize: 24, color: '#66A3FF' },
-  tabLabel: { fontSize: 11, color: '#66A3FF', marginTop: 4, fontWeight: '500' },
-  tabActive: { color: '#FFF', fontWeight: '700' },
-
   // ID Detail Screen Styles
   detailContainer: { flex: 1, backgroundColor: '#00377A' },
-  detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#3A86C0' },
+  detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#3A86C0', zIndex: 5 },
   backArrow: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   detailHeaderTitle: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   moreOptions: { color: '#FFF', fontSize: 24, fontWeight: 'bold' },
   
   // Ανοιχτό γαλάζιο πλαίσιο
-  photoContainerGradient: { backgroundColor: '#3A86C0', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', position: 'relative' },
+  photoContainerGradient: { backgroundColor: '#3A86C0', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 2 },
   numberSideBox: { flex: 1, justifyContent: 'flex-start' },
   
-  // Η φωτογραφία "κάθεται" από πάνω με zIndex και elevation
-  photoWrapperAbsolute: { position: 'absolute', right: 20, bottom: -55, zIndex: 10, elevation: 10 },
+  // Απόλυτη θέση ΕΞΩ από τα box, με κορυφαίο zIndex για να μην την καλύπτει τίποτα
+  photoWrapperAbsolute: { position: 'absolute', right: 20, top: 85, zIndex: 99, elevation: 99 },
   idPhotoLive: { width: 115, height: 150, borderRadius: 12, borderWidth: 3, borderColor: '#FFF' },
   
   idNumberLabel: { color: 'rgba(255,255,255,0.75)', fontSize: 12, fontWeight: '400' },
   idNumberValue: { color: '#FFF', fontSize: 23, fontWeight: 'bold', marginTop: 2 },
 
   // Το σκούρο πλαίσιο
-  mainDarkSection: { backgroundColor: '#00377A', paddingTop: 65, zIndex: 1 },
+  mainDarkSection: { backgroundColor: '#00377A', paddingTop: 110, zIndex: 1 },
 
   // Grid κουμπιών
   actionGrid: { paddingHorizontal: 16, paddingBottom: 15 },
   actionRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
   
-  // Κουμπιά με το ίδιο σκούρο μπλε/γκρι χρώμα
+  // Κουμπιά
   actionBtn: { backgroundColor: '#002D62', borderRadius: 12, width: '48%', flexDirection: 'row', alignItems: 'center', paddingVertical: 12, paddingHorizontal: 12, borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)' },
   actionIcon: { fontSize: 20, marginRight: 8, color: '#FFF' },
   miniQrIcon: { width: 20, height: 20, marginRight: 8, borderRadius: 4 },
