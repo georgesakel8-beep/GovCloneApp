@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Alert, Animated, Image, ImageBackground, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, StatusBar, Image, Alert, Animated, ImageBackground } from 'react-native';
 
 export default function Index() {
   const [screen, setScreen] = useState<'login' | 'pin' | 'wallet' | 'id_detail'>('login');
@@ -148,13 +148,13 @@ export default function Index() {
         <View style={styles.photoContainerGradient}>
           <View style={styles.numberSideBox}>
             <Text style={styles.idNumberLabel}>Αριθμός ταυτότητας:</Text>
-            <Text style={styles.idNumberValue}>AO714079</Text>
+            <Text style={styles.idNumberValue}>A0714079</Text>
             <Text style={[styles.idNumberLabel, { marginTop: 12 }]}>Ημ. Έκδοσης:</Text>
-            <Text style={[styles.idNumberValue, { fontSize: 18, marginTop: 2 }]}>07/05/2026</Text>
+            <Text style={[styles.idNumberValue, { fontSize: 18, marginTop: 2 }]}>08/05/2025</Text>
           </View>
         </View>
 
-        {/* Φωτογραφία (Χωρίς το λευκό περίγραμμα γύρω-γύρω) */}
+        {/* Φωτογραφία (Χωρίς λευκό περίγραμμα, κρέμεται ανάμεσα στα 2 χρώματα) */}
         <View style={styles.photoWrapperAbsolute}>
           <Image source={require('../../assets/myphoto.jpeg.jpeg')} style={styles.idPhotoLive} />
         </View>
@@ -162,7 +162,7 @@ export default function Index() {
         {/* Κάτω Σκούρο Μπλε Πλαίσιο */}
         <View style={styles.mainDarkSection}>
           
-          {/* Τα 4 κουμπιά με τα σωστά εικονίδια της εφαρμογής */}
+          {/* Τα 4 κουμπιά έγιναν ΛΕΥΚΑ */}
           <View style={styles.actionGrid}>
             <View style={styles.actionRow}>
               <TouchableOpacity style={styles.actionBtn}>
@@ -264,7 +264,6 @@ const styles = StyleSheet.create({
   welcomeText: { color: '#FFF', fontSize: 18, fontWeight: '400' },
   userName: { color: '#FFF', fontSize: 26, fontWeight: 'bold', marginBottom: 30, marginTop: 4 },
   
-  // Wallet Cards
   walletCardId: { backgroundColor: '#80E8FF', borderRadius: 16, padding: 20, height: 175, justifyContent: 'space-between', marginBottom: 20 },
   cardMainTitleId: { color: '#FFF', fontSize: 22, fontWeight: 'bold' },
   miniPlusId: { backgroundColor: '#FFF', width: 44, height: 44, borderRadius: 22, justifyContent: 'center', alignItems: 'center' },
@@ -274,54 +273,4 @@ const styles = StyleSheet.create({
   walletCardLicense: { backgroundColor: '#FFF', borderRadius: 16, padding: 20, height: 175, justifyContent: 'space-between', marginBottom: 20 },
   cardMainTitleLicense: { color: '#80E8FF', fontSize: 22, fontWeight: 'bold' },
   miniPlusLicense: { backgroundColor: '#00D2FF', width: 44, height: 44, borderRadius: 22, justifyContent: 'center', alignItems: 'center' },
-  miniPlusTextLicense: { color: '#FFF', fontSize: 26, fontWeight: 'bold' },
-  cardPlaceholdersLicense: { color: '#00469B', fontSize: 28, fontWeight: 'bold', letterSpacing: 2, marginBottom: 4 },
-  cardLabelLicense: { color: 'rgba(0, 70, 155, 0.3)', fontSize: 11, fontWeight: '600' },
-  cardTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
-  cardBottomRow: { flexDirection: 'column' },
-
-  // ID Detail Screen Styles
-  detailContainer: { flex: 1, backgroundColor: '#00377A' },
-  detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#3A86C0', zIndex: 5 },
-  backArrow: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
-  detailHeaderTitle: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
-  moreOptions: { color: '#FFF', fontSize: 24, fontWeight: 'bold' },
-  
-  photoContainerGradient: { backgroundColor: '#3A86C0', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 2 },
-  numberSideBox: { flex: 1, justifyContent: 'flex-start' },
-  
-  // Απόλυτη θέση φωτογραφίας χωρίς κανένα λευκό φόντο ή περίγραμμα
-  photoWrapperAbsolute: { position: 'absolute', right: 20, top: 85, zIndex: 99, elevation: 99 },
-  idPhotoLive: { width: 115, height: 150, borderRadius: 12 },
-  
-  idNumberLabel: { color: 'rgba(255,255,255,0.75)', fontSize: 12, fontWeight: '400' },
-  idNumberValue: { color: '#FFF', fontSize: 23, fontWeight: 'bold', marginTop: 2 },
-
-  mainDarkSection: { backgroundColor: '#00377A', paddingTop: 110, zIndex: 1 },
-
-  // Grid κουμπιών
-  actionGrid: { paddingHorizontal: 16, paddingBottom: 15 },
-  actionRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
-  
-  // Κουμπιά
-  actionBtn: { backgroundColor: '#002D62', borderRadius: 12, width: '48%', flexDirection: 'row', alignItems: 'center', paddingVertical: 12, paddingHorizontal: 12, borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)' },
-  actionBtnActive: { borderColor: '#00D2FF', backgroundColor: '#003A80' },
-  actionIconImage: { width: 20, height: 20, marginRight: 8, resizeMode: 'contain' },
-  miniQrIcon: { width: 20, height: 20, marginRight: 8, borderRadius: 4 },
-  actionText: { color: '#FFF', fontSize: 12, fontWeight: '600', flexShrink: 1 },
-
-  // Στοιχεία
-  idDetailsBlock: { paddingHorizontal: 20, paddingTop: 10 },
-  detailField: { marginBottom: 15, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.08)', paddingBottom: 6 },
-  
-  fieldLabel: { color: 'rgba(255,255,255,0.45)', fontSize: 10.5, fontWeight: '300', letterSpacing: 0.8 },
-  fieldValue: { color: '#FFF', fontSize: 18.5, fontWeight: '500', marginTop: 2, letterSpacing: 0.2 },
-  
-  detailQrSection: { alignItems: 'center', marginTop: 25, paddingVertical: 15, width: '100%' },
-  realQrFrame: { backgroundColor: '#FFF', padding: 12, borderRadius: 16, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 4, elevation: 5 },
-  detailQrSubtext: { color: 'rgba(255,255,255,0.6)', fontSize: 13, marginTop: 12, fontWeight: '500', textAlign: 'center' },
-
-  footerDocs: { marginTop: 25, marginBottom: 20, alignItems: 'center' },
-  docCodeText: { color: 'rgba(255,255,255,0.6)', fontSize: 12, marginBottom: 8 },
-  travelWarningText: { color: 'rgba(255,255,255,0.35)', fontSize: 11, textAlign: 'center', lineHeight: 16 }
-});
+  miniPlusTextLicense:
