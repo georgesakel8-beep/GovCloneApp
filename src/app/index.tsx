@@ -154,7 +154,7 @@ export default function Index() {
           </View>
         </View>
 
-        {/* Φωτογραφία που "πατάει" από πάνω */}
+        {/* Φωτογραφία (Πατάει πάνω από το μπλε χωρίς να κόβεται) */}
         <View style={styles.photoWrapperAbsolute}>
           <Image source={require('../../assets/myphoto.jpeg.jpeg')} style={styles.idPhotoLive} />
         </View>
@@ -186,7 +186,7 @@ export default function Index() {
             </View>
           </View>
 
-          {/* Στοιχεία Κατόχου */}
+          {/* Στοιχεία Κατόχου (Με τις νέες επαγγελματικές γραμματοσειρές) */}
           <View style={styles.idDetailsBlock}>
             <View style={styles.detailField}><Text style={styles.fieldLabel}>ΕΠΩΝΥΜΟ</Text><Text style={styles.fieldValue}>ΣΑΚΕΛΛΑΡΟΠΟΥΛΟΣ</Text></View>
             <View style={styles.detailField}><Text style={styles.fieldLabel}>SURNAME</Text><Text style={styles.fieldValue}>SAKELLAROPOULOS</Text></View>
@@ -199,7 +199,7 @@ export default function Index() {
             <View style={styles.detailField}><Text style={styles.fieldLabel}>ΤΟΠΟΣ ΓΕΝΝΗΣΗΣ / PLACE OF BIRTH</Text><Text style={styles.fieldValue}>ΠΑΤΡΑ ΑΧΑΪΑΣ</Text></View>
             <View style={styles.detailField}><Text style={styles.fieldLabel}>ΑΡΧΗ ΕΚΔΟΣΗΣ / ISSUANCE OFFICE</Text><Text style={styles.fieldValue}>Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ</Text></View>
             
-            {/* Εμφάνιση του QR Code όταν το showQR είναι true */}
+            {/* Εμφάνιση του μεγάλου QR Code όταν είναι ενεργό */}
             {showQR && (
               <View style={styles.detailQrSection}>
                 <View style={styles.realQrFrame}>
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
   photoContainerGradient: { backgroundColor: '#3A86C0', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 2 },
   numberSideBox: { flex: 1, justifyContent: 'flex-start' },
   
-  // Απόλυτη θέση φωτογραφίας
+  // Απόλυτη θέση φωτογραφίας (Τώρα "κάθεται" σωστά στην κορυφή)
   photoWrapperAbsolute: { position: 'absolute', right: 20, top: 85, zIndex: 99, elevation: 99 },
   idPhotoLive: { width: 115, height: 150, borderRadius: 12, borderWidth: 3, borderColor: '#FFF' },
   
@@ -313,11 +313,12 @@ const styles = StyleSheet.create({
   miniQrIcon: { width: 20, height: 20, marginRight: 8, borderRadius: 4 },
   actionText: { color: '#FFF', fontSize: 12, fontWeight: '600', flexShrink: 1 },
 
-  // Στοιχεία και QR Section
+  // Στοιχεία και QR Section (Διορθωμένα Font Weights και Spacing)
   idDetailsBlock: { paddingHorizontal: 20, paddingTop: 10 },
   detailField: { marginBottom: 15, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.08)', paddingBottom: 6 },
-  fieldLabel: { color: 'rgba(255,255,255,0.5)', fontSize: 11, fontWeight: '400', letterSpacing: 0.5 },
-  fieldValue: { color: '#FFF', fontSize: 20, fontWeight: '400', marginTop: 2 },
+  
+  fieldLabel: { color: 'rgba(255,255,255,0.45)', fontSize: 10.5, fontWeight: '300', letterSpacing: 0.8 },
+  fieldValue: { color: '#FFF', fontSize: 18.5, fontWeight: '500', marginTop: 2, letterSpacing: 0.2 },
   
   detailQrSection: { alignItems: 'center', marginTop: 25, paddingVertical: 15, width: '100%' },
   realQrFrame: { backgroundColor: '#FFF', padding: 12, borderRadius: 16, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 4, elevation: 5 },
