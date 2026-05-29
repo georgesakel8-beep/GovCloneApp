@@ -142,7 +142,6 @@ export default function Index() {
         <TouchableOpacity><Text style={styles.moreOptions}>⋮</Text></TouchableOpacity>
       </View>
       
-      {/* Χρησιμοποιούμε σωστό zIndex και στο ScrollView Container */}
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }} style={{ flex: 1 }}>
         
         {/* Επάνω Ανοιχτό Γαλάζιο Πλαίσιο */}
@@ -155,7 +154,7 @@ export default function Index() {
           </View>
         </View>
 
-        {/* Η φωτογραφία μεταφέρθηκε εδώ ΕΞΩ από το γαλάζιο box ώστε να μην επηρεάζεται από το layout του */}
+        {/* Φωτογραφία που "πατάει" από πάνω */}
         <View style={styles.photoWrapperAbsolute}>
           <Image source={require('../../assets/myphoto.jpeg.jpeg')} style={styles.idPhotoLive} />
         </View>
@@ -163,7 +162,7 @@ export default function Index() {
         {/* Κάτω Σκούρο Μπλε Πλαίσιο */}
         <View style={styles.mainDarkSection}>
           
-          {/* Τα 4 κουμπιά με σκούρο μπλε background και λευκά γράμματα */}
+          {/* Τα 4 κουμπιά */}
           <View style={styles.actionGrid}>
             <View style={styles.actionRow}>
               <TouchableOpacity style={styles.actionBtn}>
@@ -176,7 +175,7 @@ export default function Index() {
               </TouchableOpacity>
             </View>
             <View style={styles.actionRow}>
-              <TouchableOpacity style={styles.actionBtn} onPress={() => setShowQR(!showQR)}>
+              <TouchableOpacity style={[styles.actionBtn, showQR && styles.actionBtnActive]} onPress={() => setShowQR(!showQR)}>
                 <Image source={require('../../assets/qrcode.jpeg')} style={styles.miniQrIcon} />
                 <Text style={styles.actionText}>Προβολή QR</Text>
               </TouchableOpacity>
@@ -200,6 +199,16 @@ export default function Index() {
             <View style={styles.detailField}><Text style={styles.fieldLabel}>ΤΟΠΟΣ ΓΕΝΝΗΣΗΣ / PLACE OF BIRTH</Text><Text style={styles.fieldValue}>ΠΑΤΡΑ ΑΧΑΪΑΣ</Text></View>
             <View style={styles.detailField}><Text style={styles.fieldLabel}>ΑΡΧΗ ΕΚΔΟΣΗΣ / ISSUANCE OFFICE</Text><Text style={styles.fieldValue}>Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ</Text></View>
             
+            {/* Εμφάνιση του QR Code όταν το showQR είναι true */}
+            {showQR && (
+              <View style={styles.detailQrSection}>
+                <View style={styles.realQrFrame}>
+                  <Image source={require('../../assets/qrcode.jpeg')} style={{ width: 180, height: 180 }} />
+                </View>
+                <Text style={styles.detailQrSubtext}>Κωδικός μιας χρήσης για έλεγχο ταυτότητας</Text>
+              </View>
+            )}
+
             <View style={styles.footerDocs}>
               <Text style={styles.docCodeText}>Κωδικός εγγράφου: GR-7489201-BXC-9084</Text>
               <Text style={styles.travelWarningText}>Δεν αποτελεί διεθνές ταξιδιωτικό έγγραφο</Text>
@@ -283,7 +292,7 @@ const styles = StyleSheet.create({
   photoContainerGradient: { backgroundColor: '#3A86C0', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 2 },
   numberSideBox: { flex: 1, justifyContent: 'flex-start' },
   
-  // Απόλυτη θέση ΕΞΩ από τα box, με κορυφαίο zIndex για να μην την καλύπτει τίποτα
+  // Απόλυτη θέση φωτογραφίας
   photoWrapperAbsolute: { position: 'absolute', right: 20, top: 85, zIndex: 99, elevation: 99 },
   idPhotoLive: { width: 115, height: 150, borderRadius: 12, borderWidth: 3, borderColor: '#FFF' },
   
@@ -299,15 +308,21 @@ const styles = StyleSheet.create({
   
   // Κουμπιά
   actionBtn: { backgroundColor: '#002D62', borderRadius: 12, width: '48%', flexDirection: 'row', alignItems: 'center', paddingVertical: 12, paddingHorizontal: 12, borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)' },
+  actionBtnActive: { borderColor: '#00D2FF', backgroundColor: '#003A80' },
   actionIcon: { fontSize: 20, marginRight: 8, color: '#FFF' },
   miniQrIcon: { width: 20, height: 20, marginRight: 8, borderRadius: 4 },
   actionText: { color: '#FFF', fontSize: 12, fontWeight: '600', flexShrink: 1 },
 
+  // Στοιχεία και QR Section
   idDetailsBlock: { paddingHorizontal: 20, paddingTop: 10 },
   detailField: { marginBottom: 15, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.08)', paddingBottom: 6 },
   fieldLabel: { color: 'rgba(255,255,255,0.5)', fontSize: 11, fontWeight: '400', letterSpacing: 0.5 },
   fieldValue: { color: '#FFF', fontSize: 20, fontWeight: '400', marginTop: 2 },
   
+  detailQrSection: { alignItems: 'center', marginTop: 25, paddingVertical: 15, width: '100%' },
+  realQrFrame: { backgroundColor: '#FFF', padding: 12, borderRadius: 16, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 4, elevation: 5 },
+  detailQrSubtext: { color: 'rgba(255,255,255,0.6)', fontSize: 13, marginTop: 12, fontWeight: '500', textAlign: 'center' },
+
   footerDocs: { marginTop: 25, marginBottom: 20, alignItems: 'center' },
   docCodeText: { color: 'rgba(255,255,255,0.6)', fontSize: 12, marginBottom: 8 },
   travelWarningText: { color: 'rgba(255,255,255,0.35)', fontSize: 11, textAlign: 'center', lineHeight: 16 }
