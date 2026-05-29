@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Alert, Animated, Image, ImageBackground, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, StatusBar, Image, Alert, Animated, ImageBackground } from 'react-native';
 
 export default function Index() {
   const [screen, setScreen] = useState<'login' | 'pin' | 'wallet' | 'id_detail'>('login');
@@ -148,13 +148,13 @@ export default function Index() {
         <View style={styles.photoContainerGradient}>
           <View style={styles.numberSideBox}>
             <Text style={styles.idNumberLabel}>Αριθμός ταυτότητας:</Text>
-            <Text style={styles.idNumberValue}>Α03449095</Text>
+            <Text style={styles.idNumberValue}>AO714079</Text>
             <Text style={[styles.idNumberLabel, { marginTop: 12 }]}>Ημ. Έκδοσης:</Text>
             <Text style={[styles.idNumberValue, { fontSize: 18, marginTop: 2 }]}>07/05/2026</Text>
           </View>
         </View>
 
-        {/* Φωτογραφία (Πατάει πάνω από το μπλε χωρίς να κόβεται) */}
+        {/* Φωτογραφία με το λευκό περίγραμμα και φόντο ξανά */}
         <View style={styles.photoWrapperAbsolute}>
           <Image source={require('../../assets/myphoto.jpeg.jpeg')} style={styles.idPhotoLive} />
         </View>
@@ -162,15 +162,15 @@ export default function Index() {
         {/* Κάτω Σκούρο Μπλε Πλαίσιο */}
         <View style={styles.mainDarkSection}>
           
-          {/* Τα 4 κουμπιά */}
+          {/* Τα 4 κουμπιά με εικόνες για τα εικονίδια */}
           <View style={styles.actionGrid}>
             <View style={styles.actionRow}>
               <TouchableOpacity style={styles.actionBtn}>
-                <Text style={styles.actionIcon}>💳</Text>
+                <Image source={require('../../assets/wallet_icon.png')} style={styles.actionIconImage} />
                 <Text style={styles.actionText}>Προσθήκη στο Wallet</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.actionBtn}>
-                <Text style={styles.actionIcon}>📄</Text>
+                <Image source={require('../../assets/copy_icon.png')} style={styles.actionIconImage} />
                 <Text style={styles.actionText}>Αντίγραφο</Text>
               </TouchableOpacity>
             </View>
@@ -180,13 +180,13 @@ export default function Index() {
                 <Text style={styles.actionText}>Προβολή QR</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.actionBtn}>
-                <Text style={styles.actionIcon}>🔍</Text>
+                <Image source={require('../../assets/scan_icon.png')} style={styles.actionIconImage} />
                 <Text style={styles.actionText}>Quick Scan</Text>
               </TouchableOpacity>
             </View>
           </View>
 
-          {/* Στοιχεία Κατόχου (Με τις νέες επαγγελματικές γραμματοσειρές) */}
+          {/* Στοιχεία Κατόχου */}
           <View style={styles.idDetailsBlock}>
             <View style={styles.detailField}><Text style={styles.fieldLabel}>ΕΠΩΝΥΜΟ</Text><Text style={styles.fieldValue}>ΣΑΚΕΛΛΑΡΟΠΟΥΛΟΣ</Text></View>
             <View style={styles.detailField}><Text style={styles.fieldLabel}>SURNAME</Text><Text style={styles.fieldValue}>SAKELLAROPOULOS</Text></View>
@@ -199,7 +199,6 @@ export default function Index() {
             <View style={styles.detailField}><Text style={styles.fieldLabel}>ΤΟΠΟΣ ΓΕΝΝΗΣΗΣ / PLACE OF BIRTH</Text><Text style={styles.fieldValue}>ΠΑΤΡΑ ΑΧΑΪΑΣ</Text></View>
             <View style={styles.detailField}><Text style={styles.fieldLabel}>ΑΡΧΗ ΕΚΔΟΣΗΣ / ISSUANCE OFFICE</Text><Text style={styles.fieldValue}>Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ</Text></View>
             
-            {/* Εμφάνιση του μεγάλου QR Code όταν είναι ενεργό */}
             {showQR && (
               <View style={styles.detailQrSection}>
                 <View style={styles.realQrFrame}>
@@ -288,18 +287,16 @@ const styles = StyleSheet.create({
   detailHeaderTitle: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   moreOptions: { color: '#FFF', fontSize: 24, fontWeight: 'bold' },
   
-  // Ανοιχτό γαλάζιο πλαίσιο
   photoContainerGradient: { backgroundColor: '#3A86C0', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 2 },
   numberSideBox: { flex: 1, justifyContent: 'flex-start' },
   
-  // Απόλυτη θέση φωτογραφίας (Τώρα "κάθεται" σωστά στην κορυφή)
+  // Θέση φωτογραφίας με επαναφορά του λευκού περιγράμματος
   photoWrapperAbsolute: { position: 'absolute', right: 20, top: 85, zIndex: 99, elevation: 99 },
   idPhotoLive: { width: 115, height: 150, borderRadius: 12, borderWidth: 3, borderColor: '#FFF' },
   
   idNumberLabel: { color: 'rgba(255,255,255,0.75)', fontSize: 12, fontWeight: '400' },
   idNumberValue: { color: '#FFF', fontSize: 23, fontWeight: 'bold', marginTop: 2 },
 
-  // Το σκούρο πλαίσιο
   mainDarkSection: { backgroundColor: '#00377A', paddingTop: 110, zIndex: 1 },
 
   // Grid κουμπιών
@@ -309,11 +306,11 @@ const styles = StyleSheet.create({
   // Κουμπιά
   actionBtn: { backgroundColor: '#002D62', borderRadius: 12, width: '48%', flexDirection: 'row', alignItems: 'center', paddingVertical: 12, paddingHorizontal: 12, borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)' },
   actionBtnActive: { borderColor: '#00D2FF', backgroundColor: '#003A80' },
-  actionIcon: { fontSize: 20, marginRight: 8, color: '#FFF' },
+  actionIconImage: { width: 20, height: 20, marginRight: 8, resizeMode: 'contain' },
   miniQrIcon: { width: 20, height: 20, marginRight: 8, borderRadius: 4 },
   actionText: { color: '#FFF', fontSize: 12, fontWeight: '600', flexShrink: 1 },
 
-  // Στοιχεία και QR Section (Διορθωμένα Font Weights και Spacing)
+  // Στοιχεία
   idDetailsBlock: { paddingHorizontal: 20, paddingTop: 10 },
   detailField: { marginBottom: 15, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.08)', paddingBottom: 6 },
   
@@ -327,4 +324,3 @@ const styles = StyleSheet.create({
   footerDocs: { marginTop: 25, marginBottom: 20, alignItems: 'center' },
   docCodeText: { color: 'rgba(255,255,255,0.6)', fontSize: 12, marginBottom: 8 },
   travelWarningText: { color: 'rgba(255,255,255,0.35)', fontSize: 11, textAlign: 'center', lineHeight: 16 }
-});
