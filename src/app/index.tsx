@@ -151,16 +151,17 @@ export default function Index() {
             <Text style={[styles.idNumberLabel, { marginTop: 12 }]}>Ημ. Έκδοσης:</Text>
             <Text style={[styles.idNumberValue, { fontSize: 18, marginTop: 2 }]}>07/05/2026</Text>
           </View>
-          {/* Η φωτογραφία τοποθετείται absolute για να κρέμεται ανάμεσα στα δύο πλαίσια */}
+          
+          {/* Η φωτογραφία με zIndex και elevation για να βγαίνει ΠΑΝΩ από το μπλε */}
           <View style={styles.photoWrapperAbsolute}>
             <Image source={require('../../assets/myphoto.jpeg.jpeg')} style={styles.idPhotoLive} />
           </View>
         </View>
 
-        {/* Κάτω Σκούρο Μπλε Πλαίσιο που περιέχει τα κουμπιά και τα στοιχεία */}
+        {/* Κάτω Σκούρο Μπλε Πλαίσιο */}
         <View style={styles.mainDarkSection}>
           
-          {/* Τα 4 κουμπιά με σκούρο μπλε / γκρι φόντο και λευκά στοιχεία */}
+          {/* Τα 4 κουμπιά με σκούρο μπλε background και λευκά γράμματα */}
           <View style={styles.actionGrid}>
             <View style={styles.actionRow}>
               <TouchableOpacity style={styles.actionBtn}>
@@ -184,7 +185,7 @@ export default function Index() {
             </View>
           </View>
 
-          {/* Τα Στοιχεία σου */}
+          {/* Στοιχεία Κατόχου */}
           <View style={styles.idDetailsBlock}>
             <View style={styles.detailField}><Text style={styles.fieldLabel}>ΕΠΩΝΥΜΟ</Text><Text style={styles.fieldValue}>ΣΑΚΕΛΛΑΡΟΠΟΥΛΟΣ</Text></View>
             <View style={styles.detailField}><Text style={styles.fieldLabel}>SURNAME</Text><Text style={styles.fieldValue}>SAKELLAROPOULOS</Text></View>
@@ -283,28 +284,28 @@ const styles = StyleSheet.create({
   detailHeaderTitle: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   moreOptions: { color: '#FFF', fontSize: 24, fontWeight: 'bold' },
   
-  // Ανοιχτό γαλάζιο πλαίσιο με height και absolute διάταξη για τη φωτό
-  photoContainerGradient: { backgroundColor: '#3A86C0', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 150, width: '100%', position: 'relative' },
+  // Ανοιχτό γαλάζιο πλαίσιο
+  photoContainerGradient: { backgroundColor: '#3A86C0', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', position: 'relative' },
   numberSideBox: { flex: 1, justifyContent: 'flex-start' },
   
-  // Κουτί που κρατάει τη φωτογραφία και την σπρώχνει προς τα κάτω (ανάμεσα στα δύο χρώματα)
-  photoWrapperAbsolute: { position: 'absolute', right: 20, bottom: -45, zIndex: 10 },
+  // Η φωτογραφία "κάθεται" από πάνω με zIndex και elevation
+  photoWrapperAbsolute: { position: 'absolute', right: 20, bottom: -55, zIndex: 10, elevation: 10 },
   idPhotoLive: { width: 115, height: 150, borderRadius: 12, borderWidth: 3, borderColor: '#FFF' },
   
   idNumberLabel: { color: 'rgba(255,255,255,0.75)', fontSize: 12, fontWeight: '400' },
   idNumberValue: { color: '#FFF', fontSize: 23, fontWeight: 'bold', marginTop: 2 },
 
-  // Το κύριο σκούρο πλαίσιο που ξεκινά κάτω από το γαλάζιο
-  mainDarkSection: { backgroundColor: '#00377A', paddingTop: 55 },
+  // Το σκούρο πλαίσιο
+  mainDarkSection: { backgroundColor: '#00377A', paddingTop: 65, zIndex: 1 },
 
-  // Grid με τις 4 επιλογές (έχει το ίδιο σκούρο μπλε background)
+  // Grid κουμπιών
   actionGrid: { paddingHorizontal: 16, paddingBottom: 15 },
   actionRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
   
-  // Τα κουμπιά έχουν πλέον σκούρο μπλε χρώμα και λευκό περίγραμμα/στοιχεία για να ταιριάζουν με το wallet
+  // Κουμπιά με το ίδιο σκούρο μπλε/γκρι χρώμα
   actionBtn: { backgroundColor: '#002D62', borderRadius: 12, width: '48%', flexDirection: 'row', alignItems: 'center', paddingVertical: 12, paddingHorizontal: 12, borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)' },
   actionIcon: { fontSize: 20, marginRight: 8, color: '#FFF' },
-  miniQrIcon: { width: 20, height: 20, marginRight: 8, borderRadius: 4, tintColor: '#FFF' },
+  miniQrIcon: { width: 20, height: 20, marginRight: 8, borderRadius: 4 },
   actionText: { color: '#FFF', fontSize: 12, fontWeight: '600', flexShrink: 1 },
 
   idDetailsBlock: { paddingHorizontal: 20, paddingTop: 10 },
