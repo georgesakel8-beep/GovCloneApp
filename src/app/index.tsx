@@ -7,6 +7,7 @@ export default function Index() {
   const [showQR, setShowQR] = useState(false);
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
+  // Animation logic for the pulse on the login screen
   useEffect(() => {
     Animated.loop(
       Animated.sequence([
@@ -20,7 +21,7 @@ export default function Index() {
     if (pin.length < 4) {
       const newPin = pin + value;
       setPin(newPin);
-      if (newPin === '1234') { 
+      if (newPin === '1234') { // PIN
         setTimeout(() => {
           setScreen('wallet');
           setPin('');
@@ -34,33 +35,39 @@ export default function Index() {
     }
   };
 
-  // --- ΟΘΟΝΗ 1: ΑΡΧΙΚΟ LOGIN ---
+  // --- 1. LOGIN SCREEN (gov.gr wallet) ---
   if (screen === 'login') {
     return (
       <ImageBackground source={require('../../assets/background.jpg')} style={styles.loginContainer}>
         <StatusBar barStyle="light-content" backgroundColor="#0052B4" />
+        
         <View style={styles.loginLogoSection}>
           <Animated.View style={[styles.circlePulse, { transform: [{ scale: scaleAnim }] }]}>
             <Text style={styles.loginLogoText}>gov.gr</Text>
             <Text style={styles.loginLogoSubtext}>wallet</Text>
           </Animated.View>
         </View>
+
         <View style={styles.loginButtonSection}>
           <TouchableOpacity style={styles.btnTaxis} onPress={() => setScreen('pin')}>
             <Text style={styles.btnTaxisText}>Σύνδεση με κωδικούς TaxisNet</Text>
           </TouchableOpacity>
+
           <TouchableOpacity style={styles.btnOutline}>
             <Text style={styles.btnOutlineText}>🔳  Έλεγχος Εγγράφου</Text>
           </TouchableOpacity>
+
           <View style={styles.loginDividerRow}>
             <View style={styles.loginLine} />
             <Text style={styles.loginDividerText}>Non Greek residents</Text>
             <View style={styles.loginLine} />
           </View>
+
           <TouchableOpacity style={styles.btnOutline}>
             <Text style={styles.btnOutlineText}>Event Tickets</Text>
           </TouchableOpacity>
         </View>
+
         <View style={styles.loginFooter}>
           <Text style={styles.loginFooterText}>🏛️ gov</Text>
           <Text style={styles.loginFooterCyanText}>gr</Text>
@@ -69,17 +76,19 @@ export default function Index() {
     );
   }
 
-  // --- ΟΘΟΝΗ 1Β: ΕΙΣΑΓΩΓΗ PIN ---
+  // --- 2. PIN ENTRY SCREEN ---
   if (screen === 'pin') {
     return (
       <SafeAreaView style={styles.pinContainer}>
         <StatusBar barStyle="light-content" backgroundColor="#0052B4" />
         <Text style={styles.pinTitle}>Εισάγετε κωδικό PIN</Text>
+        
         <View style={styles.dotsRow}>
           {[1, 2, 3, 4].map((dot, index) => (
             <View key={index} style={[styles.dot, pin.length > index && styles.dotFilled]} />
           ))}
         </View>
+
         <View style={styles.numPad}>
           {['1', '2', '3', '4', '5', '6', '7', '8', '9', 'C', '0', '⬅️'].map((num, index) => (
             <TouchableOpacity 
@@ -99,11 +108,12 @@ export default function Index() {
     );
   }
 
-  // --- ΟΘΟΝΗ 2: ΚΕΝΤΡΙΚΟ WALLET ---
+  // --- 3. MAIN WALLET SCREEN ---
   if (screen === 'wallet') {
     return (
       <SafeAreaView style={styles.walletContainer}>
         <StatusBar barStyle="light-content" backgroundColor="#0052B4" />
+        
         <View style={styles.walletHeader}>
           <TouchableOpacity style={styles.mailCircle}>
             <Text style={styles.walletHeaderIcon}>✉️</Text>
@@ -121,6 +131,7 @@ export default function Index() {
           <Text style={styles.welcomeText}>Καλωσόρισες,</Text>
           <Text style={styles.userName}>ΓΕΩΡΓΙΟΣ ΣΑΚΕΛΛΑΡΟΠΟΥΛΟΣ</Text>
 
+          {/* CARD 1: ID Card */}
           <TouchableOpacity style={styles.walletCardId} activeOpacity={0.9} onPress={() => setScreen('id_detail')}>
             <View style={styles.cardTopRow}>
               <Text style={styles.cardMainTitleId}>Δελτίο Ταυτότητας</Text>
@@ -132,6 +143,7 @@ export default function Index() {
             </View>
           </TouchableOpacity>
 
+          {/* CARD 2: Driver's License */}
           <TouchableOpacity style={styles.walletCardLicense} activeOpacity={0.9}>
             <View style={styles.cardTopRow}>
               <Text style={styles.cardMainTitleLicense}>Άδεια Οδήγησης</Text>
@@ -166,11 +178,13 @@ export default function Index() {
     );
   }
 
-  // --- ΟΘΟΝΗ 3: ΑΝΑΛΥΤΙΚΗ ΠΡΟΒΟΛΗ ΤΑΥΤΟΤΗΤΑΣ ---
+  // --- 4. DETAILED ID VIEW SCREEN ---
   return (
     <SafeAreaView style={styles.detailContainer}>
-      <StatusBar barStyle="light-content" backgroundColor="#1B6395" />
+      {/* StatusBar color changed to lighter blue */}
+      <StatusBar barStyle="light-content" backgroundColor="#3A86C0" />
       
+      {/* Detail Header color changed to lighter blue */}
       <View style={styles.detailHeader}>
         <TouchableOpacity onPress={() => { setScreen('wallet'); setShowQR(false); }}>
           <Text style={styles.backArrow}>◀</Text>
@@ -183,7 +197,8 @@ export default function Index() {
 
       <ScrollView contentContainerStyle={styles.detailScroll}>
         
-        <View style={styles.photoContainer}>
+        {/* Photo Container color changed to lighter blue */}
+        <View style={styles.photoContainerGradient}>
           <View style={styles.numberSideBox}>
             <Text style={styles.idNumberLabel}>Αριθμός ταυτότητας:</Text>
             <Text style={styles.idNumberValue}>Α03449095</Text>
@@ -196,11 +211,12 @@ export default function Index() {
           </View>
         </View>
 
+        {/* Action Buttons */}
         <View style={styles.actionGrid}>
           <View style={styles.actionRow}>
             <TouchableOpacity style={styles.actionBtn}>
               <Text style={styles.actionIcon}>💳</Text>
-              <Text style={styles.actionText}>Προσθήκη στο{'\n'}Wallet</Text>
+              <Text style={styles.actionText}>Προσθήκη στο Wallet</Text>
             </TouchableOpacity>
             
             <TouchableOpacity style={styles.actionBtn}>
@@ -212,7 +228,7 @@ export default function Index() {
           <View style={styles.actionRow}>
             <TouchableOpacity style={styles.actionBtn} onPress={() => setShowQR(!showQR)}>
               <Image source={require('../../assets/qrcode.jpeg')} style={styles.miniQrIcon} />
-              <Text style={styles.actionText}>Προβολή{'\n'}QR κωδικού</Text>
+              <Text style={styles.actionText}>Προβολή QR</Text>
             </TouchableOpacity>
             
             <TouchableOpacity style={styles.actionBtn}>
@@ -222,76 +238,26 @@ export default function Index() {
           </View>
         </View>
 
-        {showQR ? (
-          <View style={styles.detailQrSection}>
-            <View style={styles.realQrFrame}>
-              <Image source={require('../../assets/qrcode.jpeg')} style={{ width: 180, height: 180 }} />
-            </View>
-            <Text style={styles.detailQrSubtext}>Κωδικός Ασφαλείας: 8492-1024</Text>
+        {/* Data Fields */}
+        <View style={styles.idDetailsBlock}>
+          <View style={styles.detailField}><Text style={styles.fieldLabel}>ΕΠΩΝΥΜΟ</Text><Text style={styles.fieldValue}>ΣΑΚΕΛΛΑΡΟΠΟΥΛΟΣ</Text></View>
+          <View style={styles.detailField}><Text style={styles.fieldLabel}>SURNAME</Text><Text style={styles.fieldValue}>SAKELLAROPOULOS</Text></View>
+          <View style={styles.detailField}><Text style={styles.fieldLabel}>ΟΝΟΜΑ</Text><Text style={styles.fieldValue}>ΓΕΩΡΓΙΟΣ</Text></View>
+          <View style={styles.detailField}><Text style={styles.fieldLabel}>GIVEN NAME</Text><Text style={styles.fieldValue}>GEORGIOS</Text></View>
+          <View style={styles.detailField}><Text style={styles.fieldLabel}>ΟΝΟΜΑ ΠΑΤΕΡΑ</Text><Text style={styles.fieldValue}>ΑΛΕΞΙΟΣ</Text></View>
+          <View style={styles.detailField}><Text style={styles.fieldLabel}>FATHER'S NAME</Text><Text style={styles.fieldValue}>ALEXIOS</Text></View>
+          <View style={styles.detailField}><Text style={styles.fieldLabel}>ΟΝΟΜΑ ΜΗΤΕΡΑΣ (MOTHER'S NAME)</Text><Text style={styles.fieldValue}>ΑΡΕΤΗ</Text></View>
+          <View style={styles.detailField}><Text style={styles.fieldLabel}>ΗΜ. ΓΕΝΝΗΣΗΣ (DATE OF BIRTH)</Text><Text style={styles.fieldValue}>25/02/2007</Text></View>
+          <View style={styles.detailField}><Text style={styles.fieldLabel}>ΤΟΠΟΣ ΓΕΝΝΗΣΗΣ / PLACE OF BIRTH</Text><Text style={styles.fieldValue}>ΠΑΤΡΑ ΑΧΑΪΑΣ</Text></View>
+          <View style={styles.detailField}><Text style={styles.fieldLabel}>ΑΡΧΗ ΕΚΔΟΣΗΣ / ISSUANCE OFFICE</Text><Text style={styles.fieldValue}>Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ</Text></View>
+          
+          {/* Footer Info */}
+          <View style={styles.footerDocs}>
+            <Text style={styles.docCodeText}>Κωδικός εγγράφου: GR-7489201-BXC-9084</Text>
+            <Text style={styles.travelWarningText}>Δεν αποτελεί διεθνές ταξιδιωτικό έγγραφο</Text>
+            <Text style={styles.travelWarningText}>Not an international travel document</Text>
           </View>
-        ) : (
-          <View style={styles.idDetailsBlock}>
-            <View style={styles.detailField}>
-              <Text style={styles.fieldLabel}>ΕΠΩΝΥΜΟ</Text>
-              <Text style={styles.fieldValue}>ΣΑΚΕΛΛΑΡΟΠΟΥΛΟΣ</Text>
-            </View>
-
-            <View style={styles.detailField}>
-              <Text style={styles.fieldLabel}>SURNAME</Text>
-              <Text style={styles.fieldValue}>SAKELLAROPOULOS</Text>
-            </View>
-
-            <View style={styles.detailField}>
-              <Text style={styles.fieldLabel}>ΟΝΟΜΑ</Text>
-              <Text style={styles.fieldValue}>ΓΕΩΡΓΙΟΣ</Text>
-            </View>
-
-            <View style={styles.detailField}>
-              <Text style={styles.fieldLabel}>GIVEN NAME</Text>
-              <Text style={styles.fieldValue}>GEORGIOS</Text>
-            </View>
-
-            <View style={styles.detailField}>
-              <Text style={styles.fieldLabel}>ΟΝΟΜΑ ΠΑΤΕΡΑ</Text>
-              <Text style={styles.fieldValue}>ΑΛΕΞΙΟΣ</Text>
-            </View>
-
-            <View style={styles.detailField}>
-              <Text style={styles.fieldLabel}>FATHER'S NAME</Text>
-              <Text style={styles.fieldValue}>ALEXIOS</Text>
-            </View>
-
-            <View style={styles.detailField}>
-              <Text style={styles.fieldLabel}>ΟΝΟΜΑ ΜΗΤΕΡΑΣ (MOTHER'S NAME)</Text>
-              <Text style={styles.fieldValue}>ΑΡΕΤΗ</Text>
-            </View>
-
-            <View style={styles.detailField}>
-              <Text style={styles.fieldLabel}>ΗΜ. ΓΕΝΝΗΣΗΣ (DATE OF BIRTH)</Text>
-              <Text style={styles.fieldValue}>25/02/2007</Text>
-            </View>
-
-            <View style={styles.detailField}>
-              <Text style={styles.fieldLabel}>ΤΟΠΟΣ ΓΕΝΝΗΣΗΣ (PLACE OF BIRTH)</Text>
-              <Text style={styles.fieldValue}>ΠΑΤΡΑ ΑΧΑΪΑΣ</Text>
-            </View>
-
-            <View style={styles.detailField}>
-              <Text style={styles.fieldLabel}>ΑΡΧΗ ΕΚΔΟΣΗΣ (ISSUANCE OFFICE)</Text>
-              <Text style={styles.fieldValue}>Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ</Text>
-            </View>
-
-            {/* Προσθήκη Footer με τον κωδικό, το εικονίδιο και την προειδοποίηση σε δύο γραμμές */}
-            <View style={styles.footerDocs}>
-              <View style={styles.docCodeRow}>
-                <Text style={styles.docCodeText}>Κωδικός εγγράφου: DAKmMxyii4ljZliNeY5z7A</Text>
-                <Text style={styles.copyIcon}>📋</Text>
-              </View>
-              <Text style={styles.travelWarningText}>Δεν αποτελεί διεθνές ταξιδιωτικό έγγραφο</Text>
-              <Text style={styles.travelWarningText}>Not an international travel document</Text>
-            </View>
-          </View>
-        )}
+        </View>
 
       </ScrollView>
     </SafeAreaView>
@@ -299,6 +265,7 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
+  // Login Styles
   loginContainer: { flex: 1, justifyContent: 'space-between', paddingHorizontal: 24, paddingTop: 60 },
   loginLogoSection: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   circlePulse: {
@@ -319,6 +286,7 @@ const styles = StyleSheet.create({
   loginFooterText: { color: 'rgba(255,255,255,0.5)', fontSize: 14, fontWeight: 'bold' },
   loginFooterCyanText: { color: '#00D2FF', fontSize: 14, fontWeight: 'bold' },
 
+  // Pin Screen Styles
   pinContainer: { flex: 1, backgroundColor: '#0052B4', alignItems: 'center', justifyContent: 'center' },
   pinTitle: { color: '#FFF', fontSize: 20, fontWeight: '600', marginBottom: 30 },
   dotsRow: { flexDirection: 'row', marginBottom: 50 },
@@ -328,6 +296,7 @@ const styles = StyleSheet.create({
   numButton: { width: 75, height: 75, justifyContent: 'center', alignItems: 'center', margin: 8, backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 37.5 },
   numText: { color: '#FFF', fontSize: 24, fontWeight: '600' },
 
+  // Wallet Main Styles
   walletContainer: { flex: 1, backgroundColor: '#0052B4' },
   walletHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, marginTop: 10 },
   mailCircle: { backgroundColor: '#FFF', width: 34, height: 34, borderRadius: 17, justifyContent: 'center', alignItems: 'center' },
@@ -341,6 +310,7 @@ const styles = StyleSheet.create({
   welcomeText: { color: '#FFF', fontSize: 18, fontWeight: '400' },
   userName: { color: '#FFF', fontSize: 26, fontWeight: 'bold', marginBottom: 30, marginTop: 4 },
   
+  // Wallet Cards
   walletCardId: { backgroundColor: '#80E8FF', borderRadius: 16, padding: 20, height: 175, justifyContent: 'space-between', marginBottom: 20 },
   cardMainTitleId: { color: '#FFF', fontSize: 22, fontWeight: 'bold' },
   miniPlusId: { backgroundColor: '#FFF', width: 44, height: 44, borderRadius: 22, justifyContent: 'center', alignItems: 'center' },
@@ -356,25 +326,29 @@ const styles = StyleSheet.create({
   cardTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   cardBottomRow: { flexDirection: 'column' },
 
+  // Bottom Tab Bar
   bottomTabBar: { height: 75, backgroundColor: '#003A80', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingBottom: 12 },
   tabItem: { alignItems: 'center' },
   tabIcon: { fontSize: 24, color: '#66A3FF' },
   tabLabel: { fontSize: 11, color: '#66A3FF', marginTop: 4, fontWeight: '500' },
   tabActive: { color: '#FFF', fontWeight: '700' },
 
+  // ID Detail Screen Styles
   detailContainer: { flex: 1, backgroundColor: '#00377A' },
-  detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#1B6395' },
+  
+  // Header color changed to lighter blue
+  detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#3A86C0' },
   backArrow: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   detailHeaderTitle: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   moreOptions: { color: '#FFF', fontSize: 24, fontWeight: 'bold' },
   detailScroll: { paddingBottom: 40 },
   
-  photoContainer: { backgroundColor: '#1B6395', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, paddingTop: 20, paddingBottom: 10, width: '100%' },
+  // Photo Container color changed to lighter blue
+  photoContainerGradient: { backgroundColor: '#3A86C0', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, paddingTop: 20, paddingBottom: 10, width: '100%' },
   numberSideBox: { flex: 1, justifyContent: 'center' },
   photoRightBox: { marginLeft: 15 },
   idPhotoLive: { width: 120, height: 160, borderRadius: 14, borderWidth: 1, borderColor: 'rgba(255,255,255,0.3)' },
   
-  // Αλλαγή γραμματοσειράς στο πάνω μέρος (να είναι πιο λεπτή/καθαρή)
   idNumberLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 12, fontWeight: '400', letterSpacing: 0.5 },
   idNumberValue: { color: '#FFF', fontSize: 24, fontWeight: '400', marginTop: 2 },
 
@@ -387,19 +361,9 @@ const styles = StyleSheet.create({
 
   idDetailsBlock: { paddingHorizontal: 20, paddingTop: 5 },
   detailField: { marginBottom: 16, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.1)', paddingBottom: 6 },
-  
-  // Νέες ρυθμίσεις γραμματοσειράς (Font Weights & Sizes)
   fieldLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 12, fontWeight: '400', letterSpacing: 0.5 },
   fieldValue: { color: '#FFF', fontSize: 22, fontWeight: '400', marginTop: 2, letterSpacing: 0.2 },
   
-  detailQrSection: { alignItems: 'center', marginTop: 30, paddingVertical: 15 },
-  realQrFrame: { backgroundColor: '#FFF', padding: 15, borderRadius: 12 },
-  detailQrSubtext: { color: 'rgba(255,255,255,0.6)', fontSize: 13, marginTop: 15, fontWeight: '500' },
-
-  // Νέα διάταξη για το κάτω μέρος
   footerDocs: { marginTop: 25, marginBottom: 20, alignItems: 'center', paddingHorizontal: 10 },
-  docCodeRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
-  docCodeText: { color: 'rgba(255,255,255,0.8)', fontSize: 13, fontWeight: '400' },
-  copyIcon: { color: 'rgba(255,255,255,0.8)', fontSize: 16, marginLeft: 6 },
   travelWarningText: { color: 'rgba(255,255,255,0.4)', fontSize: 12, textAlign: 'center', fontWeight: '400', lineHeight: 18 }
 });
