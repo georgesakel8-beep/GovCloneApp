@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, StatusBar, Image, Alert, Animated, ImageBackground } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, Animated, Image, ImageBackground, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function Index() {
   const [screen, setScreen] = useState<'login' | 'pin' | 'wallet' | 'id_detail'>('login');
@@ -273,4 +273,48 @@ const styles = StyleSheet.create({
   walletCardLicense: { backgroundColor: '#FFF', borderRadius: 16, padding: 20, height: 175, justifyContent: 'space-between', marginBottom: 20 },
   cardMainTitleLicense: { color: '#80E8FF', fontSize: 22, fontWeight: 'bold' },
   miniPlusLicense: { backgroundColor: '#00D2FF', width: 44, height: 44, borderRadius: 22, justifyContent: 'center', alignItems: 'center' },
-  miniPlusTextLicense:
+  miniPlusTextLicense: { color: '#FFF', fontSize: 26, fontWeight: 'bold' },
+  cardPlaceholdersLicense: { color: '#00469B', fontSize: 28, fontWeight: 'bold', letterSpacing: 2, marginBottom: 4 },
+  cardLabelLicense: { color: 'rgba(0, 70, 155, 0.3)', fontSize: 11, fontWeight: '600' },
+  cardTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
+  cardBottomRow: { flexDirection: 'column' },
+
+  // ID Detail Screen Styles
+  detailContainer: { flex: 1, backgroundColor: '#00377A' },
+  detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#3A86C0', zIndex: 5 },
+  backArrow: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
+  detailHeaderTitle: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
+  moreOptions: { color: '#FFF', fontSize: 24, fontWeight: 'bold' },
+  
+  photoContainerGradient: { backgroundColor: '#3A86C0', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 2 },
+  numberSideBox: { flex: 1, justifyContent: 'flex-start' },
+  
+  photoWrapperAbsolute: { position: 'absolute', right: 20, top: 85, zIndex: 99, elevation: 99 },
+  idPhotoLive: { width: 115, height: 150, borderRadius: 12 },
+  
+  idNumberLabel: { color: 'rgba(255,255,255,0.75)', fontSize: 12, fontWeight: '400' },
+  idNumberValue: { color: '#FFF', fontSize: 23, fontWeight: 'bold', marginTop: 2 },
+
+  mainDarkSection: { backgroundColor: '#00377A', paddingTop: 110, zIndex: 1 },
+
+  actionGrid: { paddingHorizontal: 16, paddingBottom: 15 },
+  actionRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
+  actionBtn: { backgroundColor: '#FFFFFF', borderRadius: 10, width: '48%', flexDirection: 'row', alignItems: 'center', paddingVertical: 12, paddingHorizontal: 12, borderWidth: 1, borderColor: '#EAEAEA' },
+  actionBtnActive: { borderColor: '#00D2FF', backgroundColor: '#F0FAFF' },
+  actionIconImage: { width: 20, height: 20, marginRight: 8, resizeMode: 'contain' },
+  miniQrIcon: { width: 20, height: 20, marginRight: 8, borderRadius: 4 },
+  actionText: { color: '#1A1A1A', fontSize: 13, fontWeight: 'bold', flexShrink: 1 },
+
+  idDetailsBlock: { paddingHorizontal: 20, paddingTop: 10 },
+  detailField: { marginBottom: 15, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.08)', paddingBottom: 6 },
+  fieldLabel: { color: 'rgba(255,255,255,0.45)', fontSize: 10.5, fontWeight: '300', letterSpacing: 0.8 },
+  fieldValue: { color: '#FFF', fontSize: 18.5, fontWeight: '500', marginTop: 2, letterSpacing: 0.2 },
+  
+  detailQrSection: { alignItems: 'center', marginTop: 25, paddingVertical: 15, width: '100%' },
+  realQrFrame: { backgroundColor: '#FFF', padding: 12, borderRadius: 16, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 4, elevation: 5 },
+  detailQrSubtext: { color: 'rgba(255,255,255,0.6)', fontSize: 13, marginTop: 12, fontWeight: '500', textAlign: 'center' },
+
+  footerDocs: { marginTop: 25, marginBottom: 20, alignItems: 'center' },
+  docCodeText: { color: 'rgba(255,255,255,0.6)', fontSize: 12, marginBottom: 8 },
+  travelWarningText: { color: 'rgba(255,255,255,0.35)', fontSize: 11, textAlign: 'center', lineHeight: 16 }
+});
