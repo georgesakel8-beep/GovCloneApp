@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert, Animated, Image, ImageBackground, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Animated, Image, ImageBackground, Platform, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function Index() {
   const [screen, setScreen] = useState<'login' | 'pin' | 'wallet' | 'id_detail'>('login');
@@ -141,9 +141,9 @@ export default function Index() {
         <Text style={styles.detailHeaderTitle}>Δελτίο Ταυτότητας</Text>
         <TouchableOpacity><Text style={styles.moreOptions}>⋮</Text></TouchableOpacity>
       </View>
-      
+
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }} style={{ flex: 1 }}>
-        
+
         {/* Επάνω Ανοιχτό Γαλάζιο Πλαίσιο */}
         <View style={styles.photoContainerGradient}>
           <View style={styles.numberSideBox}>
@@ -154,15 +154,15 @@ export default function Index() {
           </View>
         </View>
 
-        {/* Φωτογραφία (Χωρίς λευκό περίγραμμα, κρέμεται ανάμεσα στα 2 χρώματα) */}
+        {/* Φωτογραφία */}
         <View style={styles.photoWrapperAbsolute}>
           <Image source={require('../../assets/myphoto.jpeg.jpeg')} style={styles.idPhotoLive} />
         </View>
 
         {/* Κάτω Σκούρο Μπλε Πλαίσιο */}
         <View style={styles.mainDarkSection}>
-          
-          {/* Τα 4 κουμπιά έγιναν ΛΕΥΚΑ */}
+
+          {/* Action Grid */}
           <View style={styles.actionGrid}>
             <View style={styles.actionRow}>
               <TouchableOpacity style={styles.actionBtn}>
@@ -198,7 +198,7 @@ export default function Index() {
             <View style={styles.detailField}><Text style={styles.fieldLabel}>ΗΜ. ΓΕΝΝΗΣΗΣ (DATE OF BIRTH)</Text><Text style={styles.fieldValue}>25/02/2007</Text></View>
             <View style={styles.detailField}><Text style={styles.fieldLabel}>ΤΟΠΟΣ ΓΕΝΝΗΣΗΣ / PLACE OF BIRTH</Text><Text style={styles.fieldValue}>ΠΑΤΡΑ ΑΧΑΪΑΣ</Text></View>
             <View style={styles.detailField}><Text style={styles.fieldLabel}>ΑΡΧΗ ΕΚΔΟΣΗΣ / ISSUANCE OFFICE</Text><Text style={styles.fieldValue}>Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ</Text></View>
-            
+
             {showQR && (
               <View style={styles.detailQrSection}>
                 <View style={styles.realQrFrame}>
@@ -221,70 +221,73 @@ export default function Index() {
   );
 }
 
+// Καθαρή sans-serif δομή που ακολουθεί πιστά το UI του gov.gr
+const GOV_FONT = Platform.OS === 'ios' ? 'System' : 'sans-serif';
+
 const styles = StyleSheet.create({
   // Login Styles
   loginContainer: { flex: 1, justifyContent: 'space-between', paddingHorizontal: 24, paddingTop: 60 },
   loginLogoSection: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   circlePulse: { width: 210, height: 210, borderRadius: 105, borderWidth: 2, borderColor: '#00D2FF', justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 82, 180, 0.25)' },
-  loginLogoText: { color: '#FFF', fontSize: 42, fontWeight: 'bold' },
-  loginLogoSubtext: { color: '#00D2FF', fontSize: 22, fontWeight: '600', marginTop: -3 },
+  loginLogoText: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 42, fontWeight: 'bold' },
+  loginLogoSubtext: { fontFamily: GOV_FONT, color: '#00D2FF', fontSize: 22, fontWeight: '600', marginTop: -3 },
   loginButtonSection: { width: '100%', marginBottom: 30 },
   btnTaxis: { backgroundColor: '#00D2FF', paddingVertical: 16, borderRadius: 12, alignItems: 'center', marginBottom: 14 },
-  btnTaxisText: { color: '#0052B4', fontSize: 16, fontWeight: '700' },
+  btnTaxisText: { fontFamily: GOV_FONT, color: '#0052B4', fontSize: 16, fontWeight: '700' },
   btnOutline: { backgroundColor: 'transparent', paddingVertical: 16, borderRadius: 12, alignItems: 'center', borderWidth: 1.5, borderColor: 'rgba(255,255,255,0.4)', marginBottom: 14 },
-  btnOutlineText: { color: '#FFF', fontSize: 15, fontWeight: '600' },
+  btnOutlineText: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 15, fontWeight: '600' },
   loginDividerRow: { flexDirection: 'row', alignItems: 'center', marginVertical: 15 },
   loginLine: { flex: 1, height: 1, backgroundColor: 'rgba(255,255,255,0.2)' },
-  loginDividerText: { color: 'rgba(255,255,255,0.6)', paddingHorizontal: 10, fontSize: 13 },
+  loginDividerText: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.6)', paddingHorizontal: 10, fontSize: 13 },
   loginFooter: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingBottom: 25 },
-  loginFooterText: { color: 'rgba(255,255,255,0.5)', fontSize: 14, fontWeight: 'bold' },
-  loginFooterCyanText: { color: '#00D2FF', fontSize: 14, fontWeight: 'bold' },
+  loginFooterText: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.5)', fontSize: 14, fontWeight: 'bold' },
+  loginFooterCyanText: { fontFamily: GOV_FONT, color: '#00D2FF', fontSize: 14, fontWeight: 'bold' },
 
   // Pin Screen Styles
   pinContainer: { flex: 1, backgroundColor: '#0052B4', alignItems: 'center', justifyContent: 'center' },
-  pinTitle: { color: '#FFF', fontSize: 20, fontWeight: '600', marginBottom: 30 },
+  pinTitle: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: '600', marginBottom: 30 },
   dotsRow: { flexDirection: 'row', marginBottom: 50 },
   dot: { width: 16, height: 16, borderRadius: 8, borderWidth: 2, borderColor: '#FFF', marginHorizontal: 12 },
   dotFilled: { backgroundColor: '#00D2FF', borderColor: '#00D2FF' },
   numPad: { flexDirection: 'row', flexWrap: 'wrap', width: 280, justifyContent: 'center' },
   numButton: { width: 75, height: 75, justifyContent: 'center', alignItems: 'center', margin: 8, backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 37.5 },
-  numText: { color: '#FFF', fontSize: 24, fontWeight: '600' },
+  numText: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 24, fontWeight: '600' },
 
   // Wallet Main Styles
   walletContainer: { flex: 1, backgroundColor: '#0052B4' },
   walletHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, marginTop: 10 },
   mailCircle: { backgroundColor: '#FFF', width: 34, height: 34, borderRadius: 17, justifyContent: 'center', alignItems: 'center' },
-  walletHeaderIcon: { color: '#0052B4', fontSize: 16 },
+  walletHeaderIcon: { fontFamily: GOV_FONT, color: '#0052B4', fontSize: 16 },
   walletHeaderLogo: { alignItems: 'center' },
-  wLogoMain: { color: '#FFF', fontSize: 22, fontWeight: 'bold' },
-  wLogoSub: { color: '#00D2FF', fontSize: 13, marginTop: -3, fontWeight: '600' },
+  wLogoMain: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 22, fontWeight: 'bold' },
+  wLogoSub: { fontFamily: GOV_FONT, color: '#00D2FF', fontSize: 13, marginTop: -3, fontWeight: '600' },
   walletAddBtn: { backgroundColor: '#00D2FF', width: 34, height: 34, borderRadius: 17, justifyContent: 'center', alignItems: 'center' },
-  walletAddBtnText: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
+  walletAddBtnText: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   walletContent: { padding: 24 },
-  welcomeText: { color: '#FFF', fontSize: 18, fontWeight: '400' },
-  userName: { color: '#FFF', fontSize: 26, fontWeight: 'bold', marginBottom: 30, marginTop: 4 },
-  
+  welcomeText: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 18, fontWeight: '400' },
+  userName: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 26, fontWeight: 'bold', marginBottom: 30, marginTop: 4 },
+
   walletCardId: { backgroundColor: '#80E8FF', borderRadius: 16, padding: 20, height: 175, justifyContent: 'space-between', marginBottom: 20 },
-  cardMainTitleId: { color: '#FFF', fontSize: 22, fontWeight: 'bold' },
+  cardMainTitleId: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 22, fontWeight: 'bold' },
   miniPlusId: { backgroundColor: '#FFF', width: 44, height: 44, borderRadius: 22, justifyContent: 'center', alignItems: 'center' },
-  miniPlusTextId: { color: '#00D2FF', fontSize: 26, fontWeight: 'bold' },
-  cardPlaceholdersId: { color: '#00469B', fontSize: 28, fontWeight: 'bold', letterSpacing: 2, marginBottom: 4 },
-  cardLabelId: { color: 'rgba(0, 70, 155, 0.5)', fontSize: 11, fontWeight: '600' },
+  miniPlusTextId: { fontFamily: GOV_FONT, color: '#00D2FF', fontSize: 26, fontWeight: 'bold' },
+  cardPlaceholdersId: { fontFamily: GOV_FONT, color: '#00469B', fontSize: 28, fontWeight: 'bold', letterSpacing: 2, marginBottom: 4 },
+  cardLabelId: { fontFamily: GOV_FONT, color: 'rgba(0, 70, 155, 0.5)', fontSize: 11, fontWeight: '600' },
   walletCardLicense: { backgroundColor: '#FFF', borderRadius: 16, padding: 20, height: 175, justifyContent: 'space-between', marginBottom: 20 },
-  cardMainTitleLicense: { color: '#80E8FF', fontSize: 22, fontWeight: 'bold' },
+  cardMainTitleLicense: { fontFamily: GOV_FONT, color: '#80E8FF', fontSize: 22, fontWeight: 'bold' },
   miniPlusLicense: { backgroundColor: '#00D2FF', width: 44, height: 44, borderRadius: 22, justifyContent: 'center', alignItems: 'center' },
-  miniPlusTextLicense: { color: '#FFF', fontSize: 26, fontWeight: 'bold' },
-  cardPlaceholdersLicense: { color: '#00469B', fontSize: 28, fontWeight: 'bold', letterSpacing: 2, marginBottom: 4 },
-  cardLabelLicense: { color: 'rgba(0, 70, 155, 0.3)', fontSize: 11, fontWeight: '600' },
+  miniPlusTextLicense: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 26, fontWeight: 'bold' },
+  cardPlaceholdersLicense: { fontFamily: GOV_FONT, color: '#00469B', fontSize: 28, fontWeight: 'bold', letterSpacing: 2, marginBottom: 4 },
+  cardLabelLicense: { fontFamily: GOV_FONT, color: 'rgba(0, 70, 155, 0.3)', fontSize: 11, fontWeight: '600' },
   cardTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   cardBottomRow: { flexDirection: 'column' },
 
   // ID Detail Screen Styles
   detailContainer: { flex: 1, backgroundColor: '#00377A' },
   detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#3A86C0', zIndex: 5 },
-  backArrow: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
-  detailHeaderTitle: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
-  moreOptions: { color: '#FFF', fontSize: 24, fontWeight: 'bold' },
+  backArrow: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: 'bold' },
+  detailHeaderTitle: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: 'bold' },
+  moreOptions: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 24, fontWeight: 'bold' },
   
   photoContainerGradient: { backgroundColor: '#3A86C0', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 2 },
   numberSideBox: { flex: 1, justifyContent: 'flex-start' },
@@ -292,8 +295,8 @@ const styles = StyleSheet.create({
   photoWrapperAbsolute: { position: 'absolute', right: 20, top: 85, zIndex: 99, elevation: 99 },
   idPhotoLive: { width: 115, height: 150, borderRadius: 12 },
   
-  idNumberLabel: { color: 'rgba(255,255,255,0.75)', fontSize: 12, fontWeight: '400' },
-  idNumberValue: { color: '#FFF', fontSize: 23, fontWeight: 'bold', marginTop: 2 },
+  idNumberLabel: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.75)', fontSize: 12, fontWeight: '400' },
+  idNumberValue: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 23, fontWeight: 'bold', marginTop: 2 },
 
   mainDarkSection: { backgroundColor: '#00377A', paddingTop: 110, zIndex: 1 },
 
@@ -303,18 +306,18 @@ const styles = StyleSheet.create({
   actionBtnActive: { borderColor: '#00D2FF', backgroundColor: '#F0FAFF' },
   actionIconImage: { width: 20, height: 20, marginRight: 8, resizeMode: 'contain' },
   miniQrIcon: { width: 20, height: 20, marginRight: 8, borderRadius: 4 },
-  actionText: { color: '#1A1A1A', fontSize: 13, fontWeight: 'bold', flexShrink: 1 },
+  actionText: { fontFamily: GOV_FONT, color: '#1A1A1A', fontSize: 13, fontWeight: 'bold', flexShrink: 1 },
 
   idDetailsBlock: { paddingHorizontal: 20, paddingTop: 10 },
   detailField: { marginBottom: 15, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.08)', paddingBottom: 6 },
-  fieldLabel: { color: 'rgba(255,255,255,0.45)', fontSize: 10.5, fontWeight: '300', letterSpacing: 0.8 },
-  fieldValue: { color: '#FFF', fontSize: 18.5, fontWeight: '500', marginTop: 2, letterSpacing: 0.2 },
+  fieldLabel: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.45)', fontSize: 10.5, fontWeight: '400', letterSpacing: 0.8 },
+  fieldValue: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 18.5, fontWeight: '600', marginTop: 2, letterSpacing: 0.2 },
   
   detailQrSection: { alignItems: 'center', marginTop: 25, paddingVertical: 15, width: '100%' },
   realQrFrame: { backgroundColor: '#FFF', padding: 12, borderRadius: 16, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 4, elevation: 5 },
-  detailQrSubtext: { color: 'rgba(255,255,255,0.6)', fontSize: 13, marginTop: 12, fontWeight: '500', textAlign: 'center' },
+  detailQrSubtext: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.6)', fontSize: 13, marginTop: 12, fontWeight: '500', textAlign: 'center' },
 
   footerDocs: { marginTop: 25, marginBottom: 20, alignItems: 'center' },
-  docCodeText: { color: 'rgba(255,255,255,0.6)', fontSize: 12, marginBottom: 8 },
-  travelWarningText: { color: 'rgba(255,255,255,0.35)', fontSize: 11, textAlign: 'center', lineHeight: 16 }
+  docCodeText: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.6)', fontSize: 12, marginBottom: 8 },
+  travelWarningText: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.35)', fontSize: 11, textAlign: 'center', lineHeight: 16 }
 });
