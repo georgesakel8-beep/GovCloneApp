@@ -148,9 +148,9 @@ export default function Index() {
         <View style={styles.photoContainerGradient}>
           <View style={styles.numberSideBox}>
             <Text style={styles.idNumberLabel}>Αριθμός ταυτότητας:</Text>
-            <Text style={styles.idNumberValue}>A0714079</Text>
+            <Text style={styles.idNumberValue}>A03449095</Text>
             <Text style={[styles.idNumberLabel, { marginTop: 12 }]}>Ημ. Έκδοσης:</Text>
-            <Text style={[styles.idNumberValue, { fontSize: 18, marginTop: 2 }]}>08/05/2025</Text>
+            <Text style={[styles.idNumberValue, { fontSize: 20, fontWeight: '500', marginTop: 2 }]}>07/05/2026</Text>
           </View>
         </View>
 
@@ -186,7 +186,7 @@ export default function Index() {
             </View>
           </View>
 
-          {/* Στοιχεία Κατόχου */}
+          {/* Στοιχεία Κατόχου - Ρυθμισμένα ακριβώς όπως στη φωτογραφία */}
           <View style={styles.idDetailsBlock}>
             <View style={styles.detailField}><Text style={styles.fieldLabel}>ΕΠΩΝΥΜΟ</Text><Text style={styles.fieldValue}>ΣΑΚΕΛΛΑΡΟΠΟΥΛΟΣ</Text></View>
             <View style={styles.detailField}><Text style={styles.fieldLabel}>SURNAME</Text><Text style={styles.fieldValue}>SAKELLAROPOULOS</Text></View>
@@ -221,7 +221,7 @@ export default function Index() {
   );
 }
 
-// Καθαρή sans-serif δομή που ακολουθεί πιστά το UI του gov.gr
+// Καθαρή, εργοστασιακή sans-serif γραμματοσειρά συστήματος
 const GOV_FONT = Platform.OS === 'ios' ? 'System' : 'sans-serif';
 
 const styles = StyleSheet.create({
@@ -295,8 +295,8 @@ const styles = StyleSheet.create({
   photoWrapperAbsolute: { position: 'absolute', right: 20, top: 85, zIndex: 99, elevation: 99 },
   idPhotoLive: { width: 115, height: 150, borderRadius: 12 },
   
-  idNumberLabel: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.75)', fontSize: 12, fontWeight: '400' },
-  idNumberValue: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 23, fontWeight: 'bold', marginTop: 2 },
+  idNumberLabel: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.75)', fontSize: 13, fontWeight: '400' },
+  idNumberValue: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 27, fontWeight: 'bold', marginTop: 2 },
 
   mainDarkSection: { backgroundColor: '#00377A', paddingTop: 110, zIndex: 1 },
 
@@ -308,10 +308,11 @@ const styles = StyleSheet.create({
   miniQrIcon: { width: 20, height: 20, marginRight: 8, borderRadius: 4 },
   actionText: { fontFamily: GOV_FONT, color: '#1A1A1A', fontSize: 13, fontWeight: 'bold', flexShrink: 1 },
 
+  // Εδώ έγιναν οι αλλαγές για να είναι μεγάλα και λεπτά τα γράμματα όπως στο IMG_5423_2.jpg
   idDetailsBlock: { paddingHorizontal: 20, paddingTop: 10 },
-  detailField: { marginBottom: 15, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.08)', paddingBottom: 6 },
-  fieldLabel: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.45)', fontSize: 10.5, fontWeight: '400', letterSpacing: 0.8 },
-  fieldValue: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 18.5, fontWeight: '600', marginTop: 2, letterSpacing: 0.2 },
+  detailField: { marginBottom: 18, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.15)', paddingBottom: 8 },
+  fieldLabel: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.65)', fontSize: 12, fontWeight: '400', letterSpacing: 0.5 },
+  fieldValue: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 25, fontWeight: '400', marginTop: 4, letterSpacing: 0.2 },
   
   detailQrSection: { alignItems: 'center', marginTop: 25, paddingVertical: 15, width: '100%' },
   realQrFrame: { backgroundColor: '#FFF', padding: 12, borderRadius: 16, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 4, elevation: 5 },
