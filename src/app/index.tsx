@@ -1,11 +1,52 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Alert, Animated, Image, ImageBackground, Platform, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+// --- ΟΡΙΣΜΟΣ ΔΕΔΟΜΕΝΩΝ ΓΙΑ ΚΑΘΕ ΧΡΗΣΤΗ ---
+const PROFILES = {
+  me: {
+    fullName: 'ΓΕΩΡΓΙΟΣ ΣΑΚΕΛΛΑΡΟΠΟΥΛΟΣ',
+    lastName: 'ΣΑΚΕΛΛΑΡΟΠΟΥΛΟΣ',
+    firstName: 'ΓΕΩΡΓΙΟΣ',
+    givenNameEn: 'GEORGIOS',
+    surnameEn: 'SAKELLAROPOULOS',
+    idNumber: 'A03449095',
+    issueDate: '07/05/2026',
+    birthDate: '25/02/2007',
+    fatherName: 'ΑΛΕΞΙΟΣ',
+    fatherNameEn: 'ALEXIOS',
+    motherName: 'ΑΡΕΤΗ',
+    birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
+    issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
+    docCode: 'GR-7489201-BXC-9084',
+    photo: require('../../assets/myphoto.jpeg.jpeg'), // Η δική σου φωτογραφία
+  },
+  friend: {
+    fullName: 'ΑΛΜΠΑΝ ΣΕΡΙΦΑΙ',
+    lastName: 'ΣΕΡΙΦΑΙ',
+    firstName: 'ΑΛΜΠΑΝ',
+    givenNameEn: 'ALΒAN',
+    surnameEn: 'SERIFAÏ',
+    idNumber: 'AP604273',
+    issueDate: '14/09/2007',
+    birthDate: '14/08/2007',
+    fatherName: 'ΙΡΙΟΝ',
+    fatherNameEn: 'IRION',
+    motherName: 'ELDISA',
+    birthPlace: 'ΠΑΤΡΑ ΑΧΑΙΑΣ',
+    issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
+    docCode: 'GR-1122334-KLP-5566',
+    photo: require('../../assets/friendphoto.jpeg'), // Βάλε εδώ το αρχείο του φίλου σου (π.χ. require('../../assets/friend.jpg'))
+  }
+};
+
 export default function Index() {
   const [screen, setScreen] = useState<'login' | 'pin' | 'wallet' | 'id_detail'>('login');
   const [pin, setPin] = useState('');
   const [showQR, setShowQR] = useState(false);
   const scaleAnim = useRef(new Animated.Value(1)).current;
+
+  // Εδώ κρατάμε ποιο προφίλ είναι ενεργό κάθε φορά
+  const [currentProfile, setCurrentProfile] = useState(PROFILES.me);
 
   useEffect(() => {
     Animated.loop(
@@ -20,7 +61,13 @@ export default function Index() {
     if (pin.length < 4) {
       const newPin = pin + value;
       setPin(newPin);
+      
+      // Έλεγχος PIN για τον διαχωρισμό χρηστών
       if (newPin === '1234') { 
+        setCurrentProfile(PROFILES.me); // Φορτώνει εσένα
+        setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
+      } else if (newPin === '5678') { 
+        setCurrentProfile(PROFILES.friend); // Φορτώνει τον φίλο σου
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
       } else if (newPin.length === 4) {
         setTimeout(() => { Alert.alert('Σφάλμα', 'Λανθασμένος κωδικός PIN'); setPin(''); }, 200);
@@ -104,7 +151,7 @@ export default function Index() {
         </View>
         <ScrollView contentContainerStyle={styles.walletContent}>
           <Text style={styles.welcomeText}>Καλωσόρισες,</Text>
-          <Text style={styles.userName}>ΓΕΩΡΓΙΟΣ ΣΑΚΕΛΛΑΡΟΠΟΥΛΟΣ</Text>
+          <Text style={styles.userName}>{currentProfile.fullName}</Text>
           <TouchableOpacity style={styles.walletCardId} onPress={() => setScreen('id_detail')}>
             <View style={styles.cardTopRow}>
               <Text style={styles.cardMainTitleId}>Δελτίο Ταυτότητας</Text>
@@ -148,15 +195,15 @@ export default function Index() {
         <View style={styles.photoContainerGradient}>
           <View style={styles.numberSideBox}>
             <Text style={styles.idNumberLabel}>Αριθμός ταυτότητας:</Text>
-            <Text style={styles.idNumberValue}>A03449095</Text>
+            <Text style={styles.idNumberValue}>{currentProfile.idNumber}</Text>
             <Text style={[styles.idNumberLabel, { marginTop: 12 }]}>Ημ. Έκδοσης:</Text>
-            <Text style={[styles.idNumberValue, { fontSize: 20, fontWeight: '500', marginTop: 2 }]}>07/05/2026</Text>
+            <Text style={[styles.idNumberValue, { fontSize: 20, fontWeight: '500', marginTop: 2 }]}>{currentProfile.issueDate}</Text>
           </View>
         </View>
 
-        {/* Φωτογραφία */}
+        {/* Δυναμική Φωτογραφία */}
         <View style={styles.photoWrapperAbsolute}>
-          <Image source={require('../../assets/myphoto.jpeg.jpeg')} style={styles.idPhotoLive} />
+          <Image source={currentProfile.photo} style={styles.idPhotoLive} />
         </View>
 
         {/* Κάτω Σκούρο Μπλε Πλαίσιο */}
@@ -186,18 +233,18 @@ export default function Index() {
             </View>
           </View>
 
-          {/* Στοιχεία Κατόχου - Ρυθμισμένα ακριβώς όπως στη φωτογραφία */}
+          {/* Δυναμικά Στοιχεία Κατόχου */}
           <View style={styles.idDetailsBlock}>
-            <View style={styles.detailField}><Text style={styles.fieldLabel}>ΕΠΩΝΥΜΟ</Text><Text style={styles.fieldValue}>ΣΑΚΕΛΛΑΡΟΠΟΥΛΟΣ</Text></View>
-            <View style={styles.detailField}><Text style={styles.fieldLabel}>SURNAME</Text><Text style={styles.fieldValue}>SAKELLAROPOULOS</Text></View>
-            <View style={styles.detailField}><Text style={styles.fieldLabel}>ΟΝΟΜΑ</Text><Text style={styles.fieldValue}>ΓΕΩΡΓΙΟΣ</Text></View>
-            <View style={styles.detailField}><Text style={styles.fieldLabel}>GIVEN NAME</Text><Text style={styles.fieldValue}>GEORGIOS</Text></View>
-            <View style={styles.detailField}><Text style={styles.fieldLabel}>ΟΝΟΜΑ ΠΑΤΕΡΑ</Text><Text style={styles.fieldValue}>ΑΛΕΞΙΟΣ</Text></View>
-            <View style={styles.detailField}><Text style={styles.fieldLabel}>FATHER'S NAME</Text><Text style={styles.fieldValue}>ALEXIOS</Text></View>
-            <View style={styles.detailField}><Text style={styles.fieldLabel}>ΟΝΟΜΑ ΜΗΤΕΡΑΣ (MOTHER'S NAME)</Text><Text style={styles.fieldValue}>ΑΡΕΤΗ</Text></View>
-            <View style={styles.detailField}><Text style={styles.fieldLabel}>ΗΜ. ΓΕΝΝΗΣΗΣ (DATE OF BIRTH)</Text><Text style={styles.fieldValue}>25/02/2007</Text></View>
-            <View style={styles.detailField}><Text style={styles.fieldLabel}>ΤΟΠΟΣ ΓΕΝΝΗΣΗΣ / PLACE OF BIRTH</Text><Text style={styles.fieldValue}>ΠΑΤΡΑ ΑΧΑΪΑΣ</Text></View>
-            <View style={styles.detailField}><Text style={styles.fieldLabel}>ΑΡΧΗ ΕΚΔΟΣΗΣ / ISSUANCE OFFICE</Text><Text style={styles.fieldValue}>Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ</Text></View>
+            <View style={styles.detailField}><Text style={styles.fieldLabel}>ΕΠΩΝΥΜΟ</Text><Text style={styles.fieldValue}>{currentProfile.lastName}</Text></View>
+            <View style={styles.detailField}><Text style={styles.fieldLabel}>SURNAME</Text><Text style={styles.fieldValue}>{currentProfile.surnameEn}</Text></View>
+            <View style={styles.detailField}><Text style={styles.fieldLabel}>ΟΝΟΜΑ</Text><Text style={styles.fieldValue}>{currentProfile.firstName}</Text></View>
+            <View style={styles.detailField}><Text style={styles.fieldLabel}>GIVEN NAME</Text><Text style={styles.fieldValue}>{currentProfile.givenNameEn}</Text></View>
+            <View style={styles.detailField}><Text style={styles.fieldLabel}>ΟΝΟΜΑ ΠΑΤΕΡΑ</Text><Text style={styles.fieldValue}>{currentProfile.fatherName}</Text></View>
+            <View style={styles.detailField}><Text style={styles.fieldLabel}>FATHER'S NAME</Text><Text style={styles.fieldValue}>{currentProfile.fatherNameEn}</Text></View>
+            <View style={styles.detailField}><Text style={styles.fieldLabel}>ΟΝΟΜΑ ΜΗΤΕΡΑΣ (MOTHER'S NAME)</Text><Text style={styles.fieldValue}>{currentProfile.motherName}</Text></View>
+            <View style={styles.detailField}><Text style={styles.fieldLabel}>ΗΜ. ΓΕΝΝΗΣΗΣ (DATE OF BIRTH)</Text><Text style={styles.fieldValue}>{currentProfile.birthDate}</Text></View>
+            <View style={styles.detailField}><Text style={styles.fieldLabel}>ΤΟΠΟΣ ΓΕΝΝΗΣΗΣ / PLACE OF BIRTH</Text><Text style={styles.fieldValue}>{currentProfile.birthPlace}</Text></View>
+            <View style={styles.detailField}><Text style={styles.fieldLabel}>ΑΡΧΗ ΕΚΔΟΣΗΣ / ISSUANCE OFFICE</Text><Text style={styles.fieldValue}>{currentProfile.issuanceOffice}</Text></View>
 
             {showQR && (
               <View style={styles.detailQrSection}>
@@ -209,7 +256,7 @@ export default function Index() {
             )}
 
             <View style={styles.footerDocs}>
-              <Text style={styles.docCodeText}>Κωδικός εγγράφου: GR-7489201-BXC-9084</Text>
+              <Text style={styles.docCodeText}>Κωδικός εγγράφου: {currentProfile.docCode}</Text>
               <Text style={styles.travelWarningText}>Δεν αποτελεί διεθνές ταξιδιωτικό έγγραφο</Text>
               <Text style={styles.travelWarningText}>Not an international travel document</Text>
             </View>
@@ -221,7 +268,6 @@ export default function Index() {
   );
 }
 
-// Καθαρή, εργοστασιακή sans-serif γραμματοσειρά συστήματος
 const GOV_FONT = Platform.OS === 'ios' ? 'System' : 'sans-serif';
 
 const styles = StyleSheet.create({
@@ -308,7 +354,6 @@ const styles = StyleSheet.create({
   miniQrIcon: { width: 20, height: 20, marginRight: 8, borderRadius: 4 },
   actionText: { fontFamily: GOV_FONT, color: '#1A1A1A', fontSize: 13, fontWeight: 'bold', flexShrink: 1 },
 
-  // Εδώ έγιναν οι αλλαγές για να είναι μεγάλα και λεπτά τα γράμματα όπως στο IMG_5423_2.jpg
   idDetailsBlock: { paddingHorizontal: 20, paddingTop: 10 },
   detailField: { marginBottom: 18, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.15)', paddingBottom: 8 },
   fieldLabel: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.65)', fontSize: 12, fontWeight: '400', letterSpacing: 0.5 },
