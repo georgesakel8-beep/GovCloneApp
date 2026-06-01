@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
   cardBottomRow: { flexDirection: 'column' },
 
   // ID Detail Screen Styles
-  detailContainer: { flex: 1, backgroundColor: '#00377A' },
+  detailContainer: { flex: 1, backgroundColor: '#030c96' },
   detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#3A86C0', zIndex: 5 },
   backArrow: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   detailHeaderTitle: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: 'bold' },
@@ -344,7 +344,7 @@ const styles = StyleSheet.create({
   idNumberLabel: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.75)', fontSize: 13, fontWeight: '400' },
   idNumberValue: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 27, fontWeight: 'bold', marginTop: 2 },
 
-  mainDarkSection: { backgroundColor: '#00377A', paddingTop: 110, zIndex: 1 },
+  mainDarkSection: { backgroundColor: '#0077ff', paddingTop: 110, zIndex: 1 },
 
   actionGrid: { paddingHorizontal: 16, paddingBottom: 15 },
   actionRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
