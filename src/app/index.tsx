@@ -18,7 +18,7 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-7489201-BXC-9084',
-    photo: require('../../assets/myphoto.jpeg.jpeg'), // Η δική σου φωτογραφία
+    photo: require('../../assets/myphoto.jpeg.jpeg'),
   },
   friend: {
     fullName: 'ΑΛΜΠΑΝ ΣΕΡΙΦΑΙ',
@@ -35,7 +35,7 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΙΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-1122334-KLP-5566',
-    photo: require('../../assets/friendphoto.jpeg'), // Βάλε εδώ το αρχείο του φίλου σου (π.χ. require('../../assets/friend.jpg'))
+    photo: require('../../assets/friendphoto.jpeg'),
   }
 };
 
@@ -45,7 +45,6 @@ export default function Index() {
   const [showQR, setShowQR] = useState(false);
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
-  // Εδώ κρατάμε ποιο προφίλ είναι ενεργό κάθε φορά
   const [currentProfile, setCurrentProfile] = useState(PROFILES.me);
 
   useEffect(() => {
@@ -62,12 +61,11 @@ export default function Index() {
       const newPin = pin + value;
       setPin(newPin);
       
-      // Έλεγχος PIN για τον διαχωρισμό χρηστών
       if (newPin === '1234') { 
-        setCurrentProfile(PROFILES.me); // Φορτώνει εσένα
+        setCurrentProfile(PROFILES.me);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
       } else if (newPin === '5678') { 
-        setCurrentProfile(PROFILES.friend); // Φορτώνει τον φίλο σου
+        setCurrentProfile(PROFILES.friend);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
       } else if (newPin.length === 4) {
         setTimeout(() => { Alert.alert('Σφάλμα', 'Λανθασμένος κωδικός PIN'); setPin(''); }, 200);
@@ -180,7 +178,7 @@ export default function Index() {
   // --- 4. ID DETAIL SCREEN ---
   return (
     <SafeAreaView style={styles.detailContainer}>
-      <StatusBar barStyle="light-content" backgroundColor="#3A86C0" />
+      <StatusBar barStyle="light-content" backgroundColor="#00D2FF" />
       <View style={styles.detailHeader}>
         <TouchableOpacity onPress={() => { setScreen('wallet'); setShowQR(false); }}>
           <Text style={styles.backArrow}>◀</Text>
@@ -328,14 +326,14 @@ const styles = StyleSheet.create({
   cardTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   cardBottomRow: { flexDirection: 'column' },
 
-  // ID Detail Screen Styles
-  detailContainer: { flex: 1, backgroundColor: '#0077ff' },
-  detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#3A86C0', zIndex: 5 },
+  // ID Detail Screen Styles - ΕΔΩ ΕΓΙΝΑΝ ΟΙ ΔΙΟΡΘΩΣΕΙΣ
+  detailContainer: { flex: 1, backgroundColor: '#0b0197' }, // Διορθώθηκε για να μην βγάζει άλλο χρώμα στο κάτω μέρος
+  detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#00D2FF', zIndex: 5 }, // Μπήκε το κυανό χρώμα
   backArrow: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   detailHeaderTitle: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   moreOptions: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 24, fontWeight: 'bold' },
   
-  photoContainerGradient: { backgroundColor: '#3A86C0', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 2 },
+  photoContainerGradient: { backgroundColor: '#0077ff', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 2 }, // Μπήκε το κυανό χρώμα
   numberSideBox: { flex: 1, justifyContent: 'flex-start' },
   
   photoWrapperAbsolute: { position: 'absolute', right: 20, top: 85, zIndex: 99, elevation: 99 },
@@ -349,13 +347,13 @@ const styles = StyleSheet.create({
   actionGrid: { paddingHorizontal: 16, paddingBottom: 15 },
   actionRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
   actionBtn: { backgroundColor: '#FFFFFF', borderRadius: 10, width: '48%', flexDirection: 'row', alignItems: 'center', paddingVertical: 12, paddingHorizontal: 12, borderWidth: 1, borderColor: '#EAEAEA' },
-  actionBtnActive: { borderColor: '#00D2FF', backgroundColor: '#F0FAFF' },
+  actionBtnActive: { borderColor: '#0077ff', backgroundColor: '#F0FAFF' },
   actionIconImage: { width: 20, height: 20, marginRight: 8, resizeMode: 'contain' },
   miniQrIcon: { width: 20, height: 20, marginRight: 8, borderRadius: 4 },
   actionText: { fontFamily: GOV_FONT, color: '#1A1A1A', fontSize: 13, fontWeight: 'bold', flexShrink: 1 },
 
   idDetailsBlock: { paddingHorizontal: 20, paddingTop: 10 },
-  detailField: { marginBottom: 18, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.15)', paddingBottom: 8 },
+  detailField: { marginBottom: 16, borderBottomWidth: 0.8, borderBottomColor: 'rgba(255, 255, 255, 0.25)', paddingBottom: 10 },
   fieldLabel: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.65)', fontSize: 12, fontWeight: '400', letterSpacing: 0.5 },
   fieldValue: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 25, fontWeight: '400', marginTop: 4, letterSpacing: 0.2 },
   
