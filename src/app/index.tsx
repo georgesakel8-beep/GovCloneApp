@@ -179,6 +179,16 @@ export default function Index() {
   return (
     <SafeAreaView style={styles.detailContainer}>
       <StatusBar barStyle="light-content" backgroundColor="#00D2FF" />
+      
+      {/* Watermark με το λογότυπο της ελληνικής κυβέρνησης */}
+      <View style={styles.watermarkContainer}>
+        <Image 
+          source={require('../../assets/greek_government_logo.png')} 
+          style={styles.watermarkImage}
+          resizeMode="contain"
+        />
+      </View>
+      
       <View style={styles.detailHeader}>
         <TouchableOpacity onPress={() => { setScreen('wallet'); setShowQR(false); }}>
           <Text style={styles.backArrow}>◀</Text>
@@ -327,13 +337,33 @@ const styles = StyleSheet.create({
   cardBottomRow: { flexDirection: 'column' },
 
   // ID Detail Screen Styles - ΕΔΩ ΕΓΙΝΑΝ ΟΙ ΔΙΟΡΘΩΣΕΙΣ
-  detailContainer: { flex: 1, backgroundColor: '#0b0197' }, // Διορθώθηκε για να μην βγάζει άλλο χρώμα στο κάτω μέρος
-  detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#00D2FF', zIndex: 5 }, // Μπήκε το κυανό χρώμα
+  detailContainer: { flex: 1, backgroundColor: '#0b0197' },
+  
+  // Watermark Styles
+  watermarkContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 0,
+    pointerEvents: 'none',
+  },
+  watermarkImage: {
+    width: '80%',
+    height: '80%',
+    opacity: 0.15,
+    tintColor: '#FFFFFF',
+  },
+  
+  detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#0077ff', zIndex: 5 },
   backArrow: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   detailHeaderTitle: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   moreOptions: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 24, fontWeight: 'bold' },
   
-  photoContainerGradient: { backgroundColor: '#0077ff', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 2 }, // Μπήκε το κυανό χρώμα
+  photoContainerGradient: { backgroundColor: '#0077ff', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 2 },
   numberSideBox: { flex: 1, justifyContent: 'flex-start' },
   
   photoWrapperAbsolute: { position: 'absolute', right: 20, top: 85, zIndex: 99, elevation: 99 },
