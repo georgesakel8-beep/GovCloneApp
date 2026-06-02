@@ -9,8 +9,8 @@ const PROFILES = {
     firstName: 'ΓΕΩΡΓΙΟΣ',
     givenNameEn: 'GEORGIOS',
     surnameEn: 'SAKELLAROPOULOS',
-    idNumber: 'A03449095',
-    issueDate: '07/05/2026',
+    idNumber: 'AO714079',
+    issueDate: '08/05/2025',
     birthDate: '25/02/2007',
     fatherName: 'ΑΛΕΞΙΟΣ',
     fatherNameEn: 'ALEXIOS',
@@ -35,7 +35,7 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΙΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-1122334-KLP-5566',
-    photo: require('../../assets/friendphoto.jpeg'),
+    photo: require('../../assets/friendphoto.jpeg'), 
   }
 };
 
@@ -181,6 +181,7 @@ export default function Index() {
       <StatusBar barStyle="light-content" backgroundColor="#00D2FF" />
       
       {/* Watermark με το λογότυπο της ελληνικής κυβέρνησης */}
+      {/* Τοποθετημένο πίσω από όλα, αλλά πάνω από το φόντο */}
       <View style={styles.watermarkContainer}>
         <Image 
           source={require('../../assets/greek_government_logo.png')} 
@@ -197,7 +198,7 @@ export default function Index() {
         <TouchableOpacity><Text style={styles.moreOptions}>⋮</Text></TouchableOpacity>
       </View>
 
-      <ScrollView contentContainerStyle={{ paddingBottom: 40 }} style={{ flex: 1 }}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 40 }} style={{ flex: 1, zIndex: 2 }}>
 
         {/* Επάνω Ανοιχτό Γαλάζιο Πλαίσιο */}
         <View style={styles.photoContainerGradient}>
@@ -214,7 +215,7 @@ export default function Index() {
           <Image source={currentProfile.photo} style={styles.idPhotoLive} />
         </View>
 
-        {/* Κάτω Σκούρο Μπλε Πλαίσιο */}
+        {/* Κάτω Πλαίσιο - ΕΝΤΕΛΩΣ ΔΙΑΦΑΝΟ για να φαίνεται το watermark από πίσω */}
         <View style={styles.mainDarkSection}>
 
           {/* Action Grid */}
@@ -336,25 +337,25 @@ const styles = StyleSheet.create({
   cardTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   cardBottomRow: { flexDirection: 'column' },
 
-  // ID Detail Screen Styles - ΕΔΩ ΕΓΙΝΑΝ ΟΙ ΔΙΟΡΘΩΣΕΙΣ
-  detailContainer: { flex: 1, backgroundColor: '#0b0197' },
+  // ID Detail Screen Styles
+  detailContainer: { flex: 1, backgroundColor: '#0b0197' }, // Αυτό δίνει το μπλε φόντο σε όλη την οθόνη
   
-  // Watermark Styles
+  // Watermark Styles - Τώρα ρυθμισμένο σωστά
   watermarkContainer: {
     position: 'absolute',
-    top: 0,
+    top: 150, // Ξεκινάει πιο κάτω από το header/φωτογραφία
     left: 0,
     right: 0,
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 0,
+    zIndex: 1, // Βρίσκεται πάνω από το #0b0197 φόντο
     pointerEvents: 'none',
   },
   watermarkImage: {
-    width: '80%',
-    height: '80%',
-    opacity: 0.15,
+    width: 650, // Αρκετά μεγάλο για να απλωθεί όμορφα πίσω από το κείμενο
+    height: 650,
+    opacity: 0.08, // Πολύ αχνό για το εφέ
     tintColor: '#FFFFFF',
   },
   
@@ -363,16 +364,14 @@ const styles = StyleSheet.create({
   detailHeaderTitle: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   moreOptions: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 24, fontWeight: 'bold' },
   
-  photoContainerGradient: { backgroundColor: '#0077ff', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 2 },
+  photoContainerGradient: { backgroundColor: '#0077ff', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 3 },
   numberSideBox: { flex: 1, justifyContent: 'flex-start' },
   
   photoWrapperAbsolute: { position: 'absolute', right: 20, top: 85, zIndex: 99, elevation: 99 },
   idPhotoLive: { width: 115, height: 150, borderRadius: 12 },
   
-  idNumberLabel: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.75)', fontSize: 13, fontWeight: '400' },
-  idNumberValue: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 27, fontWeight: 'bold', marginTop: 2 },
-
-  mainDarkSection: { backgroundColor: '#0b0197', paddingTop: 110, zIndex: 1 },
+  // ΤΟ ΚΛΕΙΔΙ: Διάφανο background εδώ για να περνάει η εικόνα του watermark
+  mainDarkSection: { backgroundColor: 'transparent', paddingTop: 110, zIndex: 4 },
 
   actionGrid: { paddingHorizontal: 16, paddingBottom: 15 },
   actionRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
