@@ -10,7 +10,7 @@ const PROFILES = {
     givenNameEn: 'GEORGIOS',
     surnameEn: 'SAKELLAROPOULOS',
     idNumber: 'AO714079',
-    issueDate: '08/05/2025',
+    issueDate: '08/05/2024',
     birthDate: '25/02/2007',
     fatherName: 'ΑΛΕΞΙΟΣ',
     fatherNameEn: 'ALEXIOS',
@@ -18,7 +18,7 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-7489201-BXC-9084',
-    photo: require('../../assets/myphoto.jpeg.jpeg'),
+    photo: require('../../assets/myphoto.png'),
   },
   friend: {
     fullName: 'ΑΛΜΠΑΝ ΣΕΡΙΦΑΙ',
@@ -27,15 +27,15 @@ const PROFILES = {
     givenNameEn: 'ALΒAN',
     surnameEn: 'SERIFAÏ',
     idNumber: 'AP604273',
-    issueDate: '14/09/2007',
+    issueDate: '14/09/2024',
     birthDate: '14/08/2007',
     fatherName: 'ΙΡΙΟΝ',
     fatherNameEn: 'IRION',
     motherName: 'ELDISA',
-    birthPlace: 'ΠΑΤΡΑ ΑΧΑΙΑΣ',
+    birthPlace: 'ΠΑΤΡΑ ΑΧΑΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-1122334-KLP-5566',
-    photo: require('../../assets/friendphoto.jpeg'), 
+    photo: require('../../assets/friendphoto.png'), 
   }
 };
 
@@ -180,8 +180,7 @@ export default function Index() {
     <SafeAreaView style={styles.detailContainer}>
       <StatusBar barStyle="light-content" backgroundColor="#00D2FF" />
       
-      {/* Watermark με το λογότυπο της ελληνικής κυβέρνησης */}
-      {/* Τοποθετημένο πίσω από όλα, αλλά πάνω από το φόντο */}
+      {/* Watermark logo */}
       <View style={styles.watermarkContainer}>
         <Image 
           source={require('../../assets/greek_government_logo.png')} 
@@ -215,7 +214,7 @@ export default function Index() {
           <Image source={currentProfile.photo} style={styles.idPhotoLive} />
         </View>
 
-        {/* Κάτω Πλαίσιο - ΕΝΤΕΛΩΣ ΔΙΑΦΑΝΟ για να φαίνεται το watermark από πίσω */}
+        {/* Κάτω Πλαίσιο - Διαφανές background */}
         <View style={styles.mainDarkSection}>
 
           {/* Action Grid */}
@@ -338,24 +337,24 @@ const styles = StyleSheet.create({
   cardBottomRow: { flexDirection: 'column' },
 
   // ID Detail Screen Styles
-  detailContainer: { flex: 1, backgroundColor: '#0b0197' }, // Αυτό δίνει το μπλε φόντο σε όλη την οθόνη
+  detailContainer: { flex: 1, backgroundColor: '#0b0197' }, 
   
-  // Watermark Styles - Τώρα ρυθμισμένο σωστά
+  // Watermark Styles - Fainter and smaller
   watermarkContainer: {
     position: 'absolute',
-    top: 150, // Ξεκινάει πιο κάτω από το header/φωτογραφία
+    top: 150, 
     left: 0,
     right: 0,
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 1, // Βρίσκεται πάνω από το #0b0197 φόντο
+    zIndex: 1, 
     pointerEvents: 'none',
   },
   watermarkImage: {
-    width: 650, // Αρκετά μεγάλο για να απλωθεί όμορφα πίσω από το κείμενο
-    height: 650,
-    opacity: 0.08, // Πολύ αχνό για το εφέ
+    width: 580, // One tad smaller
+    height: 580, // One tad smaller
+    opacity: 0.05, // One tad fainter
     tintColor: '#FFFFFF',
   },
   
@@ -367,10 +366,13 @@ const styles = StyleSheet.create({
   photoContainerGradient: { backgroundColor: '#0077ff', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 3 },
   numberSideBox: { flex: 1, justifyContent: 'flex-start' },
   
+  // Font Restoration - Reverting to implicit default fonts
+  idNumberLabel: { color: 'rgba(255,255,255,0.75)', fontSize: 13, fontWeight: '400' },
+  idNumberValue: { color: '#FFF', fontSize: 27, fontWeight: 'bold', marginTop: 2 },
+
   photoWrapperAbsolute: { position: 'absolute', right: 20, top: 85, zIndex: 99, elevation: 99 },
   idPhotoLive: { width: 115, height: 150, borderRadius: 12 },
   
-  // ΤΟ ΚΛΕΙΔΙ: Διάφανο background εδώ για να περνάει η εικόνα του watermark
   mainDarkSection: { backgroundColor: 'transparent', paddingTop: 110, zIndex: 4 },
 
   actionGrid: { paddingHorizontal: 16, paddingBottom: 15 },
