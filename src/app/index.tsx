@@ -187,8 +187,8 @@ export default function Index() {
       
       {/* Header (Περιλαμβάνει το paddingTop για την ώρα του κινητού) */}
       <View style={styles.detailHeader}>
-        <TouchableOpacity onPress={() => { setScreen('wallet'); setShowQR(false); }}>
-          <Text style={styles.backArrow}>◀</Text>
+        <TouchableOpacity onPress={() => { setScreen('wallet'); setShowQR(false); }} style={{ paddingHorizontal: 6 }}>
+          <Text style={styles.backArrow}>‹</Text>
         </TouchableOpacity>
         <Text style={styles.detailHeaderTitle}>Δελτίο Ταυτότητας</Text>
         <TouchableOpacity><Text style={styles.moreOptions}>⋮</Text></TouchableOpacity>
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  backArrow: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: 'bold' },
+  backArrow: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 34, fontWeight: '300', marginTop: -4 },
   detailHeaderTitle: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   moreOptions: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 24, fontWeight: 'bold' },
   
