@@ -1,4 +1,3 @@
-import { Stack } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import { Alert, Animated, Image, ImageBackground, Platform, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -10,8 +9,8 @@ const PROFILES = {
     firstName: 'ΓΕΩΡΓΙΟΣ',
     givenNameEn: 'GEORGIOS',
     surnameEn: 'SAKELLAROPOULOS',
-    idNumber: 'AO714079',
-    issueDate: '08/05/2024',
+    idNumber: 'AO714079', // <--- ΒΑΛΕ ΕΔΩ ΤΟΝ ΔΙΚΟ ΣΟΥ ΑΡΙΘΜΟ ΤΑΥΤΟΤΗΤΑΣ
+    issueDate: '07/05/2024',
     birthDate: '25/02/2007',
     fatherName: 'ΑΛΕΞΙΟΣ',
     fatherNameEn: 'ALEXIOS',
@@ -19,7 +18,7 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-7489201-BXC-9084',
-    photo: require('../../assets/myphoto.png'),
+    photo: require('../../assets/myphoto.png'), // <--- ΒΑΛΕ ΕΔΩ ΤΟ PATH ΤΗΣ ΕΓΧΡΩΜΗΣ ΦΩΤΟΓΡΑΦΙΑΣ ΣΟΥ
   },
   friend: {
     fullName: 'ΑΛΜΠΑΝ ΣΕΡΙΦΑΙ',
@@ -28,15 +27,15 @@ const PROFILES = {
     givenNameEn: 'ALΒAN',
     surnameEn: 'SERIFAÏ',
     idNumber: 'AP604273',
-    issueDate: '14/09/2007',
+    issueDate: '14/09/2024',
     birthDate: '14/08/2007',
     fatherName: 'ΙΡΙΟΝ',
     fatherNameEn: 'IRION',
     motherName: 'ELDISA',
-    birthPlace: 'ΠΑΤΡΑ ΑΧΑΙΑΣ',
+    birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-1122334-KLP-5566',
-    photo: require('../../assets/friendphoto.png'), 
+    photo: require('../../assets/friendphoto.png'),
   }
 };
 
@@ -78,8 +77,7 @@ export default function Index() {
   if (screen === 'login') {
     return (
       <ImageBackground source={require('../../assets/background.jpg')} style={styles.loginContainer}>
-        <Stack.Screen options={{ headerShown: false }} />
-        <StatusBar barStyle="light-content" backgroundColor="#0052B4" />
+        <StatusBar barStyle="light-content" backgroundColor="#0052B4" translucent={false} />
         <View style={styles.loginLogoSection}>
           <Animated.View style={[styles.circlePulse, { transform: [{ scale: scaleAnim }] }]}>
             <Text style={styles.loginLogoText}>gov.gr</Text>
@@ -114,8 +112,7 @@ export default function Index() {
   if (screen === 'pin') {
     return (
       <SafeAreaView style={styles.pinContainer}>
-        <Stack.Screen options={{ headerShown: false }} />
-        <StatusBar barStyle="light-content" backgroundColor="#0052B4" />
+        <StatusBar barStyle="light-content" backgroundColor="#0052B4" translucent={false} />
         <Text style={styles.pinTitle}>Εισάγετε κωδικό PIN</Text>
         <View style={styles.dotsRow}>
           {[1, 2, 3, 4].map((_, i) => (
@@ -141,8 +138,7 @@ export default function Index() {
   if (screen === 'wallet') {
     return (
       <SafeAreaView style={styles.walletContainer}>
-        <Stack.Screen options={{ headerShown: false }} />
-        <StatusBar barStyle="light-content" backgroundColor="#0052B4" />
+        <StatusBar barStyle="light-content" backgroundColor="#0052B4" translucent={false} />
         <View style={styles.walletHeader}>
           <TouchableOpacity style={styles.mailCircle}><Text style={styles.walletHeaderIcon}>✉️</Text></TouchableOpacity>
           <View style={styles.walletHeaderLogo}>
@@ -182,29 +178,23 @@ export default function Index() {
   // --- 4. ID DETAIL SCREEN ---
   return (
     <View style={styles.detailContainer}>
-      <Stack.Screen options={{ headerShown: false }} />
-      {/* Διορθώθηκε το status bar: τώρα είναι συμπαγές μπλε */}
-      <StatusBar barStyle="light-content" backgroundColor="#0077ff" />
+      {/* Διαφανές StatusBar ώστε το header να πιάνει όλη την κορυφή ομοιόμορφα */}
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent={true}
+      />
       
-      {/* Watermark logo */}
-      <View style={styles.watermarkContainer}>
-        <Image 
-          source={require('../../assets/greek_government_logo.png')} 
-          style={styles.watermarkImage}
-          resizeMode="contain"
-        />
-      </View>
-      
-      {/* Header */}
+      {/* Header (Περιλαμβάνει το paddingTop για την ώρα του κινητού) */}
       <View style={styles.detailHeader}>
-        <TouchableOpacity style={styles.backButtonTouchable} onPress={() => { setScreen('wallet'); setShowQR(false); }}>
-          <Text style={styles.backArrow}>‹</Text>
+        <TouchableOpacity onPress={() => { setScreen('wallet'); setShowQR(false); }}>
+          <Text style={styles.backArrow}>◀</Text>
         </TouchableOpacity>
         <Text style={styles.detailHeaderTitle}>Δελτίο Ταυτότητας</Text>
         <TouchableOpacity><Text style={styles.moreOptions}>⋮</Text></TouchableOpacity>
       </View>
 
-      <ScrollView contentContainerStyle={{ paddingBottom: 60 }} style={{ flex: 1, zIndex: 2 }}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 40 }} style={{ flex: 1 }}>
 
         {/* Επάνω Ανοιχτό Γαλάζιο Πλαίσιο */}
         <View style={styles.photoContainerGradient}>
@@ -217,13 +207,21 @@ export default function Index() {
         </View>
 
         {/* Δυναμική Φωτογραφία */}
-        {/* Διορθώθηκε η θέση της φωτογραφίας */}
         <View style={styles.photoWrapperAbsolute}>
           <Image source={currentProfile.photo} style={styles.idPhotoLive} />
         </View>
 
-        {/* Κάτω Πλαίσιο - Διαφανές background */}
+        {/* Κάτω Σκούρο Μπλε Πλαίσιο */}
         <View style={styles.mainDarkSection}>
+          
+          {/* ΜΕΤΑΚΙΝΗΣΗ ΕΔΩ: Το Watermark μπήκε μέσα στο mainDarkSection για να μην κρύβεται */}
+          <View style={styles.watermarkContainer}>
+            <Image 
+              source={require('../../assets/greek_government_logo.png')} 
+              style={styles.watermarkImage}
+              resizeMode="contain"
+            />
+          </View>
 
           {/* Action Grid */}
           <View style={styles.actionGrid}>
@@ -345,74 +343,61 @@ const styles = StyleSheet.create({
   cardBottomRow: { flexDirection: 'column' },
 
   // ID Detail Screen Styles
-  detailContainer: { flex: 1, backgroundColor: '#0b0197' }, 
+  detailContainer: { flex: 1, backgroundColor: '#0b0197' },
   
-  // Watermark Styles
+  // Watermark Styles - Προσαρμοσμένο absolute φόντο μέσα στο σκούρο section
   watermarkContainer: {
     position: 'absolute',
-    top: 150, 
+    top: 140, 
     left: 0,
     right: 0,
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 1, 
+    zIndex: 0,
     pointerEvents: 'none',
   },
   watermarkImage: {
-    width: 580, 
-    height: 580, 
-    opacity: 0.05, 
+    width: '85%',
+    height: '85%',
+    opacity: 0.14,
     tintColor: '#FFFFFF',
   },
   
-  // Αναβαθμισμένο Header
-  detailHeader: { 
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
-    alignItems: 'center', 
-    paddingHorizontal: 16, 
-    backgroundColor: '#0077ff', 
+  detailHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    backgroundColor: '#0077ff',
     zIndex: 5,
     ...Platform.select({
       ios: {
-        paddingTop: 46, // notches
-        height: 92,     
+        paddingTop: 44, 
+        paddingBottom: 12,
       },
       android: {
-        paddingTop: StatusBar.currentHeight || 0,
-        height: 60 + (StatusBar.currentHeight || 0),
-      }
-    })
+        paddingTop: StatusBar.currentHeight + 12,
+        paddingBottom: 12,
+      },
+    }),
   },
-  backButtonTouchable: {
-    paddingHorizontal: 6,
-    paddingVertical: 4,
-  },
-  backArrow: { 
-    fontFamily: GOV_FONT, 
-    color: '#FFF', 
-    fontSize: 34, 
-    fontWeight: '300',
-    marginTop: -4,
-  },
+  backArrow: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   detailHeaderTitle: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   moreOptions: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 24, fontWeight: 'bold' },
   
-  photoContainerGradient: { backgroundColor: '#0077ff', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 3 },
+  photoContainerGradient: { backgroundColor: '#0077ff', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 2 },
   numberSideBox: { flex: 1, justifyContent: 'flex-start' },
   
-  // Font Restoration
-  idNumberLabel: { color: 'rgba(255,255,255,0.75)', fontSize: 13, fontWeight: '400' },
-  idNumberValue: { color: '#FFF', fontSize: 27, fontWeight: 'bold', marginTop: 2 },
-
-  // Διορθώθηκε η θέση της φωτογραφίας
-  photoWrapperAbsolute: { position: 'absolute', right: 20, top: 20, zIndex: 99, elevation: 99 }, 
+  photoWrapperAbsolute: { position: 'absolute', right: 20, top: 85, zIndex: 99, elevation: 99 },
   idPhotoLive: { width: 115, height: 150, borderRadius: 12 },
   
-  mainDarkSection: { backgroundColor: 'transparent', paddingTop: 110, zIndex: 4 },
+  idNumberLabel: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.75)', fontSize: 13, fontWeight: '400' },
+  idNumberValue: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 27, fontWeight: 'bold', marginTop: 2 },
 
-  actionGrid: { paddingHorizontal: 16, paddingBottom: 15 },
+  mainDarkSection: { backgroundColor: '#0b0197', paddingTop: 110, zIndex: 1, position: 'relative' },
+
+  actionGrid: { paddingHorizontal: 16, paddingBottom: 15, zIndex: 2 },
   actionRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
   actionBtn: { backgroundColor: '#FFFFFF', borderRadius: 10, width: '48%', flexDirection: 'row', alignItems: 'center', paddingVertical: 12, paddingHorizontal: 12, borderWidth: 1, borderColor: '#EAEAEA' },
   actionBtnActive: { borderColor: '#0077ff', backgroundColor: '#F0FAFF' },
@@ -420,7 +405,7 @@ const styles = StyleSheet.create({
   miniQrIcon: { width: 20, height: 20, marginRight: 8, borderRadius: 4 },
   actionText: { fontFamily: GOV_FONT, color: '#1A1A1A', fontSize: 13, fontWeight: 'bold', flexShrink: 1 },
 
-  idDetailsBlock: { paddingHorizontal: 20, paddingTop: 10 },
+  idDetailsBlock: { paddingHorizontal: 20, paddingTop: 10, zIndex: 2 },
   detailField: { marginBottom: 16, borderBottomWidth: 0.8, borderBottomColor: 'rgba(255, 255, 255, 0.25)', paddingBottom: 10 },
   fieldLabel: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.65)', fontSize: 12, fontWeight: '400', letterSpacing: 0.5 },
   fieldValue: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 25, fontWeight: '400', marginTop: 4, letterSpacing: 0.2 },
