@@ -32,7 +32,7 @@ const PROFILES = {
     fatherName: 'ΙΡΙΟΝ',
     fatherNameEn: 'IRION',
     motherName: 'ELDISA',
-    birthPlace: 'ΠΑΤΡΑ ΑΧΑΑΣ',
+    birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-1122334-KLP-5566',
     photo: require('../../assets/friendphoto.png'), 
