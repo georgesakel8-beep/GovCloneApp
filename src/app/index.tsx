@@ -1,3 +1,4 @@
+import { Stack } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import { Alert, Animated, Image, ImageBackground, Platform, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -27,12 +28,12 @@ const PROFILES = {
     givenNameEn: 'ALΒAN',
     surnameEn: 'SERIFAÏ',
     idNumber: 'AP604273',
-    issueDate: '14/09/2024',
+    issueDate: '14/09/2007',
     birthDate: '14/08/2007',
     fatherName: 'ΙΡΙΟΝ',
     fatherNameEn: 'IRION',
     motherName: 'ELDISA',
-    birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
+    birthPlace: 'ΠΑΤΡΑ ΑΧΑΙΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-1122334-KLP-5566',
     photo: require('../../assets/friendphoto.png'), 
@@ -77,6 +78,7 @@ export default function Index() {
   if (screen === 'login') {
     return (
       <ImageBackground source={require('../../assets/background.jpg')} style={styles.loginContainer}>
+        <Stack.Screen options={{ headerShown: false }} />
         <StatusBar barStyle="light-content" backgroundColor="#0052B4" />
         <View style={styles.loginLogoSection}>
           <Animated.View style={[styles.circlePulse, { transform: [{ scale: scaleAnim }] }]}>
@@ -112,6 +114,7 @@ export default function Index() {
   if (screen === 'pin') {
     return (
       <SafeAreaView style={styles.pinContainer}>
+        <Stack.Screen options={{ headerShown: false }} />
         <StatusBar barStyle="light-content" backgroundColor="#0052B4" />
         <Text style={styles.pinTitle}>Εισάγετε κωδικό PIN</Text>
         <View style={styles.dotsRow}>
@@ -138,6 +141,7 @@ export default function Index() {
   if (screen === 'wallet') {
     return (
       <SafeAreaView style={styles.walletContainer}>
+        <Stack.Screen options={{ headerShown: false }} />
         <StatusBar barStyle="light-content" backgroundColor="#0052B4" />
         <View style={styles.walletHeader}>
           <TouchableOpacity style={styles.mailCircle}><Text style={styles.walletHeaderIcon}>✉️</Text></TouchableOpacity>
@@ -177,8 +181,11 @@ export default function Index() {
 
   // --- 4. ID DETAIL SCREEN ---
   return (
-    <SafeAreaView style={styles.detailContainer}>
-      <StatusBar barStyle="light-content" backgroundColor="#00D2FF" />
+    // Αλλάχτηκε σε View για να επιτρέψει στο header να "ανέβει" μέχρι πάνω-πάνω στην οθόνη
+    <View style={styles.detailContainer}>
+      <Stack.Screen options={{ headerShown: false }} />
+      {/* Το status bar γίνεται διάφανο ώστε να φαίνεται το μπλε φόντο από πίσω */}
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true} />
       
       {/* Watermark logo */}
       <View style={styles.watermarkContainer}>
@@ -189,15 +196,16 @@ export default function Index() {
         />
       </View>
       
+      {/* Το Header επεκτείνεται προς τα πάνω ανάλογα με το κινητό */}
       <View style={styles.detailHeader}>
-        <TouchableOpacity onPress={() => { setScreen('wallet'); setShowQR(false); }}>
-          <Text style={styles.backArrow}>◀</Text>
+        <TouchableOpacity style={styles.backButtonTouchable} onPress={() => { setScreen('wallet'); setShowQR(false); }}>
+          <Text style={styles.backArrow}>‹</Text>
         </TouchableOpacity>
         <Text style={styles.detailHeaderTitle}>Δελτίο Ταυτότητας</Text>
         <TouchableOpacity><Text style={styles.moreOptions}>⋮</Text></TouchableOpacity>
       </View>
 
-      <ScrollView contentContainerStyle={{ paddingBottom: 40 }} style={{ flex: 1, zIndex: 2 }}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 60 }} style={{ flex: 1, zIndex: 2 }}>
 
         {/* Επάνω Ανοιχτό Γαλάζιο Πλαίσιο */}
         <View style={styles.photoContainerGradient}>
@@ -272,7 +280,7 @@ export default function Index() {
 
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -339,7 +347,7 @@ const styles = StyleSheet.create({
   // ID Detail Screen Styles
   detailContainer: { flex: 1, backgroundColor: '#0b0197' }, 
   
-  // Watermark Styles - Fainter and smaller
+  // Watermark Styles
   watermarkContainer: {
     position: 'absolute',
     top: 150, 
@@ -352,25 +360,54 @@ const styles = StyleSheet.create({
     pointerEvents: 'none',
   },
   watermarkImage: {
-    width: 580, // One tad smaller
-    height: 580, // One tad smaller
-    opacity: 0.05, // One tad fainter
+    width: 580, 
+    height: 580, 
+    opacity: 0.05, 
     tintColor: '#FFFFFF',
   },
   
-  detailHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#0077ff', zIndex: 5 },
-  backArrow: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: 'bold' },
+  // Αναβαθμισμένο Header για να καλύπτει ομοιόμορφα το status bar
+  detailHeader: { 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center', 
+    paddingHorizontal: 16, 
+    backgroundColor: '#0077ff', 
+    zIndex: 5,
+    ...Platform.select({
+      ios: {
+        paddingTop: 46, // Ύψος για το Notch του iPhone
+        height: 92,     
+      },
+      android: {
+        paddingTop: StatusBar.currentHeight || 0,
+        height: 60 + (StatusBar.currentHeight || 0),
+      }
+    })
+  },
+  backButtonTouchable: {
+    paddingHorizontal: 6,
+    paddingVertical: 4,
+  },
+  // Καθαρό, αυθεντικό λευκό βέλος χωρίς emoji boxes
+  backArrow: { 
+    fontFamily: GOV_FONT, 
+    color: '#FFF', 
+    fontSize: 34, 
+    fontWeight: '300',
+    marginTop: -4,
+  },
   detailHeaderTitle: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   moreOptions: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 24, fontWeight: 'bold' },
   
   photoContainerGradient: { backgroundColor: '#0077ff', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 3 },
   numberSideBox: { flex: 1, justifyContent: 'flex-start' },
   
-  // Font Restoration - Reverting to implicit default fonts
+  // Font Restoration
   idNumberLabel: { color: 'rgba(255,255,255,0.75)', fontSize: 13, fontWeight: '400' },
   idNumberValue: { color: '#FFF', fontSize: 27, fontWeight: 'bold', marginTop: 2 },
 
-  photoWrapperAbsolute: { position: 'absolute', right: 20, top: 85, zIndex: 99, elevation: 99 },
+  photoWrapperAbsolute: { position: 'absolute', right: 20, top: 120, zIndex: 99, elevation: 99 }, // Προσαρμογή λόγω του νέου ύψους header
   idPhotoLive: { width: 115, height: 150, borderRadius: 12 },
   
   mainDarkSection: { backgroundColor: 'transparent', paddingTop: 110, zIndex: 4 },
