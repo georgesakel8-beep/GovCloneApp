@@ -181,11 +181,10 @@ export default function Index() {
 
   // --- 4. ID DETAIL SCREEN ---
   return (
-    // Αλλάχτηκε σε View για να επιτρέψει στο header να "ανέβει" μέχρι πάνω-πάνω στην οθόνη
     <View style={styles.detailContainer}>
       <Stack.Screen options={{ headerShown: false }} />
-      {/* Το status bar γίνεται διάφανο ώστε να φαίνεται το μπλε φόντο από πίσω */}
-      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true} />
+      {/* Διορθώθηκε το status bar: τώρα είναι συμπαγές μπλε */}
+      <StatusBar barStyle="light-content" backgroundColor="#0077ff" />
       
       {/* Watermark logo */}
       <View style={styles.watermarkContainer}>
@@ -196,7 +195,7 @@ export default function Index() {
         />
       </View>
       
-      {/* Το Header επεκτείνεται προς τα πάνω ανάλογα με το κινητό */}
+      {/* Header */}
       <View style={styles.detailHeader}>
         <TouchableOpacity style={styles.backButtonTouchable} onPress={() => { setScreen('wallet'); setShowQR(false); }}>
           <Text style={styles.backArrow}>‹</Text>
@@ -218,6 +217,7 @@ export default function Index() {
         </View>
 
         {/* Δυναμική Φωτογραφία */}
+        {/* Διορθώθηκε η θέση της φωτογραφίας */}
         <View style={styles.photoWrapperAbsolute}>
           <Image source={currentProfile.photo} style={styles.idPhotoLive} />
         </View>
@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
     tintColor: '#FFFFFF',
   },
   
-  // Αναβαθμισμένο Header για να καλύπτει ομοιόμορφα το status bar
+  // Αναβαθμισμένο Header
   detailHeader: { 
     flexDirection: 'row', 
     justifyContent: 'space-between', 
@@ -376,7 +376,7 @@ const styles = StyleSheet.create({
     zIndex: 5,
     ...Platform.select({
       ios: {
-        paddingTop: 46, // Ύψος για το Notch του iPhone
+        paddingTop: 46, // notches
         height: 92,     
       },
       android: {
@@ -389,7 +389,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     paddingVertical: 4,
   },
-  // Καθαρό, αυθεντικό λευκό βέλος χωρίς emoji boxes
   backArrow: { 
     fontFamily: GOV_FONT, 
     color: '#FFF', 
@@ -407,7 +406,8 @@ const styles = StyleSheet.create({
   idNumberLabel: { color: 'rgba(255,255,255,0.75)', fontSize: 13, fontWeight: '400' },
   idNumberValue: { color: '#FFF', fontSize: 27, fontWeight: 'bold', marginTop: 2 },
 
-  photoWrapperAbsolute: { position: 'absolute', right: 20, top: 120, zIndex: 99, elevation: 99 }, // Προσαρμογή λόγω του νέου ύψους header
+  // Διορθώθηκε η θέση της φωτογραφίας
+  photoWrapperAbsolute: { position: 'absolute', right: 20, top: 20, zIndex: 99, elevation: 99 }, 
   idPhotoLive: { width: 115, height: 150, borderRadius: 12 },
   
   mainDarkSection: { backgroundColor: 'transparent', paddingTop: 110, zIndex: 4 },
