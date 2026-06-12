@@ -36,6 +36,40 @@ const PROFILES = {
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-1122334-KLP-5566',
     photo: require('../../assets/friendphoto.png'),
+  },
+  person3: {
+    fullName: 'ΛΑΜΠΡΟΣ ΜΕΝΤΖΑΣ',
+    lastName: 'ΜΕΝΤΖΑΣ',
+    firstName: 'ΛΑΜΠΡΟΣ',
+    givenNameEn: 'LAMPROS',
+    surnameEn: 'MENTZAS',
+    idNumber: 'A03449095', // <--- ΒΑΛΕ ΕΔΩ ΤΟΝ ΑΡΙΘΜΟ ΤΟΥ 3ΟΥ ΑΤΟΜΟΥ
+    issueDate: '19/04/2024',
+    birthDate: '13/01/2008',
+    fatherName: 'ΔΗΜΗΤΡΙΟΣ',
+    fatherNameEn: 'DIMITRIOS',
+    motherName: 'ΙΩΑΝΝΑ',
+    birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
+    issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
+    docCode: 'GR-0000000-XXX-0003',
+    photo: require('../../assets/person3photo.jpeg'), // <--- PATH ΓΙΑ ΤΗ 3Η ΦΩΤΟΓΡΑΦΙΑ
+  },
+  person4: {
+    fullName: 'ΝΙΚΟΛΑΟΣ ΜΠΑΚΑΛΑΡΟΣ',
+    lastName: 'ΜΠΑΚΑΛΑΡΟΣ',
+    firstName: 'ΝΙΚΟΛΑΟΣ',
+    givenNameEn: 'NICOLAS',
+    surnameEn: 'BAKALAROS',
+    idNumber: 'AP318592', // <--- ΒΑΛΕ ΕΔΩ ΤΟΝ ΑΡΙΘΜΟ ΤΟΥ 4ΟΥ ΑΤΟΜΟΥ
+    issueDate: '19/04/2024',
+    birthDate: '05/04/2008',
+    fatherName: 'ΠΑΝΑΓΙΩΤΗΣ',
+    fatherNameEn: 'PANAGIOTIS',
+    motherName: 'ΜΑΡΙΝΑ',
+    birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
+    issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
+    docCode: 'GR-0000000-XXX-0004',
+    photo: require('../../assets/person4photo.png'), // <--- PATH ΓΙΑ ΤΗ 4Η ΦΩΤΟΓΡΑΦΙΑ
   }
 };
 
@@ -66,6 +100,12 @@ export default function Index() {
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
       } else if (newPin === '5678') { 
         setCurrentProfile(PROFILES.friend);
+        setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
+      } else if (newPin === '1111') {  // <--- PIN ΓΙΑ ΤΟ 3Ο ΑΤΟΜΟ
+        setCurrentProfile(PROFILES.person3);
+        setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
+      } else if (newPin === '2222') {  // <--- PIN ΓΙΑ ΤΟ 4Ο ΑΤΟΜΟ
+        setCurrentProfile(PROFILES.person4);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
       } else if (newPin.length === 4) {
         setTimeout(() => { Alert.alert('Σφάλμα', 'Λανθασμένος κωδικός PIN'); setPin(''); }, 200);
