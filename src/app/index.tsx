@@ -70,6 +70,23 @@ const PROFILES = {
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-0000000-XXX-0004',
     photo: require('../../assets/person4photo.png'), // <--- PATH ΓΙΑ ΤΗ 4Η ΦΩΤΟΓΡΑΦΙΑ
+  },
+  person5: { // <--- ΠΡΟΣΘΗΚΗ 5ΟΥ ΑΤΟΜΟΥ ΕΔΩ
+    fullName: 'ΒΑΣΙΛΗΣ ΣΟΛΩΜΟΣ',
+    lastName: 'ΣΟΛΩΜΟΣ',
+    firstName: 'ΒΑΣΙΛΗΣ',
+    givenNameEn: 'VASILIS',
+    surnameEn: 'SOLWMOS',
+    idNumber: 'AP582910', // <--- ΒΑΛΕ ΕΔΩ ΤΟΝ ΑΡΙΘΜΟ ΤΟΥ 5ΟΥ ΑΤΟΜΟΥ
+    issueDate: '22/08/2024',
+    birthDate: '26/04/2008',
+    fatherName: 'ΚΩΝΣΤΑΝΤΙΝΟΣ',
+    fatherNameEn: 'KONSTANTINOS',
+    motherName: 'ΕΛΕΝΗ',
+    birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
+    issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
+    docCode: 'GR-0000000-XXX-0005',
+    photo: require('../../assets/person5photo.png'), // <--- PATH ΓΙΑ ΤΗ 5Η ΦΩΤΟΓΡΑΦΙΑ
   }
 };
 
@@ -106,6 +123,9 @@ export default function Index() {
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
       } else if (newPin === '2222') {  // <--- PIN ΓΙΑ ΤΟ 4Ο ΑΤΟΜΟ
         setCurrentProfile(PROFILES.person4);
+        setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
+      } else if (newPin === '3333') {  // <--- PIN ΓΙΑ ΤΟ 5Ο ΑΤΟΜΟ (ΠΡΟΣΤΕΘΗΚΕ ΕΔΩ)
+        setCurrentProfile(PROFILES.person5);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
       } else if (newPin.length === 4) {
         setTimeout(() => { Alert.alert('Σφάλμα', 'Λανθασμένος κωδικός PIN'); setPin(''); }, 200);
