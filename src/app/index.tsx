@@ -71,7 +71,7 @@ const PROFILES = {
     docCode: 'GR-0000000-XXX-0004',
     photo: require('../../assets/person4photo.png'), // <--- PATH ΓΙΑ ΤΗ 4Η ΦΩΤΟΓΡΑΦΙΑ
   },
-  person5: { // <--- ΠΡΟΣΘΗΚΗ 5ΟΥ ΑΤΟΜΟΥ ΕΔΩ
+  person5: {
     fullName: 'ΒΑΣΙΛΗΣ ΣΟΛΩΜΟΣ',
     lastName: 'ΣΟΛΩΜΟΣ',
     firstName: 'ΒΑΣΙΛΗΣ',
@@ -86,7 +86,24 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-0000000-XXX-0005',
-    photo: require('../../assets/person5photo.png'), // <--- PATH ΓΙΑ ΤΗ 5Η ΦΩΤΟΓΡΑΦΙΑ
+    photo: require('../../assets/person5photo.jpeg'), // <--- PATH ΓΙΑ ΤΗ 5Η ΦΩΤΟΓΡΑΦΙΑ
+  },
+  person6: { // <--- ΠΡΟΣΘΗΚΗ 6ΟΥ ΑΤΟΜΟΥ ΕΔΩ
+    fullName: 'ΒΑΡΒΑΡΑ ΚΑΛΑΠΟΔΗ',
+    lastName: 'ΚΑΛΑΠΟΔΗ',
+    firstName: 'ΒΑΡΒΑΡΑ',
+    givenNameEn: 'BARBARA',
+    surnameEn: 'KALAPODI',
+    idNumber: 'AP880550', // <--- ΒΑΛΕ ΕΔΩ ΤΟΝ ΑΡΙΘΜΟ ΤΟΥ 6ΟΥ ΑΤΟΜΟΥ
+    issueDate: '22/08/2024',
+    birthDate: '23/04/2008',
+    fatherName: 'ΙΩΑΝΝΗΣ',
+    fatherNameEn: 'IOANNIS',
+    motherName: 'ΓΕΩΡΓΙΑ',
+    birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
+    issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
+    docCode: 'GR-0000000-XXX-0006',
+    photo: require('../../assets/person6photo.png'), // <--- PATH ΓΙΑ ΤΗ 6Η ΦΩΤΟΓΡΑΦΙΑ
   }
 };
 
@@ -124,8 +141,11 @@ export default function Index() {
       } else if (newPin === '2222') {  // <--- PIN ΓΙΑ ΤΟ 4Ο ΑΤΟΜΟ
         setCurrentProfile(PROFILES.person4);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
-      } else if (newPin === '3333') {  // <--- PIN ΓΙΑ ΤΟ 5Ο ΑΤΟΜΟ (ΠΡΟΣΤΕΘΗΚΕ ΕΔΩ)
+      } else if (newPin === '3333') {  // <--- PIN ΓΙΑ ΤΟ 5Ο ΑΤΟΜΟ
         setCurrentProfile(PROFILES.person5);
+        setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
+      } else if (newPin === '6767') {  // <--- PIN ΓΙΑ ΤΟ 6Ο ΑΤΟΜΟ (ΠΡΟΣΤΕΘΗΚΕ ΕΔΩ)
+        setCurrentProfile(PROFILES.person6);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
       } else if (newPin.length === 4) {
         setTimeout(() => { Alert.alert('Σφάλμα', 'Λανθασμένος κωδικός PIN'); setPin(''); }, 200);
