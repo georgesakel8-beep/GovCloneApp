@@ -86,7 +86,7 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-0000000-XXX-0005',
-    photo: require('../../assets/person5photo.jpeg'), // <--- PATH ΓΙΑ ΤΗ 5Η ΦΩΤΟΓΡΑΦΙΑ
+    photo: require('../../assets/person5photo.png'), // <--- PATH ΓΙΑ ΤΗ 5Η ΦΩΤΟΓΡΑΦΙΑ
   },
   person6: { // <--- ΠΡΟΣΘΗΚΗ 6ΟΥ ΑΤΟΜΟΥ ΕΔΩ
     fullName: 'ΒΑΡΒΑΡΑ ΚΑΛΑΠΟΔΗ',
@@ -103,7 +103,7 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-0000000-XXX-0006',
-    photo: require('../../assets/person6photo.png'), // <--- PATH ΓΙΑ ΤΗ 6Η ΦΩΤΟΓΡΑΦΙΑ
+    photo: require('../../assets/person6photo.jpeg'), // <--- PATH ΓΙΑ ΤΗ 6Η ΦΩΤΟΓΡΑΦΙΑ
   }
 };
 
