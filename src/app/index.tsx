@@ -110,7 +110,7 @@ const PROFILES = {
     lastName: 'ΠΑΝΑΓΟΠΟΥΛΟΣ',
     firstName: 'ΓΕΩΡΓΙΟΣ',
     givenNameEn: 'GEORGIOS',
-    surnameEn: 'PANAGIOPOULOS',
+    surnameEn: 'PANAGOPOULOS',
     idNumber: 'AP730695', // <--- ΒΑΛΕ ΕΔΩ ΤΟΝ ΑΡΙΘΜΟ ΤΟΥ 7ΟΥ ΑΤΟΜΟΥ
     issueDate: '23/09/2024',
     birthDate: '03/06/2007',
