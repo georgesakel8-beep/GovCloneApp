@@ -110,7 +110,7 @@ const PROFILES = {
     lastName: 'ΠΑΝΑΓΟΠΟΥΛΟΣ',
     firstName: 'ΓΕΩΡΓΙΟΣ',
     givenNameEn: 'GEORGIOS',
-    surnameEn: 'PANAGIOPULOS',
+    surnameEn: 'PANAGIOPOULOS',
     idNumber: 'AP730695', // <--- ΒΑΛΕ ΕΔΩ ΤΟΝ ΑΡΙΘΜΟ ΤΟΥ 7ΟΥ ΑΤΟΜΟΥ
     issueDate: '23/09/2024',
     birthDate: '03/06/2007',
@@ -120,7 +120,7 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-0000000-XXX-0007',
-    photo: require('../../assets/person7photo.jpeg'), // <--- PATH ΓΙΑ ΤΗ 7Η ΦΩΤΟΓΡΑΦΙΑ
+    photo: require('../../assets/person7photo.png'), // <--- PATH ΓΙΑ ΤΗ 7Η ΦΩΤΟΓΡΑΦΙΑ
   }
 };
 
