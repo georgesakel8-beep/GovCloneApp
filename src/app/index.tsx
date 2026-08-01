@@ -72,23 +72,23 @@ const PROFILES = {
     photo: require('../../assets/person4photo.png'), // <--- PATH ΓΙΑ ΤΗ 4Η ΦΩΤΟΓΡΑΦΙΑ
   },
   person5: {
-    fullName: 'ΒΑΣΙΛΗΣ ΣΟΛΩΜΟΣ',
+    fullName: 'ΒΑΣΙΛEIOΣ ΣΟΛΩΜΟΣ',
     lastName: 'ΣΟΛΩΜΟΣ',
-    firstName: 'ΒΑΣΙΛΗΣ',
-    givenNameEn: 'VASILIS',
-    surnameEn: 'SOLWMOS',
+    firstName: 'ΒΑΣΙΛEIOΣ',
+    givenNameEn: 'VASILEIOS',
+    surnameEn: 'SOLOMOS',
     idNumber: 'AP582910', // <--- ΒΑΛΕ ΕΔΩ ΤΟΝ ΑΡΙΘΜΟ ΤΟΥ 5ΟΥ ΑΤΟΜΟΥ
     issueDate: '22/08/2024',
     birthDate: '26/04/2008',
-    fatherName: 'ΚΩΝΣΤΑΝΤΙΝΟΣ',
-    fatherNameEn: 'KONSTANTINOS',
-    motherName: 'ΕΛΕΝΗ',
+    fatherName: 'ΠΑΝΑΓΙΩΤΗΣ',
+    fatherNameEn: 'PANAGIOTIS',
+    motherName: 'ΔΙΟΝΥΣΙΑ',
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-0000000-XXX-0005',
     photo: require('../../assets/person5photo.png'), // <--- PATH ΓΙΑ ΤΗ 5Η ΦΩΤΟΓΡΑΦΙΑ
   },
-  person6: { // <--- ΠΡΟΣΘΗΚΗ 6ΟΥ ΑΤΟΜΟΥ ΕΔΩ
+  person6: { 
     fullName: 'ΒΑΡΒΑΡΑ ΚΑΛΑΠΟΔΗ',
     lastName: 'ΚΑΛΑΠΟΔΗ',
     firstName: 'ΒΑΡΒΑΡΑ',
@@ -104,6 +104,23 @@ const PROFILES = {
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-0000000-XXX-0006',
     photo: require('../../assets/person6photo.jpeg'), // <--- PATH ΓΙΑ ΤΗ 6Η ΦΩΤΟΓΡΑΦΙΑ
+  },
+  person7: { // <--- ΠΡΟΣΘΗΚΗ 7ΟΥ ΑΤΟΜΟΥ ΕΔΩ
+    fullName: 'ΓΕΩΡΓΙΟΣ ΠΑΝΑΓΟΠΟΥΛΟΣ',
+    lastName: 'ΠΑΝΑΓΟΠΟΥΛΟΣ',
+    firstName: 'ΓΕΩΡΓΙΟΣ',
+    givenNameEn: 'GEORGIOS',
+    surnameEn: 'PANAGIOPULOS',
+    idNumber: 'AP730695', // <--- ΒΑΛΕ ΕΔΩ ΤΟΝ ΑΡΙΘΜΟ ΤΟΥ 7ΟΥ ΑΤΟΜΟΥ
+    issueDate: '23/09/2024',
+    birthDate: '03/06/2007',
+    fatherName: 'ΜΑΡΙΟΣ',
+    fatherNameEn: 'ΜΑΡΙΟΣ',
+    motherName: 'ΘΕΟΔΩΡΑ',
+    birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
+    issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
+    docCode: 'GR-0000000-XXX-0007',
+    photo: require('../../assets/person7photo.jpeg'), // <--- PATH ΓΙΑ ΤΗ 7Η ΦΩΤΟΓΡΑΦΙΑ
   }
 };
 
@@ -144,8 +161,11 @@ export default function Index() {
       } else if (newPin === '3333') {  // <--- PIN ΓΙΑ ΤΟ 5Ο ΑΤΟΜΟ
         setCurrentProfile(PROFILES.person5);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
-      } else if (newPin === '6767') {  // <--- PIN ΓΙΑ ΤΟ 6Ο ΑΤΟΜΟ (ΠΡΟΣΤΕΘΗΚΕ ΕΔΩ)
+      } else if (newPin === '6767') {  // <--- PIN ΓΙΑ ΤΟ 6Ο ΑΤΟΜΟ
         setCurrentProfile(PROFILES.person6);
+        setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
+      } else if (newPin === '7777') {  // <--- PIN ΓΙΑ ΤΟ 7Ο ΑΤΟΜΟ (ΠΡΟΣΤΕΘΗΚΕ ΕΔΩ)
+        setCurrentProfile(PROFILES.person7);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
       } else if (newPin.length === 4) {
         setTimeout(() => { Alert.alert('Σφάλμα', 'Λανθασμένος κωδικός PIN'); setPin(''); }, 200);
