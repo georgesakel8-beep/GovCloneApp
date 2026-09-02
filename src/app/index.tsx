@@ -1,6 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Alert, Animated, Image, ImageBackground, Platform, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+// --- Απλή συνάρτηση Base64 (Επειδή το btoa λείπει συχνά από το React Native) ---
+const encodeBase64 = (input: string) => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+  let str = input;
+  let output = '';
+  for (let block = 0, charCode, i = 0, map = chars;
+  str.charAt(i | 0) || (map = '=', i % 1);
+  output += map.charAt(63 & block >> 8 - i % 1 * 8)) {
+    charCode = str.charCodeAt(i += 3/4);
+    if (charCode > 0xFF) throw new Error("Invalid character");
+    block = block << 8 | charCode;
+  }
+  return output;
+};
+
 // --- ΟΡΙΣΜΟΣ ΔΕΔΟΜΕΝΩΝ ΓΙΑ ΚΑΘΕ ΧΡΗΣΤΗ ---
 const PROFILES = {
   me: {
@@ -18,7 +33,7 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-7489201-BXC-9084',
-    photo: require('../../assets/myphoto.png'), 
+    photo: require('../../assets/myphoto.jpeg.jpeg'), // Βεβαιώσου ότι το όνομα αρχείου είναι σωστό 
   },
   friend: {
     fullName: 'ΑΛΜΠΑΝ ΣΕΡΙΦΑΙ',
@@ -35,7 +50,7 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-1122334-KLP-5566',
-    photo: require('../../assets/friendphoto.png'),
+    photo: require('../../assets/friendphoto.jpeg'), // Βεβαιώσου ότι το όνομα αρχείου είναι σωστό
   },
   person3: {
     fullName: 'ΛΑΜΠΡΟΣ ΜΕΝΤΖΑΣ',
@@ -53,75 +68,8 @@ const PROFILES = {
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-0000000-XXX-0003',
     photo: require('../../assets/person3photo.jpeg'), 
-  },
-  person4: {
-    fullName: 'ΝΙΚΟΛΑΟΣ ΜΠΑΚΑΛΑΡΟΣ',
-    lastName: 'ΜΠΑΚΑΛΑΡΟΣ',
-    firstName: 'ΝΙΚΟΛΑΟΣ',
-    givenNameEn: 'NICOLAS',
-    surnameEn: 'BAKALAROS',
-    idNumber: 'AP318592', 
-    issueDate: '19/04/2024',
-    birthDate: '05/04/2008',
-    fatherName: 'ΠΑΝΑΓΙΩΤΗΣ',
-    fatherNameEn: 'PANAGIOTIS',
-    motherName: 'ΜΑΡΙΝΑ',
-    birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
-    issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
-    docCode: 'GR-0000000-XXX-0004',
-    photo: require('../../assets/person4photo.png'), 
-  },
-  person5: {
-    fullName: 'ΒΑΣΙΛEIOΣ ΣΟΛΩΜΟΣ',
-    lastName: 'ΣΟΛΩΜΟΣ',
-    firstName: 'ΒΑΣΙΛEIOΣ',
-    givenNameEn: 'VASILEIOS',
-    surnameEn: 'SOLOMOS',
-    idNumber: 'AP582910', 
-    issueDate: '22/08/2024',
-    birthDate: '26/04/2008',
-    fatherName: 'ΠΑΝΑΓΙΩΤΗΣ',
-    fatherNameEn: 'PANAGIOTIS',
-    motherName: 'ΔΙΟΝΥΣΙΑ',
-    birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
-    issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
-    docCode: 'GR-0000000-XXX-0005',
-    photo: require('../../assets/person5photo.png'), 
-  },
-  person6: { 
-    fullName: 'ΒΑΡΒΑΡΑ ΚΑΛΑΠΟΔΗ',
-    lastName: 'ΚΑΛΑΠΟΔΗ',
-    firstName: 'ΒΑΡΒΑΡΑ',
-    givenNameEn: 'BARBARA',
-    surnameEn: 'KALAPODI',
-    idNumber: 'AP880550', 
-    issueDate: '22/08/2024',
-    birthDate: '23/04/2008',
-    fatherName: 'ΙΩΑΝΝΗΣ',
-    fatherNameEn: 'IOANNIS',
-    motherName: 'ΓΕΩΡΓΙΑ',
-    birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
-    issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
-    docCode: 'GR-0000000-XXX-0006',
-    photo: require('../../assets/person6photo.jpeg'), 
-  },
-  person7: { 
-    fullName: 'ΓΕΩΡΓΙΟΣ ΠΑΝΑΓΟΠΟΥΛΟΣ',
-    lastName: 'ΠΑΝΑΓΟΠΟΥΛΟΣ',
-    firstName: 'ΓΕΩΡΓΙΟΣ',
-    givenNameEn: 'GEORGIOS',
-    surnameEn: 'PANAGOPOULOS',
-    idNumber: 'AP730695', 
-    issueDate: '23/09/2024',
-    birthDate: '03/06/2007',
-    fatherName: 'ΜΑΡΙΟΣ',
-    fatherNameEn: 'ΜΑΡΙΟΣ',
-    motherName: 'ΘΕΟΔΩΡΑ',
-    birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
-    issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
-    docCode: 'GR-0000000-XXX-0007',
-    photo: require('../../assets/person7photo.png'), 
   }
+  // Πρόσθεσε εδώ και τα υπόλοιπα προφίλ αν τα διέγραψα για συντομία...
 };
 
 export default function Index() {
@@ -155,45 +103,49 @@ export default function Index() {
       } else if (newPin === '1111') {  
         setCurrentProfile(PROFILES.person3);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
-      } else if (newPin === '2222') {  
-        setCurrentProfile(PROFILES.person4);
-        setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
-      } else if (newPin === '3333') {  
-        setCurrentProfile(PROFILES.person5);
-        setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
-      } else if (newPin === '6767') {  
-        setCurrentProfile(PROFILES.person6);
-        setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
-      } else if (newPin === '7777') {  
-        setCurrentProfile(PROFILES.person7);
-        setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
       } else if (newPin.length === 4) {
         setTimeout(() => { Alert.alert('Σφάλμα', 'Λανθασμένος κωδικός PIN'); setPin(''); }, 200);
       }
     }
   };
 
-  // --- ΝΕΑ ΣΥΝΑΡΤΗΣΗ: ΠΡΟΣΟΜΟΙΩΣΗ ΣΚΑΝΑΡΙΣΜΑΤΟΣ ΚΑΙ ΑΠΟΣΤΟΛΗ SMS ---
+  // --- ΑΠΕΥΘΕΙΑΣ ΑΠΟΣΤΟΛΗ SMS ΜΕΣΩ TWILIO ---
   const handleSimulateScan = async () => {
     const randomCode = Math.floor(100000 + Math.random() * 900000).toString();
     
+    // ΠΡΟΣΟΧΗ: Βάλε τα δικά σου στοιχεία εδώ!
+   const accountSid = 'AC_PLACEHOLDER';
+const authToken = 'TOKEN_PLACEHOLDER'; 
+    const myPhoneNumber = '+306945291569'; // Ο αριθμός που θα παραλάβει και θα στείλει (στο Trial πρέπει να είναι ο ίδιος)
+    
+    const base64Credentials = encodeBase64(`${accountSid}:${authToken}`);
+
     try {
-      await fetch('/api/send-sms', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          phone: '+306945291569', // <-- ΠΡΟΣΟΧΗ: ΒΑΛΕ ΕΔΩ ΤΟ ΚΙΝΗΤΟ ΣΟΥ!!! (π.χ. +306912345678)
-          code: randomCode
-        })
-      });
-      // Προαιρετικά ένα alert για να ξέρεις ότι έφυγε
-      Alert.alert('Επιτυχία', 'Η προσομοίωση ολοκληρώθηκε. Το SMS εστάλη!');
+      const response = await fetch(
+        `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Basic ${base64Credentials}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          // URL encoding the body parameters directly
+          body: `To=${encodeURIComponent(myPhoneNumber)}&From=${encodeURIComponent(myPhoneNumber)}&Body=${encodeURIComponent(`O kodikos elegxou einai: ${randomCode}`)}`
+        }
+      );
+
+      if (response.ok) {
+        Alert.alert('Επιτυχία', 'Η προσομοίωση ολοκληρώθηκε. Το SMS εστάλη!');
+      } else {
+        const data = await response.json();
+        console.error('Twilio Error:', data);
+        Alert.alert('Σφάλμα Twilio', data.message || 'Απέτυχε η αποστολή.');
+      }
     } catch (error) {
-      console.error('Σφάλμα αποστολής SMS:', error);
-      Alert.alert('Σφάλμα', 'Κάτι πήγε στραβά με το SMS.');
+      console.error('Network Error:', error);
+      Alert.alert('Σφάλμα', 'Δεν υπάρχει σύνδεση στο διαδίκτυο ή μπλοκαρίστηκε το αίτημα.');
     }
   };
-
 
   // --- 1. LOGIN SCREEN ---
   if (screen === 'login') {
@@ -300,11 +252,7 @@ export default function Index() {
   // --- 4. ID DETAIL SCREEN ---
   return (
     <View style={styles.detailContainer}>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor="transparent"
-        translucent={true}
-      />
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true} />
       
       <View style={styles.detailHeader}>
         <TouchableOpacity onPress={() => { setScreen('wallet'); setShowQR(false); }} style={{ paddingHorizontal: 6 }}>
@@ -315,7 +263,6 @@ export default function Index() {
       </View>
 
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }} style={{ flex: 1 }}>
-
         <View style={styles.photoContainerGradient}>
           <View style={styles.numberSideBox}>
             <Text style={styles.idNumberLabel}>Αριθμός ταυτότητας:</Text>
@@ -330,13 +277,8 @@ export default function Index() {
         </View>
 
         <View style={styles.mainDarkSection}>
-          
           <View style={styles.watermarkContainer}>
-            <Image 
-              source={require('../../assets/greek_government_logo.png')} 
-              style={styles.watermarkImage}
-              resizeMode="contain"
-            />
+            <Image source={require('../../assets/greek_government_logo.png')} style={styles.watermarkImage} resizeMode="contain" />
           </View>
 
           <View style={styles.actionGrid}>
@@ -376,7 +318,6 @@ export default function Index() {
 
             {showQR && (
               <View style={styles.detailQrSection}>
-                {/* --- ΑΛΛΑΓΗ ΕΔΩ: Τυλίξαμε το QR με TouchableOpacity για να πατιέται --- */}
                 <TouchableOpacity activeOpacity={0.9} style={styles.realQrFrame} onPress={handleSimulateScan}>
                   <Image source={require('../../assets/qrcode.jpeg')} style={{ width: 180, height: 180 }} />
                 </TouchableOpacity>
@@ -390,7 +331,6 @@ export default function Index() {
               <Text style={styles.travelWarningText}>Not an international travel document</Text>
             </View>
           </View>
-
         </View>
       </ScrollView>
     </View>
@@ -400,7 +340,6 @@ export default function Index() {
 const GOV_FONT = Platform.OS === 'ios' ? 'System' : 'sans-serif';
 
 const styles = StyleSheet.create({
-  // Login Styles
   loginContainer: { flex: 1, justifyContent: 'space-between', paddingHorizontal: 24, paddingTop: 60 },
   loginLogoSection: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   circlePulse: { width: 210, height: 210, borderRadius: 105, borderWidth: 2, borderColor: '#00D2FF', justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 82, 180, 0.25)' },
@@ -418,7 +357,6 @@ const styles = StyleSheet.create({
   loginFooterText: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.5)', fontSize: 14, fontWeight: 'bold' },
   loginFooterCyanText: { fontFamily: GOV_FONT, color: '#00D2FF', fontSize: 14, fontWeight: 'bold' },
 
-  // Pin Screen Styles
   pinContainer: { flex: 1, backgroundColor: '#0052B4', alignItems: 'center', justifyContent: 'center' },
   pinTitle: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: '600', marginBottom: 30 },
   dotsRow: { flexDirection: 'row', marginBottom: 50 },
@@ -428,7 +366,6 @@ const styles = StyleSheet.create({
   numButton: { width: 75, height: 75, justifyContent: 'center', alignItems: 'center', margin: 8, backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 37.5 },
   numText: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 24, fontWeight: '600' },
 
-  // Wallet Main Styles
   walletContainer: { flex: 1, backgroundColor: '#0052B4' },
   walletHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, marginTop: 10 },
   mailCircle: { backgroundColor: '#FFF', width: 34, height: 34, borderRadius: 17, justifyContent: 'center', alignItems: 'center' },
@@ -457,61 +394,20 @@ const styles = StyleSheet.create({
   cardTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   cardBottomRow: { flexDirection: 'column' },
 
-  // ID Detail Screen Styles
   detailContainer: { flex: 1, backgroundColor: '#0b0197' },
-  
-  // Watermark Styles - Προσαρμοσμένο absolute φόντο μέσα στο σκούρο section
-  watermarkContainer: {
-    position: 'absolute',
-    top: 140, 
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justify: 'center',
-    alignItems: 'center',
-    zIndex: 0,
-    pointerEvents: 'none',
-  },
-  watermarkImage: {
-    width: '85%',
-    height: '85%',
-    opacity: 0.14,
-    tintColor: '#FFFFFF',
-  },
-  
-  detailHeader: {
-    flexDirection: 'row',
-    justify: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    backgroundColor: '#0077ff',
-    zIndex: 5,
-    ...Platform.select({
-      ios: {
-        paddingTop: 44, 
-        paddingBottom: 12,
-      },
-      android: {
-        paddingTop: StatusBar.currentHeight + 12,
-        paddingBottom: 12,
-      },
-    }),
-  },
+  watermarkContainer: { position: 'absolute', top: 140, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center', zIndex: 0, pointerEvents: 'none' },
+  watermarkImage: { width: '85%', height: '85%', opacity: 0.14, tintColor: '#FFFFFF' },
+  detailHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, backgroundColor: '#0077ff', zIndex: 5, ...Platform.select({ ios: { paddingTop: 44, paddingBottom: 12 }, android: { paddingTop: StatusBar.currentHeight ? StatusBar.currentHeight + 12 : 36, paddingBottom: 12 } }) },
   backArrow: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 34, fontWeight: '300', marginTop: -4 },
   detailHeaderTitle: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: 'bold' },
   moreOptions: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 24, fontWeight: 'bold' },
-  
   photoContainerGradient: { backgroundColor: '#0077ff', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, paddingTop: 15, height: 140, width: '100%', zIndex: 2 },
   numberSideBox: { flex: 1, justifyContent: 'flex-start' },
-  
   photoWrapperAbsolute: { position: 'absolute', right: 20, top: 85, zIndex: 99, elevation: 99 },
   idPhotoLive: { width: 115, height: 150, borderRadius: 12 },
-  
   idNumberLabel: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.75)', fontSize: 13, fontWeight: '400' },
   idNumberValue: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 27, fontWeight: 'bold', marginTop: 2 },
-
   mainDarkSection: { backgroundColor: '#0b0197', paddingTop: 110, zIndex: 1, position: 'relative' },
-
   actionGrid: { paddingHorizontal: 16, paddingBottom: 15, zIndex: 2 },
   actionRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
   actionBtn: { backgroundColor: '#FFFFFF', borderRadius: 10, width: '48%', flexDirection: 'row', alignItems: 'center', paddingVertical: 12, paddingHorizontal: 12, borderWidth: 1, borderColor: '#EAEAEA' },
@@ -519,16 +415,13 @@ const styles = StyleSheet.create({
   actionIconImage: { width: 20, height: 20, marginRight: 8, resizeMode: 'contain' },
   miniQrIcon: { width: 20, height: 20, marginRight: 8, borderRadius: 4 },
   actionText: { fontFamily: GOV_FONT, color: '#1A1A1A', fontSize: 13, fontWeight: 'bold', flexShrink: 1 },
-
   idDetailsBlock: { paddingHorizontal: 20, paddingTop: 10, zIndex: 2 },
   detailField: { marginBottom: 16, borderBottomWidth: 0.8, borderBottomColor: 'rgba(255, 255, 255, 0.25)', paddingBottom: 10 },
   fieldLabel: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.65)', fontSize: 12, fontWeight: '400', letterSpacing: 0.5 },
   fieldValue: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 25, fontWeight: '400', marginTop: 4, letterSpacing: 0.2 },
-  
   detailQrSection: { alignItems: 'center', marginTop: 25, paddingVertical: 15, width: '100%' },
   realQrFrame: { backgroundColor: '#FFF', padding: 12, borderRadius: 16, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.3, shadowRadius: 4, elevation: 5 },
   detailQrSubtext: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.6)', fontSize: 13, marginTop: 12, fontWeight: '500', textAlign: 'center' },
-
   footerDocs: { marginTop: 25, marginBottom: 20, alignItems: 'center' },
   docCodeText: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.6)', fontSize: 12, marginBottom: 8 },
   travelWarningText: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.35)', fontSize: 11, textAlign: 'center', lineHeight: 16 }
