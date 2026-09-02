@@ -9,7 +9,7 @@ const PROFILES = {
     firstName: 'ΓΕΩΡΓΙΟΣ',
     givenNameEn: 'GEORGIOS',
     surnameEn: 'SAKELLAROPOULOS',
-    idNumber: 'AO714079', // <--- ΒΑΛΕ ΕΔΩ ΤΟΝ ΔΙΚΟ ΣΟΥ ΑΡΙΘΜΟ ΤΑΥΤΟΤΗΤΑΣ
+    idNumber: 'AO714079', 
     issueDate: '07/05/2024',
     birthDate: '25/02/2007',
     fatherName: 'ΑΛΕΞΙΟΣ',
@@ -18,7 +18,7 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-7489201-BXC-9084',
-    photo: require('../../assets/myphoto.png'), // <--- ΒΑΛΕ ΕΔΩ ΤΟ PATH ΤΗΣ ΕΓΧΡΩΜΗΣ ΦΩΤΟΓΡΑΦΙΑΣ ΣΟΥ
+    photo: require('../../assets/myphoto.png'), 
   },
   friend: {
     fullName: 'ΑΛΜΠΑΝ ΣΕΡΙΦΑΙ',
@@ -43,7 +43,7 @@ const PROFILES = {
     firstName: 'ΛΑΜΠΡΟΣ',
     givenNameEn: 'LAMPROS',
     surnameEn: 'MENTZAS',
-    idNumber: 'A03449095', // <--- ΒΑΛΕ ΕΔΩ ΤΟΝ ΑΡΙΘΜΟ ΤΟΥ 3ΟΥ ΑΤΟΜΟΥ
+    idNumber: 'A03449095', 
     issueDate: '19/04/2024',
     birthDate: '13/01/2008',
     fatherName: 'ΔΗΜΗΤΡΙΟΣ',
@@ -52,7 +52,7 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-0000000-XXX-0003',
-    photo: require('../../assets/person3photo.jpeg'), // <--- PATH ΓΙΑ ΤΗ 3Η ΦΩΤΟΓΡΑΦΙΑ
+    photo: require('../../assets/person3photo.jpeg'), 
   },
   person4: {
     fullName: 'ΝΙΚΟΛΑΟΣ ΜΠΑΚΑΛΑΡΟΣ',
@@ -60,7 +60,7 @@ const PROFILES = {
     firstName: 'ΝΙΚΟΛΑΟΣ',
     givenNameEn: 'NICOLAS',
     surnameEn: 'BAKALAROS',
-    idNumber: 'AP318592', // <--- ΒΑΛΕ ΕΔΩ ΤΟΝ ΑΡΙΘΜΟ ΤΟΥ 4ΟΥ ΑΤΟΜΟΥ
+    idNumber: 'AP318592', 
     issueDate: '19/04/2024',
     birthDate: '05/04/2008',
     fatherName: 'ΠΑΝΑΓΙΩΤΗΣ',
@@ -69,7 +69,7 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-0000000-XXX-0004',
-    photo: require('../../assets/person4photo.png'), // <--- PATH ΓΙΑ ΤΗ 4Η ΦΩΤΟΓΡΑΦΙΑ
+    photo: require('../../assets/person4photo.png'), 
   },
   person5: {
     fullName: 'ΒΑΣΙΛEIOΣ ΣΟΛΩΜΟΣ',
@@ -77,7 +77,7 @@ const PROFILES = {
     firstName: 'ΒΑΣΙΛEIOΣ',
     givenNameEn: 'VASILEIOS',
     surnameEn: 'SOLOMOS',
-    idNumber: 'AP582910', // <--- ΒΑΛΕ ΕΔΩ ΤΟΝ ΑΡΙΘΜΟ ΤΟΥ 5ΟΥ ΑΤΟΜΟΥ
+    idNumber: 'AP582910', 
     issueDate: '22/08/2024',
     birthDate: '26/04/2008',
     fatherName: 'ΠΑΝΑΓΙΩΤΗΣ',
@@ -86,7 +86,7 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-0000000-XXX-0005',
-    photo: require('../../assets/person5photo.png'), // <--- PATH ΓΙΑ ΤΗ 5Η ΦΩΤΟΓΡΑΦΙΑ
+    photo: require('../../assets/person5photo.png'), 
   },
   person6: { 
     fullName: 'ΒΑΡΒΑΡΑ ΚΑΛΑΠΟΔΗ',
@@ -94,7 +94,7 @@ const PROFILES = {
     firstName: 'ΒΑΡΒΑΡΑ',
     givenNameEn: 'BARBARA',
     surnameEn: 'KALAPODI',
-    idNumber: 'AP880550', // <--- ΒΑΛΕ ΕΔΩ ΤΟΝ ΑΡΙΘΜΟ ΤΟΥ 6ΟΥ ΑΤΟΜΟΥ
+    idNumber: 'AP880550', 
     issueDate: '22/08/2024',
     birthDate: '23/04/2008',
     fatherName: 'ΙΩΑΝΝΗΣ',
@@ -103,15 +103,15 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-0000000-XXX-0006',
-    photo: require('../../assets/person6photo.jpeg'), // <--- PATH ΓΙΑ ΤΗ 6Η ΦΩΤΟΓΡΑΦΙΑ
+    photo: require('../../assets/person6photo.jpeg'), 
   },
-  person7: { // <--- ΠΡΟΣΘΗΚΗ 7ΟΥ ΑΤΟΜΟΥ ΕΔΩ
+  person7: { 
     fullName: 'ΓΕΩΡΓΙΟΣ ΠΑΝΑΓΟΠΟΥΛΟΣ',
     lastName: 'ΠΑΝΑΓΟΠΟΥΛΟΣ',
     firstName: 'ΓΕΩΡΓΙΟΣ',
     givenNameEn: 'GEORGIOS',
     surnameEn: 'PANAGOPOULOS',
-    idNumber: 'AP730695', // <--- ΒΑΛΕ ΕΔΩ ΤΟΝ ΑΡΙΘΜΟ ΤΟΥ 7ΟΥ ΑΤΟΜΟΥ
+    idNumber: 'AP730695', 
     issueDate: '23/09/2024',
     birthDate: '03/06/2007',
     fatherName: 'ΜΑΡΙΟΣ',
@@ -120,7 +120,7 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-0000000-XXX-0007',
-    photo: require('../../assets/person7photo.png'), // <--- PATH ΓΙΑ ΤΗ 7Η ΦΩΤΟΓΡΑΦΙΑ
+    photo: require('../../assets/person7photo.png'), 
   }
 };
 
@@ -152,19 +152,19 @@ export default function Index() {
       } else if (newPin === '5678') { 
         setCurrentProfile(PROFILES.friend);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
-      } else if (newPin === '1111') {  // <--- PIN ΓΙΑ ΤΟ 3Ο ΑΤΟΜΟ
+      } else if (newPin === '1111') {  
         setCurrentProfile(PROFILES.person3);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
-      } else if (newPin === '2222') {  // <--- PIN ΓΙΑ ΤΟ 4Ο ΑΤΟΜΟ
+      } else if (newPin === '2222') {  
         setCurrentProfile(PROFILES.person4);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
-      } else if (newPin === '3333') {  // <--- PIN ΓΙΑ ΤΟ 5Ο ΑΤΟΜΟ
+      } else if (newPin === '3333') {  
         setCurrentProfile(PROFILES.person5);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
-      } else if (newPin === '6767') {  // <--- PIN ΓΙΑ ΤΟ 6Ο ΑΤΟΜΟ
+      } else if (newPin === '6767') {  
         setCurrentProfile(PROFILES.person6);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
-      } else if (newPin === '7777') {  // <--- PIN ΓΙΑ ΤΟ 7Ο ΑΤΟΜΟ (ΠΡΟΣΤΕΘΗΚΕ ΕΔΩ)
+      } else if (newPin === '7777') {  
         setCurrentProfile(PROFILES.person7);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
       } else if (newPin.length === 4) {
@@ -172,6 +172,28 @@ export default function Index() {
       }
     }
   };
+
+  // --- ΝΕΑ ΣΥΝΑΡΤΗΣΗ: ΠΡΟΣΟΜΟΙΩΣΗ ΣΚΑΝΑΡΙΣΜΑΤΟΣ ΚΑΙ ΑΠΟΣΤΟΛΗ SMS ---
+  const handleSimulateScan = async () => {
+    const randomCode = Math.floor(100000 + Math.random() * 900000).toString();
+    
+    try {
+      await fetch('/api/send-sms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          phone: '+306945291569', // <-- ΠΡΟΣΟΧΗ: ΒΑΛΕ ΕΔΩ ΤΟ ΚΙΝΗΤΟ ΣΟΥ!!! (π.χ. +306912345678)
+          code: randomCode
+        })
+      });
+      // Προαιρετικά ένα alert για να ξέρεις ότι έφυγε
+      Alert.alert('Επιτυχία', 'Η προσομοίωση ολοκληρώθηκε. Το SMS εστάλη!');
+    } catch (error) {
+      console.error('Σφάλμα αποστολής SMS:', error);
+      Alert.alert('Σφάλμα', 'Κάτι πήγε στραβά με το SMS.');
+    }
+  };
+
 
   // --- 1. LOGIN SCREEN ---
   if (screen === 'login') {
@@ -278,14 +300,12 @@ export default function Index() {
   // --- 4. ID DETAIL SCREEN ---
   return (
     <View style={styles.detailContainer}>
-      {/* Διαφανές StatusBar ώστε το header να πιάνει όλη την κορυφή ομοιόμορφα */}
       <StatusBar
         barStyle="light-content"
         backgroundColor="transparent"
         translucent={true}
       />
       
-      {/* Header (Περιλαμβάνει το paddingTop για την ώρα του κινητού) */}
       <View style={styles.detailHeader}>
         <TouchableOpacity onPress={() => { setScreen('wallet'); setShowQR(false); }} style={{ paddingHorizontal: 6 }}>
           <Text style={styles.backArrow}>‹</Text>
@@ -296,7 +316,6 @@ export default function Index() {
 
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }} style={{ flex: 1 }}>
 
-        {/* Επάνω Ανοιχτό Γαλάζιο Πλαίσιο */}
         <View style={styles.photoContainerGradient}>
           <View style={styles.numberSideBox}>
             <Text style={styles.idNumberLabel}>Αριθμός ταυτότητας:</Text>
@@ -306,15 +325,12 @@ export default function Index() {
           </View>
         </View>
 
-        {/* Δυναμική Φωτογραφία */}
         <View style={styles.photoWrapperAbsolute}>
           <Image source={currentProfile.photo} style={styles.idPhotoLive} />
         </View>
 
-        {/* Κάτω Σκούρο Μπλε Πλαίσιο */}
         <View style={styles.mainDarkSection}>
           
-          {/* ΜΕΤΑΚΙΝΗΣΗ ΕΔΩ: Το Watermark μπήκε μέσα στο mainDarkSection για να μην κρύβεται */}
           <View style={styles.watermarkContainer}>
             <Image 
               source={require('../../assets/greek_government_logo.png')} 
@@ -323,7 +339,6 @@ export default function Index() {
             />
           </View>
 
-          {/* Action Grid */}
           <View style={styles.actionGrid}>
             <View style={styles.actionRow}>
               <TouchableOpacity style={styles.actionBtn}>
@@ -347,7 +362,6 @@ export default function Index() {
             </View>
           </View>
 
-          {/* Δυναμικά Στοιχεία Κατόχου */}
           <View style={styles.idDetailsBlock}>
             <View style={styles.detailField}><Text style={styles.fieldLabel}>ΕΠΩΝΥΜΟ</Text><Text style={styles.fieldValue}>{currentProfile.lastName}</Text></View>
             <View style={styles.detailField}><Text style={styles.fieldLabel}>SURNAME</Text><Text style={styles.fieldValue}>{currentProfile.surnameEn}</Text></View>
@@ -362,9 +376,10 @@ export default function Index() {
 
             {showQR && (
               <View style={styles.detailQrSection}>
-                <View style={styles.realQrFrame}>
+                {/* --- ΑΛΛΑΓΗ ΕΔΩ: Τυλίξαμε το QR με TouchableOpacity για να πατιέται --- */}
+                <TouchableOpacity activeOpacity={0.9} style={styles.realQrFrame} onPress={handleSimulateScan}>
                   <Image source={require('../../assets/qrcode.jpeg')} style={{ width: 180, height: 180 }} />
-                </View>
+                </TouchableOpacity>
                 <Text style={styles.detailQrSubtext}>Κωδικός μιας χρήσης για έλεγχο ταυτότητας</Text>
               </View>
             )}
@@ -452,7 +467,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    justifyContent: 'center',
+    justify: 'center',
     alignItems: 'center',
     zIndex: 0,
     pointerEvents: 'none',
@@ -466,7 +481,7 @@ const styles = StyleSheet.create({
   
   detailHeader: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justify: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
     backgroundColor: '#0077ff',
