@@ -1,4 +1,20 @@
 export default async function handler(req, res) {
+  // 1. Ενεργοποίηση CORS headers
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*'); 
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  );
+
+  // 2. Διαχείριση preflight αιτήματος (OPTIONS) από τον browser
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
+  // 3. Κανονική ροή για POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -42,37 +58,3 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: error.message });
   }
 }
-Βήμα 2: Αλλαγή στον κώδικα του frontend (src/app/index.tsx)
-Τώρα, αντί να καλείς την Twilio απευθείας, θα καλείς το δικό σου backend API /api/send-sms. Άλλαξε τη συνάρτηση αποστολής στο αρχείο σου σε κάτι τέτοιο:
-
-TypeScript
-const handleSimulateScan = async () => {
-  const randomCode = Math.floor(100000 + Math.random() * 900000).toString();
-  const myPhoneNumber = '+306945291569'; // Ο αριθμός σου
-
-  try {
-    const res = await fetch('/api/send-sms', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        to: myPhoneNumber,
-        message: `GovClone Verification Code: ${randomCode}`
-      }),
-    });
-
-    const data = await res.json();
-
-    if (res.ok) {
-      console.log('SMS sent successfully!', data.sid);
-      alert('Το SMS στάλθηκε επιτυχώς!');
-    } else {
-      console.error('Failed to send SMS:', data.error);
-      alert('Σφάλμα αποστολής: ' + data.error);
-    }
-  } catch (err) {
-    console.error('Network or server error:', err);
-    alert('Προέκυψε σφάλμα σύνδεσης.');
-  }
-};
