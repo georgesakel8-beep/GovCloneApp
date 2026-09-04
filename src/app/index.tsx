@@ -100,7 +100,7 @@ export default function Index() {
     
     try {
       const response = await fetch(
-        'https://gov-clone-mf95qzsg2-george-sakel-s-projects.vercel.app/api/send-sms', 
+        '/api/send-sms', 
         {
           method: 'POST',
           headers: {
