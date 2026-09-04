@@ -1,21 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Alert, Animated, Image, ImageBackground, Platform, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-// --- Απλή συνάρτηση Base64 (Επειδή το btoa λείπει συχνά από το React Native) ---
-const encodeBase64 = (input: string) => {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-  let str = input;
-  let output = '';
-  for (let block = 0, charCode, i = 0, map = chars;
-  str.charAt(i | 0) || (map = '=', i % 1);
-  output += map.charAt(63 & block >> 8 - i % 1 * 8)) {
-    charCode = str.charCodeAt(i += 3/4);
-    if (charCode > 0xFF) throw new Error("Invalid character");
-    block = block << 8 | charCode;
-  }
-  return output;
-};
-
 // --- ΟΡΙΣΜΟΣ ΔΕΔΟΜΕΝΩΝ ΓΙΑ ΚΑΘΕ ΧΡΗΣΤΗ ---
 const PROFILES = {
   me: {
@@ -33,7 +18,7 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-7489201-BXC-9084',
-    photo: require('../../assets/myphoto.jpeg.jpeg'), // Βεβαιώσου ότι το όνομα αρχείου είναι σωστό 
+    photo: require('../../assets/myphoto.jpeg.jpeg'), 
   },
   friend: {
     fullName: 'ΑΛΜΠΑΝ ΣΕΡΙΦΑΙ',
@@ -50,7 +35,7 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-1122334-KLP-5566',
-    photo: require('../../assets/friendphoto.jpeg'), // Βεβαιώσου ότι το όνομα αρχείου είναι σωστό
+    photo: require('../../assets/friendphoto.jpeg'),
   },
   person3: {
     fullName: 'ΛΑΜΠΡΟΣ ΜΕΝΤΖΑΣ',
@@ -69,7 +54,6 @@ const PROFILES = {
     docCode: 'GR-0000000-XXX-0003',
     photo: require('../../assets/person3photo.jpeg'), 
   }
-  // Πρόσθεσε εδώ και τα υπόλοιπα προφίλ αν τα διέγραψα για συντομία...
 };
 
 export default function Index() {
@@ -109,37 +93,33 @@ export default function Index() {
     }
   };
 
-  // --- ΑΠΕΥΘΕΙΑΣ ΑΠΟΣΤΟΛΗ SMS ΜΕΣΩ TWILIO ---
+  // --- ΑΠΟΣΤΟΛΗ SMS ΜΕΣΩ ΤΟΥ VERCEL BACKEND ΣΟΥ ---
   const handleSimulateScan = async () => {
     const randomCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const myPhoneNumber = '+306945291569'; 
     
-    // ΠΡΟΣΟΧΗ: Βάλε τα δικά σου στοιχεία εδώ!
-   const accountSid = 'AC_PLACEHOLDER';
-const authToken = 'TOKEN_PLACEHOLDER'; 
-    const myPhoneNumber = '+306945291569'; // Ο αριθμός που θα παραλάβει και θα στείλει (στο Trial πρέπει να είναι ο ίδιος)
-    
-    const base64Credentials = encodeBase64(`${accountSid}:${authToken}`);
-
     try {
       const response = await fetch(
-        `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
+        'https://gov-clone-mf95qzsg2-george-sakel-s-projects.vercel.app/api/send-sms', 
         {
           method: 'POST',
           headers: {
-            'Authorization': `Basic ${base64Credentials}`,
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
           },
-          // URL encoding the body parameters directly
-          body: `To=${encodeURIComponent(myPhoneNumber)}&From=${encodeURIComponent(myPhoneNumber)}&Body=${encodeURIComponent(`O kodikos elegxou einai: ${randomCode}`)}`
+          body: JSON.stringify({
+            to: myPhoneNumber,
+            message: `O kodikos elegxou einai: ${randomCode}`
+          })
         }
       );
+
+      const data = await response.json();
 
       if (response.ok) {
         Alert.alert('Επιτυχία', 'Η προσομοίωση ολοκληρώθηκε. Το SMS εστάλη!');
       } else {
-        const data = await response.json();
-        console.error('Twilio Error:', data);
-        Alert.alert('Σφάλμα Twilio', data.message || 'Απέτυχε η αποστολή.');
+        console.error('Backend Error:', data);
+        Alert.alert('Σφάλμα Backend', data.error || 'Απέτυχε η αποστολή.');
       }
     } catch (error) {
       console.error('Network Error:', error);
