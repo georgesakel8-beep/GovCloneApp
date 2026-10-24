@@ -105,12 +105,11 @@ const PROFILES = {
     docCode: 'GR-0000000-XXX-0006',
     photo: require('../../assets/person6photo.jpeg'), // <--- PATH ΓΙΑ ΤΗ 6Η ΦΩΤΟΓΡΑΦΙΑ
   },
-  person7: { // <--- ΠΡΟΣΘΗΚΗ 7ΟΥ ΑΤΟΜΟΥ ΕΔΩ
+  person7: { 
     fullName: 'ΓΕΩΡΓΙΟΣ ΠΑΝΑΓΟΠΟΥΛΟΣ',
     lastName: 'ΠΑΝΑΓΟΠΟΥΛΟΣ',
     firstName: 'ΓΕΩΡΓΙΟΣ',
     givenNameEn: 'GEORGIOS',
-    surnameEn: 'PANAGIOPULOS',
     surnameEn: 'PANAGIOPOULOS',
     idNumber: 'AP730695', // <--- ΒΑΛΕ ΕΔΩ ΤΟΝ ΑΡΙΘΜΟ ΤΟΥ 7ΟΥ ΑΤΟΜΟΥ
     issueDate: '23/09/2024',
@@ -121,8 +120,41 @@ const PROFILES = {
     birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
     issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
     docCode: 'GR-0000000-XXX-0007',
-    photo: require('../../assets/person7photo.jpeg'), // <--- PATH ΓΙΑ ΤΗ 7Η ΦΩΤΟΓΡΑΦΙΑ
     photo: require('../../assets/person7photo.png'), // <--- PATH ΓΙΑ ΤΗ 7Η ΦΩΤΟΓΡΑΦΙΑ
+  },
+  person8: { // <--- 8Ο ΑΤΟΜΟ (PIN: 4444)
+    fullName: 'ΔΗΜΗΤΡΙΟΣ ΜΠΟΥΡΔΑΝΙΩΤΗΣ',
+    lastName: 'ΜΠΟΥΡΔΑΝΙΩΤΗΣ',
+    firstName: 'ΔΗΜΗΤΡΙΟΣ',
+    givenNameEn: 'DIMITRIOS',
+    surnameEn: 'BOURDANIOTIS',
+    idNumber: 'AP311762',
+    issueDate: '23/09/2024',
+    birthDate: '17/12/2007',
+    fatherName: 'ΠΟΛΥΧΡΟΝΙΟΣ',
+    fatherNameEn: 'POLYCHRONIOS',
+    motherName: 'ΚΩΣΤΑΝΤΖΑ',
+    birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
+    issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
+    docCode: 'GR-0000000-XXX-0008',
+    photo: require('../../assets/person8photo.jpeg'),
+  },
+  person9: { // <--- 9Ο ΑΤΟΜΟ (PIN: 9999)
+    fullName: 'ΕΛΕΥΘΕΡΙΑ ΔΗΜΗΤΡΟΠΟΥΛΟΥ',
+    lastName: 'ΔΗΜΗΤΡΟΠΟΥΛΟΥ',
+    firstName: 'ΕΛΕΥΘΕΡΙΑ',
+    givenNameEn: 'ELEFTHERIA',
+    surnameEn: 'DIMITROPOULOU',
+    idNumber: 'AO4896703',
+    issueDate: '23/01/2024',
+    birthDate: '11/05/2008',
+    fatherName: 'ΑΘΑΝΑΣΙΟΣ',
+    fatherNameEn: 'ATHANASIOS',
+    motherName: 'ΑΓΓΕΛΙΚΗ',
+    birthPlace: 'ΠΑΤΡΑ ΑΧΑΪΑΣ',
+    issuanceOffice: 'Υ.Δ.Ε.Ε. ΠΑΤΡΩΝ',
+    docCode: 'GR-0000000-XXX-0009',
+    photo: require('../../assets/person9photo.jpeg'),
   }
 };
 
@@ -154,20 +186,26 @@ export default function Index() {
       } else if (newPin === '5678') { 
         setCurrentProfile(PROFILES.friend);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
-      } else if (newPin === '1111') {  // <--- PIN ΓΙΑ ΤΟ 3Ο ΑΤΟΜΟ
+      } else if (newPin === '1111') {  
         setCurrentProfile(PROFILES.person3);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
-      } else if (newPin === '2222') {  // <--- PIN ΓΙΑ ΤΟ 4Ο ΑΤΟΜΟ
+      } else if (newPin === '2222') {  
         setCurrentProfile(PROFILES.person4);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
-      } else if (newPin === '3333') {  // <--- PIN ΓΙΑ ΤΟ 5Ο ΑΤΟΜΟ
+      } else if (newPin === '3333') {  
         setCurrentProfile(PROFILES.person5);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
-      } else if (newPin === '6767') {  // <--- PIN ΓΙΑ ΤΟ 6Ο ΑΤΟΜΟ
+      } else if (newPin === '6767') {  
         setCurrentProfile(PROFILES.person6);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
-      } else if (newPin === '7777') {  // <--- PIN ΓΙΑ ΤΟ 7Ο ΑΤΟΜΟ (ΠΡΟΣΤΕΘΗΚΕ ΕΔΩ)
+      } else if (newPin === '7777') {  
         setCurrentProfile(PROFILES.person7);
+        setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
+      } else if (newPin === '4444') {  // <--- PIN ΓΙΑ ΤΟ 8Ο ΑΤΟΜΟ
+        setCurrentProfile(PROFILES.person8);
+        setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
+      } else if (newPin === '9999') {  // <--- PIN ΓΙΑ ΤΟ 9Ο ΑΤΟΜΟ
+        setCurrentProfile(PROFILES.person9);
         setTimeout(() => { setScreen('wallet'); setPin(''); }, 200);
       } else if (newPin.length === 4) {
         setTimeout(() => { Alert.alert('Σφάλμα', 'Λανθασμένος κωδικός PIN'); setPin(''); }, 200);
@@ -280,14 +318,12 @@ export default function Index() {
   // --- 4. ID DETAIL SCREEN ---
   return (
     <View style={styles.detailContainer}>
-      {/* Διαφανές StatusBar ώστε το header να πιάνει όλη την κορυφή ομοιόμορφα */}
       <StatusBar
         barStyle="light-content"
         backgroundColor="transparent"
         translucent={true}
       />
 
-      {/* Header (Περιλαμβάνει το paddingTop για την ώρα του κινητού) */}
       <View style={styles.detailHeader}>
         <TouchableOpacity onPress={() => { setScreen('wallet'); setShowQR(false); }} style={{ paddingHorizontal: 6 }}>
           <Text style={styles.backArrow}>‹</Text>
@@ -298,7 +334,6 @@ export default function Index() {
 
       <ScrollView contentContainerStyle={{ paddingBottom: 40 }} style={{ flex: 1 }}>
 
-        {/* Επάνω Ανοιχτό Γαλάζιο Πλαίσιο */}
         <View style={styles.photoContainerGradient}>
           <View style={styles.numberSideBox}>
             <Text style={styles.idNumberLabel}>Αριθμός ταυτότητας:</Text>
@@ -308,15 +343,12 @@ export default function Index() {
           </View>
         </View>
 
-        {/* Δυναμική Φωτογραφία */}
         <View style={styles.photoWrapperAbsolute}>
           <Image source={currentProfile.photo} style={styles.idPhotoLive} />
         </View>
 
-        {/* Κάτω Σκούρο Μπλε Πλαίσιο */}
         <View style={styles.mainDarkSection}>
 
-          {/* ΜΕΤΑΚΙΝΗΣΗ ΕΔΩ: Το Watermark μπήκε μέσα στο mainDarkSection για να μην κρύβεται */}
           <View style={styles.watermarkContainer}>
             <Image 
               source={require('../../assets/greek_government_logo.png')} 
@@ -325,7 +357,6 @@ export default function Index() {
             />
           </View>
 
-          {/* Action Grid */}
           <View style={styles.actionGrid}>
             <View style={styles.actionRow}>
               <TouchableOpacity style={styles.actionBtn}>
@@ -349,7 +380,6 @@ export default function Index() {
             </View>
           </View>
 
-          {/* Δυναμικά Στοιχεία Κατόχου */}
           <View style={styles.idDetailsBlock}>
             <View style={styles.detailField}><Text style={styles.fieldLabel}>ΕΠΩΝΥΜΟ</Text><Text style={styles.fieldValue}>{currentProfile.lastName}</Text></View>
             <View style={styles.detailField}><Text style={styles.fieldLabel}>SURNAME</Text><Text style={styles.fieldValue}>{currentProfile.surnameEn}</Text></View>
@@ -387,7 +417,6 @@ export default function Index() {
 const GOV_FONT = Platform.OS === 'ios' ? 'System' : 'sans-serif';
 
 const styles = StyleSheet.create({
-  // Login Styles
   loginContainer: { flex: 1, justifyContent: 'space-between', paddingHorizontal: 24, paddingTop: 60 },
   loginLogoSection: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   circlePulse: { width: 210, height: 210, borderRadius: 105, borderWidth: 2, borderColor: '#00D2FF', justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 82, 180, 0.25)' },
@@ -405,7 +434,6 @@ const styles = StyleSheet.create({
   loginFooterText: { fontFamily: GOV_FONT, color: 'rgba(255,255,255,0.5)', fontSize: 14, fontWeight: 'bold' },
   loginFooterCyanText: { fontFamily: GOV_FONT, color: '#00D2FF', fontSize: 14, fontWeight: 'bold' },
 
-  // Pin Screen Styles
   pinContainer: { flex: 1, backgroundColor: '#0052B4', alignItems: 'center', justifyContent: 'center' },
   pinTitle: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 20, fontWeight: '600', marginBottom: 30 },
   dotsRow: { flexDirection: 'row', marginBottom: 50 },
@@ -415,7 +443,6 @@ const styles = StyleSheet.create({
   numButton: { width: 75, height: 75, justifyContent: 'center', alignItems: 'center', margin: 8, backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 37.5 },
   numText: { fontFamily: GOV_FONT, color: '#FFF', fontSize: 24, fontWeight: '600' },
 
-  // Wallet Main Styles
   walletContainer: { flex: 1, backgroundColor: '#0052B4' },
   walletHeader: { height: 60, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, marginTop: 10 },
   mailCircle: { backgroundColor: '#FFF', width: 34, height: 34, borderRadius: 17, justifyContent: 'center', alignItems: 'center' },
@@ -444,10 +471,8 @@ const styles = StyleSheet.create({
   cardTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
   cardBottomRow: { flexDirection: 'column' },
 
-  // ID Detail Screen Styles
   detailContainer: { flex: 1, backgroundColor: '#0b0197' },
 
-  // Watermark Styles - Προσαρμοσμένο absolute φόντο μέσα στο σκούρο section
   watermarkContainer: {
     position: 'absolute',
     top: 140, 
